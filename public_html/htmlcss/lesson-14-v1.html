@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS text and fonts</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">four properties, and one of them quietly overwrites the others</span>
+
+text-align:  <span class="a">center</span>;
+font-size:   <span class="a">1rem</span>;
+font-weight: <span class="a">700</span>;
+font:        <span class="a">1rem system-ui</span>;   <span class="s">&larr; the weight above is now 400 again</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">text-align</span>
+          <h2 data-i18n="s.align.t"></h2>
+        </header>
+        <div data-i18n="s.align.d"></div>
+        <pre><code>text-align: <span class="a">start</span>;     <span class="s">where the reading direction begins</span>
+text-align: <span class="a">end</span>;       <span class="s">where it finishes</span>
+text-align: <span class="a">center</span>;
+text-align: <span class="a">justify</span>;   <span class="s">stretch every line but the last</span>
+
+<span class="s">this centres the text inside the card</span>
+.card { text-align: center; }
+
+<span class="s">this centres the card itself</span>
+.card { width: 40rem; margin-inline: auto; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">font-size</span>
+          <h2 data-i18n="s.size.t"></h2>
+        </header>
+        <div data-i18n="s.size.d"></div>
+        <pre><code>font-size: <span class="a">16px</span>;     <span class="s">fixed &mdash; ignores what the reader chose</span>
+font-size: <span class="a">1rem</span>;     <span class="s">relative to the root &mdash; follows the reader</span>
+font-size: <span class="a">1.25em</span>;   <span class="s">relative to the parent &mdash; compounds when nested</span>
+font-size: <span class="a">125%</span>;     <span class="s">exactly the same as 1.25em</span>
+
+<span class="s">em compounds, and that is the whole difference</span>
+.step        { font-size: 1.5em; }   <span class="s">16px &rarr; 24px</span>
+.step .step  { font-size: 1.5em; }   <span class="s">24px &rarr; 36px</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">font-weight</span>
+          <h2 data-i18n="s.weight.t"></h2>
+        </header>
+        <div data-i18n="s.weight.d"></div>
+        <pre><code>font-weight: <span class="a">400</span>;   <span class="s">the same thing as normal</span>
+font-weight: <span class="a">700</span>;   <span class="s">the same thing as bold</span>
+font-weight: <span class="a">100</span> &hellip; <span class="a">900</span>
+
+<span class="s">these two are relative to whatever the parent has</span>
+font-weight: <span class="a">bolder</span>;
+font-weight: <span class="a">lighter</span>;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">font-family</span>
+          <h2 data-i18n="s.family.t"></h2>
+        </header>
+        <div data-i18n="s.family.d"></div>
+        <pre><code>font-family: <span class="a">'Nunito Sans'</span>, <span class="a">'Segoe UI'</span>, system-ui, <span class="t">sans-serif</span>;
+             <span class="s">└ quoted, because the name contains a space</span>
+                                                  <span class="s">└ always end with a generic</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">font</span>
+          <h2 data-i18n="s.short.t"></h2>
+        </header>
+        <div data-i18n="s.short.d"></div>
+        <pre><code><span class="s">size and family are required, and the order is fixed</span>
+font: <span class="a">700</span> <span class="a">1rem</span>/<span class="a">1.5</span> <span class="a">system-ui, sans-serif</span>;
+      <span class="s">│    │    │    └ family</span>
+      <span class="s">│    │    └ line-height</span>
+      <span class="s">│    └ size</span>
+      <span class="s">└ weight</span>
+
+<span class="s">the trap: anything left out is reset, not kept</span>
+.title { font-weight: 700; font: 1rem system-ui; }   <span class="s">&rarr; weight is 400</span>
+.title { font: 1rem system-ui; font-weight: 700; }   <span class="s">&rarr; weight is 700</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">line-height</span>
+          <h2 data-i18n="s.lh.t"></h2>
+        </header>
+        <div data-i18n="s.lh.d"></div>
+        <pre><code><span class="s">a parent at 16px, with a child at 32px</span>
+
+line-height: <span class="a">1.5</span>;     <span class="s">the child inherits the ratio  &rarr; 48px</span>
+line-height: <span class="a">150%</span>;    <span class="s">the child inherits 24px       &rarr; 24px</span>
+line-height: <span class="a">24px</span>;    <span class="s">the child inherits 24px       &rarr; 24px</span>
+
+<span class="s">the last two crush large text. write the number on its own.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">inherit</span>
+          <h2 data-i18n="s.inherit.t"></h2>
+        </header>
+        <div data-i18n="s.inherit.d"></div>
+        <pre><code><span class="t">inherited</span>       color, font-family, font-size, font-weight,
+                line-height, text-align, letter-spacing
+
+<span class="a">not inherited</span>   width, height, margin, padding, border, background</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-15-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-14-v1.data.js"></script>
+  </body>
+</html>

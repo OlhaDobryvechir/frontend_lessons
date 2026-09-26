@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: addresses</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">this looks right, and it is wrong</span>
+location.href = <span class="a">'/sok?q='</span> + brukerensTekst;
+
+<span class="s">the user wrote: a&amp;b=c#d e</span>
+<span class="s">the server read q as: 'a'</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">location</span>
+          <h2 data-i18n="s.loc.t"></h2>
+        </header>
+        <div data-i18n="s.loc.d"></div>
+        <pre><code><span class="s">on http://127.0.0.1:8099/lessons/js/side.html?q=test&amp;side=2#midt</span>
+
+location.href       <span class="s">the whole thing, as a string</span>
+location.origin     <span class="s">http://127.0.0.1:8099</span>
+location.protocol   <span class="s">http:          with the colon</span>
+location.host       <span class="s">127.0.0.1:8099 with the port</span>
+location.hostname   <span class="s">127.0.0.1      without it</span>
+location.port       <span class="s">'8099'         a string, and '' if there is none</span>
+location.pathname   <span class="s">/lessons/js/side.html</span>
+location.search     <span class="s">?q=test&amp;side=2   with the ?</span>
+location.hash       <span class="s">#midt          with the #</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">navigation</span>
+          <h2 data-i18n="s.nav.t"></h2>
+        </header>
+        <div data-i18n="s.nav.d"></div>
+        <pre><code>location.href = <span class="a">'lesson-11-v1.html'</span>;   <span class="s">history 3 &rarr; 4   Back works</span>
+location.assign(<span class="a">'...'</span>);              <span class="s">the same thing</span>
+location.replace(<span class="a">'...'</span>);             <span class="s">history 3 &rarr; 3   Back skips past it</span>
+location.reload();
+
+<span class="s">the parts can be written to, one at a time</span>
+location.hash = <span class="a">'seksjon-3'</span>;        <span class="s">no reload. the page stays alive.</span>
+location.search = <span class="a">'?q=1'</span>;            <span class="s">full reload</span>
+location.pathname = <span class="a">'/annet'</span>;        <span class="s">full reload</span>
+
+location.origin = <span class="a">'https://ond.no'</span>;  <span class="s">ignored. it is read-only.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">URL</span>
+          <h2 data-i18n="s.url.t"></h2>
+        </header>
+        <div data-i18n="s.url.d"></div>
+        <pre><code><span class="t">const</span> u = <span class="t">new</span> URL(<span class="a">'https://api.altibox.no:8443/kunder/12?q=hei du#topp'</span>);
+u.hostname   <span class="s">api.altibox.no</span>
+u.port       <span class="s">8443</span>
+u.search     <span class="s">?q=hei%20du      it tidied the space by itself</span>
+
+<span class="s">relative needs a base, or it throws</span>
+<span class="t">new</span> URL(<span class="a">'/kunder/12'</span>)                      <span class="s">TypeError</span>
+<span class="t">new</span> URL(<span class="a">'/kunder/12'</span>, <span class="a">'https://a.no/x/y'</span>)  <span class="s">https://a.no/kunder/12</span>
+<span class="t">new</span> URL(<span class="a">'../b'</span>, <span class="a">'https://a.no/x/y/z'</span>)     <span class="s">https://a.no/x/b</span>
+URL.canParse(<span class="a">'/x'</span>)                        <span class="s">false   ask before you build</span>
+
+<span class="s">a URL object is a note to yourself, not a command</span>
+u.pathname = <span class="a">'/annet'</span>;   <span class="s">nothing happens. the page stays.</span>
+location.href = u;         <span class="s">now it happens.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">searchParams</span>
+          <h2 data-i18n="s.params.t"></h2>
+        </header>
+        <div data-i18n="s.params.d"></div>
+        <pre><code><span class="t">const</span> p = <span class="t">new</span> URL(location.href).searchParams;
+
+p.get(<span class="a">'q'</span>)             <span class="s">'hei du'   already decoded</span>
+p.get(<span class="a">'finnesikke'</span>)    <span class="s">null       not undefined</span>
+p.has(<span class="a">'side'</span>)          <span class="s">true</span>
+
+<span class="s">the same name can appear twice</span>
+p.append(<span class="a">'tag'</span>, <span class="a">'x'</span>); p.append(<span class="a">'tag'</span>, <span class="a">'y'</span>);
+p.getAll(<span class="a">'tag'</span>)         <span class="s">['x', 'y']</span>
+p.get(<span class="a">'tag'</span>)            <span class="s">'x'        only the first</span>
+
+<span class="s">set encodes for you, so you never have to think about it</span>
+u.searchParams.set(<span class="a">'q'</span>, <span class="a">'a&amp;b=c#d e'</span>);
+u.href     <span class="s">https://a.no/s?q=a%26b%3Dc%23d+e</span>
+u.searchParams.get(<span class="a">'q'</span>)   <span class="s">'a&amp;b=c#d e'   back out intact</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">encodeURIComponent</span>
+          <h2 data-i18n="s.comp.t"></h2>
+        </header>
+        <div data-i18n="s.comp.d"></div>
+        <pre><code>encodeURIComponent(<span class="a">'hei du'</span>)       <span class="s">hei%20du</span>
+encodeURIComponent(<span class="a">'a&amp;b=c'</span>)        <span class="s">a%26b%3Dc</span>
+
+<span class="s">it leaves only these alone:</span>
+A&ndash;Z  a&ndash;z  0&ndash;9  - _ . ! ~ * <span class="a">'</span> ( )
+
+<span class="s">everything else becomes UTF-8 bytes, as %XX (lesson 6 of the HTML track)</span>
+<span class="a">'æ'</span>      <span class="s">&rarr; %C3%A6      two bytes</span>
+<span class="a">'€'</span>      <span class="s">&rarr; %E2%82%AC   three</span>
+<span class="a">'🙂'</span>     <span class="s">&rarr; %F0%9F%99%82 four</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">encodeURI</span>
+          <h2 data-i18n="s.uri.t"></h2>
+        </header>
+        <div data-i18n="s.uri.d"></div>
+        <pre><code>encodeURI(<span class="a">'https://a.no/sok?q=hei du&amp;x=1#topp'</span>)
+   <span class="s">https://a.no/sok?q=hei%20du&amp;x=1#topp   still a working address</span>
+
+encodeURIComponent(<span class="a">'https://a.no/sok?q=hei du&amp;x=1#topp'</span>)
+   <span class="s">https%3A%2F%2Fa.no%2Fsok%3Fq%3Dhei%20du%26x%3D1%23topp</span>
+   <span class="s">no longer an address &mdash; now it is one value</span>
+
+<span class="s">the whole difference is these eleven characters:</span>
+   ; / ? : @ &amp; = + $ , #
+   <span class="s">encodeURI keeps them, because they hold the address together</span>
+   <span class="s">encodeURIComponent escapes them, because inside a value they are text</span>
+
+<span class="s">the one that bites: +</span>
+encodeURI(<span class="a">'+'</span>)            <span class="s">+      and many servers read + as a space</span>
+encodeURIComponent(<span class="a">'+'</span>)   <span class="s">%2B    a real plus</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">decode</span>
+          <h2 data-i18n="s.dec.t"></h2>
+        </header>
+        <div data-i18n="s.dec.d"></div>
+        <pre><code>decodeURIComponent(<span class="a">'hei%20du%20%26%20deg'</span>)   <span class="s">hei du &amp; deg</span>
+decodeURIComponent(<span class="a">'100%'</span>)                  <span class="s">URIError: URI malformed</span>
+decodeURIComponent(<span class="a">'a+b'</span>)                   <span class="s">'a+b'   it does not know about +</span>
+<span class="t">new</span> URLSearchParams(<span class="a">'q=a+b'</span>).get(<span class="a">'q'</span>)        <span class="s">'a b'   it does</span>
+
+<span class="s">encoding twice is the classic bug</span>
+encodeURIComponent(encodeURIComponent(<span class="a">'hei du'</span>))   <span class="s">hei%2520du</span>
+<span class="s">the % became %25, and the reader gets back 'hei%20du'</span>
+
+<span class="s">and the hash never leaves the machine</span>
+location.href = <span class="a">'side.html?q=hei%20du#topp'</span>;
+<span class="s">the server was asked for: /side.html?q=hei%20du</span>
+<span class="s">the page still sees: hash = #topp</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-14-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-13-v1.data.js"></script>
+  </body>
+</html>

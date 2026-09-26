@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS units</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code>width: <span class="a">320px</span>;                 <span class="s">a fixed size</span>
+width: <span class="a">50%</span>;                   <span class="s">half of &mdash; something. which is the whole question</span>
+width: <span class="a">50vw</span>;                  <span class="s">half of the viewport, whatever the parent says</span>
+width: <span class="a">calc(100% - 2rem)</span>;     <span class="s">mix them, and let the browser do the sum</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">px</span>
+          <h2 data-i18n="s.px.t"></h2>
+        </header>
+        <div data-i18n="s.px.d"></div>
+        <pre><code>border: <span class="a">1px</span> solid #253040;
+width: <span class="a">320px</span>;
+
+<span class="s">a CSS pixel is a reference unit, not a hardware dot:</span>
+<span class="s">on a 2&times; screen the browser paints one of them across two device dots</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">%</span>
+          <h2 data-i18n="s.pct.t"></h2>
+        </header>
+        <div data-i18n="s.pct.d"></div>
+        <pre><code><span class="s">property                  the percentage is measured against</span>
+
+width, left, right        <span class="a">the containing block&rsquo;s width</span>
+height, top, bottom       <span class="a">the containing block&rsquo;s height</span>
+padding, margin           <span class="a">the containing block&rsquo;s width</span>   <span class="s">&larr; all four sides</span>
+font-size                 <span class="a">the parent&rsquo;s font-size</span>
+line-height               <span class="a">the element&rsquo;s own font-size</span>
+translate()               <span class="a">the element&rsquo;s own size</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">height: %</span>
+          <h2 data-i18n="s.h.t"></h2>
+        </header>
+        <div data-i18n="s.h.d"></div>
+        <pre><code><span class="s">does nothing &mdash; the parent has no definite height to halve</span>
+.parent { }
+.child  { height: 50%; }
+
+<span class="s">works &mdash; now there is something to take half of</span>
+.parent { height: 400px; }
+.child  { height: 50%; }        <span class="s">&rarr; 200px</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">vw vh</span>
+          <h2 data-i18n="s.v.t"></h2>
+        </header>
+        <div data-i18n="s.v.d"></div>
+        <pre><code><span class="a">1vw</span>    <span class="s">1% of the viewport width</span>
+<span class="a">1vh</span>    <span class="s">1% of the viewport height</span>
+<span class="a">1vmin</span>  <span class="s">1% of the smaller of the two</span>
+<span class="a">1vmax</span>  <span class="s">1% of the larger of the two</span>
+
+<span class="s">the parent is not consulted at all</span>
+.tiny-box .hero { height: <span class="a">100vh</span>; }   <span class="s">still the full viewport</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">100vw</span>
+          <h2 data-i18n="s.traps.t"></h2>
+        </header>
+        <div data-i18n="s.traps.d"></div>
+        <pre><code><span class="s">desktop: with a classic scrollbar, 100vw is wider than the content area</span>
+width: <span class="a">100vw</span>;     <span class="s">&rarr; a horizontal scrollbar appears</span>
+width: <span class="a">100%</span>;      <span class="s">&rarr; what you almost always meant</span>
+
+<span class="s">mobile: 100vh is measured as if the toolbars were hidden</span>
+height: <span class="a">100vh</span>;    <span class="s">&rarr; the bottom sits behind the toolbar</span>
+height: <span class="a">100svh</span>;   <span class="s">&rarr; the small viewport, toolbars showing</span>
+height: <span class="a">100dvh</span>;   <span class="s">&rarr; follows the toolbars as they come and go</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">calc()</span>
+          <h2 data-i18n="s.calc.t"></h2>
+        </header>
+        <div data-i18n="s.calc.d"></div>
+        <pre><code>width:  <span class="a">calc(100% - 2rem)</span>;
+height: <span class="a">calc(100vh - 64px)</span>;
+margin-left: <span class="a">calc(50% - 160px)</span>;
+
+<span class="s">the spaces around + and &minus; are required</span>
+calc(100% - 2rem)    <span class="t">&#x2713;</span>
+calc(100% -2rem)     <span class="a">&#x2717;</span>   <span class="s">&minus;2rem reads as one negative number</span>
+calc(100%-2rem)      <span class="a">&#x2717;</span>
+
+<span class="s">&times; and &divide; do not need them, and the divisor must be a plain number</span>
+calc(100% / 3)       <span class="t">&#x2713;</span>
+calc(100px * 2)      <span class="t">&#x2713;</span>
+calc(100% / 3px)     <span class="a">&#x2717;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">clamp()</span>
+          <h2 data-i18n="s.clamp.t"></h2>
+        </header>
+        <div data-i18n="s.clamp.d"></div>
+        <pre><code>width: <span class="a">min(100%, 60rem)</span>;            <span class="s">never wider than 60rem</span>
+width: <span class="a">max(50%, 320px)</span>;             <span class="s">never narrower than 320px</span>
+font-size: <span class="a">clamp(1rem, 2.5vw, 2rem)</span>;  <span class="s">floor, preferred, ceiling</span>
+
+<span class="s">clamp(a, b, c) is exactly max(a, min(b, c))</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-13-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-12-v1.data.js"></script>
+  </body>
+</html>

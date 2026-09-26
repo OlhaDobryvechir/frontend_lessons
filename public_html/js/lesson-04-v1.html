@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: operators</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">two expressions, one character apart</span>
+
+<span class="a">'5'</span> + <span class="a">1</span>        <span class="s">&rarr; '51'   plus also joins text</span>
+<span class="a">'5'</span> - <span class="a">1</span>        <span class="s">&rarr; 4      minus only ever counts</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">precedence</span>
+          <h2 data-i18n="s.prec.t"></h2>
+        </header>
+        <div data-i18n="s.prec.d"></div>
+        <pre><code><span class="s">binds tightest at the top</span>
+
+<span class="a">a.b</span>  <span class="a">a?.b</span>  <span class="a">f()</span>            <span class="s">reaching into things</span>
+<span class="a">!a</span>  <span class="a">-a</span>  <span class="a">typeof a</span>           <span class="s">one-sided operators</span>
+<span class="a">**</span>
+<span class="a">*</span>  <span class="a">/</span>  <span class="a">%</span>
+<span class="a">+</span>  <span class="a">-</span>
+<span class="a">&lt;</span>  <span class="a">&lt;=</span>  <span class="a">&gt;</span>  <span class="a">&gt;=</span>
+<span class="a">==</span>  <span class="a">!=</span>  <span class="a">===</span>  <span class="a">!==</span>
+<span class="a">&amp;&amp;</span>
+<span class="a">||</span>  <span class="a">??</span>
+<span class="a">? :</span>                          <span class="s">the ternary</span>
+<span class="a">=</span>  <span class="a">+=</span>  <span class="a">-=</span>                   <span class="s">assignment, loosest of all</span>
+
+<span class="s">so this needs no parentheses</span>
+<span class="t">if</span> (<span class="t">typeof</span> x === <span class="a">'string'</span> &amp;&amp; x.length &gt; <span class="a">0</span>) { ... }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">+</span>
+          <h2 data-i18n="s.plus.t"></h2>
+        </header>
+        <div data-i18n="s.plus.d"></div>
+        <pre><code><span class="a">1</span> + <span class="a">2</span> + <span class="a">'3'</span>          <span class="s">&rarr; '33'    counts, then joins</span>
+<span class="a">'1'</span> + <span class="a">2</span> + <span class="a">3</span>          <span class="s">&rarr; '123'   joins all the way</span>
+
+<span class="s">left to right, so the order of your data decides the answer</span>
+
+<span class="a">1</span> + <span class="a">true</span>             <span class="s">&rarr; 2</span>
+<span class="a">1</span> + <span class="a">null</span>             <span class="s">&rarr; 1</span>
+<span class="a">1</span> + <span class="a">undefined</span>        <span class="s">&rarr; NaN</span>
+[] + {}                <span class="s">&rarr; '[object Object]'</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">== vs ===</span>
+          <h2 data-i18n="s.eq.t"></h2>
+        </header>
+        <div data-i18n="s.eq.d"></div>
+        <pre><code><span class="a">''</span> == <span class="a">0</span>               <span class="s">&rarr; true</span>
+<span class="a">''</span> === <span class="a">0</span>              <span class="s">&rarr; false</span>
+
+[] == <span class="a">false</span>           <span class="s">&rarr; true</span>
+<span class="a">'0'</span> == <span class="a">false</span>          <span class="s">&rarr; true</span>
+Boolean(<span class="a">'0'</span>)           <span class="s">&rarr; true    ← the same value, both ways</span>
+
+<span class="s">the one exception worth keeping (lesson 1)</span>
+verdi != <span class="a">null</span>          <span class="s">catches null and undefined, nothing else</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;&amp; ||</span>
+          <h2 data-i18n="s.logic.t"></h2>
+        </header>
+        <div data-i18n="s.logic.d"></div>
+        <pre><code><span class="s">they hand back one of the operands, not true or false</span>
+
+<span class="a">'a'</span> &amp;&amp; <span class="a">'b'</span>            <span class="s">&rarr; 'b'       both truthy, so the last one</span>
+<span class="a">0</span> &amp;&amp; <span class="a">'b'</span>              <span class="s">&rarr; 0         stopped at the first falsy</span>
+<span class="a">0</span> || <span class="a">'reserve'</span>        <span class="s">&rarr; 'reserve'</span>
+<span class="a">null</span> || <span class="a">'a'</span> || <span class="a">'b'</span>     <span class="s">&rarr; 'a'       stops as soon as it can</span>
+
+<span class="s">and the right side is never evaluated if the left decided it</span>
+bruker &amp;&amp; bruker.lagre();</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">??</span>
+          <h2 data-i18n="s.nullish.t"></h2>
+        </header>
+        <div data-i18n="s.nullish.d"></div>
+        <pre><code><span class="a">0</span> || <span class="a">'reserve'</span>        <span class="s">&rarr; 'reserve'   zero counted as missing</span>
+<span class="a">0</span> ?? <span class="a">'reserve'</span>        <span class="s">&rarr; 0           zero is a real answer</span>
+
+<span class="a">''</span> || <span class="a">'reserve'</span>       <span class="s">&rarr; 'reserve'</span>
+<span class="a">''</span> ?? <span class="a">'reserve'</span>       <span class="s">&rarr; ''</span>
+
+<span class="a">null</span> ?? <span class="a">'reserve'</span>     <span class="s">&rarr; 'reserve'   only null and undefined</span>
+
+<span class="s">mixing them without parentheses is refused outright</span>
+a || b ?? c            <span class="s">SyntaxError</span>
+(a || b) ?? c          <span class="s">fine</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">?.</span>
+          <h2 data-i18n="s.optional.t"></h2>
+        </header>
+        <div data-i18n="s.optional.d"></div>
+        <pre><code>({}).a.b               <span class="s">TypeError: cannot read 'b' of undefined</span>
+({}).a?.b              <span class="s">&rarr; undefined</span>
+
+<span class="s">one ?. stops the whole rest of the chain</span>
+<span class="a">null</span>?.a.b.c            <span class="s">&rarr; undefined   no error, nothing evaluated</span>
+
+<span class="s">it works on calls and on brackets too</span>
+obj.metode?.()
+obj?.[felt]
+
+<span class="s">the pair you will write constantly</span>
+<span class="t">const</span> navn = svar?.kunde?.navn ?? <span class="a">'ukjent'</span>;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">associativity</span>
+          <h2 data-i18n="s.assoc.t"></h2>
+        </header>
+        <div data-i18n="s.assoc.d"></div>
+        <pre><code><span class="s">most operators group from the left</span>
+<span class="a">1</span> - <span class="a">2</span> - <span class="a">3</span>              <span class="s">&rarr; (1 - 2) - 3 &rarr; -4</span>
+
+<span class="s">two group from the right</span>
+<span class="a">2</span> ** <span class="a">3</span> ** <span class="a">2</span>            <span class="s">&rarr; 2 ** 9  &rarr; 512   not 64</span>
+a = b = <span class="a">5</span>              <span class="s">&rarr; both become 5</span>
+
+<span class="s">and one case the language simply refuses to guess</span>
+-<span class="a">2</span> ** <span class="a">2</span>               <span class="s">SyntaxError &mdash; write (-2) ** 2 or -(2 ** 2)</span>
+
+<span class="s">comparisons chain, but not the way they read</span>
+<span class="a">1</span> &lt; <span class="a">2</span> &lt; <span class="a">3</span>              <span class="s">&rarr; true    (1 &lt; 2) is true, true &lt; 3 is 1 &lt; 3</span>
+<span class="a">3</span> &gt; <span class="a">2</span> &gt; <span class="a">1</span>              <span class="s">&rarr; false   (3 &gt; 2) is true, true &gt; 1 is 1 &gt; 1</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-05-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-04-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: setTimeout, setInterval</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the number you give is a minimum, never a promise</span>
+
+setTimeout(fn, <span class="a">10</span>);
+<span class="s">then block the thread for 120 ms &mdash; measured: fn ran after 121 ms</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">setTimeout</span>
+          <h2 data-i18n="s.timeout.t"></h2>
+        </header>
+        <div data-i18n="s.timeout.d"></div>
+        <pre><code><span class="t">const</span> id = setTimeout(fn, <span class="a">1000</span>);      <span class="s">runs once, in about a second</span>
+<span class="t">typeof</span> id                             <span class="s">&rarr; 'number'  in a browser</span>
+
+<span class="s">anything after the delay is handed to the function</span>
+setTimeout((a, b) =&gt; a + b, <span class="a">0</span>, <span class="a">'x'</span>, <span class="a">'y'</span>);   <span class="s">&rarr; 'xy'</span>
+
+<span class="s">the string form still exists. it is eval. do not use it.</span>
+setTimeout(<span class="a">'gjørNoe()'</span>, <span class="a">0</span>);</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">clearTimeout</span>
+          <h2 data-i18n="s.clear.t"></h2>
+        </header>
+        <div data-i18n="s.clear.d"></div>
+        <pre><code><span class="t">const</span> id = setTimeout(fn, <span class="a">1000</span>);
+clearTimeout(id);              <span class="s">fn never runs</span>
+
+clearTimeout(<span class="a">99999</span>);           <span class="s">an unknown id is simply ignored</span>
+clearTimeout(<span class="a">undefined</span>);       <span class="s">so is nothing at all</span>
+
+<span class="s">which means you never need to check before clearing</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">setInterval</span>
+          <h2 data-i18n="s.interval.t"></h2>
+        </header>
+        <div data-i18n="s.interval.d"></div>
+        <pre><code>setInterval(fn, <span class="a">10</span>);     <span class="s">asks for every 10 ms</span>
+
+<span class="s">but if fn itself takes 30 ms, measured starts were</span>
+about <span class="a">10</span>, <span class="a">40</span>, <span class="a">70</span>, <span class="a">100</span> ms   <span class="s">&mdash; 30 apart, not 10</span>
+
+<span class="s">the browser will not stack them up, but it cannot go faster</span>
+<span class="s">than the work allows, and the gap you asked for is gone</span>
+
+<span class="s">a timeout that reschedules itself keeps the gap honest</span>
+(<span class="t">function</span> tick() {
+  gjørArbeid();
+  setTimeout(tick, <span class="a">10</span>);       <span class="s">10 ms after this one finished</span>
+})();</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">a minimum</span>
+          <h2 data-i18n="s.min.t"></h2>
+        </header>
+        <div data-i18n="s.min.d"></div>
+        <pre><code><span class="s">1. the thread has to be free (lesson 7)</span>
+setTimeout(fn, <span class="a">10</span>) + 120 ms of blocking   <span class="s">&rarr; fn ran at 121 ms</span>
+
+<span class="s">2. promises always go first</span>
+sync  &rarr;  promise  &rarr;  timeout 0
+
+<span class="s">3. nested timeouts get clamped: once a timer has set a timer</span>
+<span class="s">   more than five deep, the floor becomes 4 ms rather than 0</span>
+<span class="s">   (a page that has already been running timers can hit it at once)</span>
+
+<span class="s">4. a background tab is throttled to about once a second</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">this</span>
+          <h2 data-i18n="s.this.t"></h2>
+        </header>
+        <div data-i18n="s.this.d"></div>
+        <pre><code><span class="s">a timer calls your function plainly &mdash; the dot is gone (lesson 9)</span>
+
+setTimeout(teller.les, <span class="a">0</span>);        <span class="s">TypeError in a module; window.navn in a script</span>
+
+setTimeout(() =&gt; teller.les(), <span class="a">0</span>);  <span class="s">the arrow keeps the dot</span>
+setTimeout(teller.les.bind(teller), <span class="a">0</span>);</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">debounce</span>
+          <h2 data-i18n="s.debounce.t"></h2>
+        </header>
+        <div data-i18n="s.debounce.d"></div>
+        <pre><code><span class="s">wait until the typing stops, then search once</span>
+<span class="t">let</span> id;
+felt.addEventListener(<span class="a">'input'</span>, () =&gt; {
+  clearTimeout(id);
+  id = setTimeout(() =&gt; søk(felt.value), <span class="a">300</span>);
+});
+
+<span class="s">or: act at most once every 300 ms while scrolling</span>
+<span class="t">let</span> venter = <span class="a">false</span>;
+window.addEventListener(<span class="a">'scroll'</span>, () =&gt; {
+  <span class="t">if</span> (venter) <span class="t">return</span>;
+  venter = <span class="a">true</span>;
+  setTimeout(() =&gt; { oppdater(); venter = <span class="a">false</span>; }, <span class="a">300</span>);
+});</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">cleanup</span>
+          <h2 data-i18n="s.cleanup.t"></h2>
+        </header>
+        <div data-i18n="s.cleanup.d"></div>
+        <pre><code><span class="s">an interval runs until someone stops it &mdash; forever, otherwise</span>
+<span class="t">const</span> id = setInterval(oppdater, <span class="a">1000</span>);
+
+<span class="s">and it holds on to everything the callback can reach (lesson 9)</span>
+<span class="s">so the component it belonged to is never freed</span>
+
+clearInterval(id);             <span class="s">when the element goes away</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-11-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-10-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>style and class</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">style &mdash; CSS written straight onto this one element</span>
+<span class="t">&lt;p</span> <span class="a">style</span>="color: #58a6ff; font-weight: 700;"<span class="t">&gt;</span>499 kr<span class="t">&lt;/p&gt;</span>
+
+<span class="s">class &mdash; a name, and the CSS lives somewhere else</span>
+<span class="t">&lt;p</span> <span class="a">class</span>="price"<span class="t">&gt;</span>499 kr<span class="t">&lt;/p&gt;</span>
+
+.price { color: #58a6ff; font-weight: 700; }</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">style</span>
+          <h2 data-i18n="s.style.t"></h2>
+        </header>
+        <div data-i18n="s.style.d"></div>
+        <pre><code><span class="s">a rule: selector, braces, declarations &mdash; in &lt;style&gt; or a .css file</span>
+p { color: #58a6ff; font-weight: 700; }
+
+<span class="s">the attribute: declarations only, no selector, no braces</span>
+<span class="t">&lt;p</span> <span class="a">style</span>="color: #58a6ff; font-weight: 700;"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">declarations</span>
+          <h2 data-i18n="s.decl.t"></h2>
+        </header>
+        <div data-i18n="s.decl.d"></div>
+        <pre><code><span class="s">these have nowhere to live in a style attribute</span>
+
+:hover                          <span class="s">a state needs a selector</span>
+::before                        <span class="s">so does a generated box</span>
+@media (max-width: 600px)       <span class="s">and so does a condition</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">class</span>
+          <h2 data-i18n="s.class.t"></h2>
+        </header>
+        <div data-i18n="s.class.d"></div>
+        <pre><code><span class="s">one attribute, three names, separated by spaces</span>
+<span class="t">&lt;p</span> <span class="a">class</span>="price price--campaign is-highlighted"<span class="t">&gt;</span>499 kr<span class="t">&lt;/p&gt;</span>
+
+.price             { font-weight: 700; }
+.price--campaign   { color: #58a6ff; }
+.is-highlighted    { background: rgba(88, 166, 255, 0.1); }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">class vs id</span>
+          <h2 data-i18n="s.vs.t"></h2>
+        </header>
+        <div data-i18n="s.vs.d"></div>
+        <pre><code><span class="a">id</span>      one name, one element, unique in the document   <span class="s">lesson 8</span>
+<span class="a">class</span>   many names per element, many elements per name
+
+<span class="s">both at once is perfectly normal</span>
+<span class="t">&lt;h2</span> <span class="a">id</span>="priser" <span class="a">class</span>="section-title"<span class="t">&gt;</span>Priser<span class="t">&lt;/h2&gt;</span>
+     <span class="s">└ the jump target</span>  <span class="s">└ the shared styling</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">specificity</span>
+          <h2 data-i18n="s.spec.t"></h2>
+        </header>
+        <div data-i18n="s.spec.d"></div>
+        <pre><code><span class="s">weakest</span>
+  p { color: gray; }                     <span class="s">an element</span>
+  .price { color: black; }               <span class="s">a class</span>
+  #total { color: green; }               <span class="s">an id</span>
+  <span class="a">style</span>="color: blue"                   <span class="s">the style attribute</span>
+  .price { color: red !important; }      <span class="s">!important in a stylesheet</span>
+<span class="s">strongest</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">classList</span>
+          <h2 data-i18n="s.list.t"></h2>
+        </header>
+        <div data-i18n="s.list.d"></div>
+        <pre><code>el.classList.add(<span class="a">'is-open'</span>);
+el.classList.remove(<span class="a">'is-open'</span>);
+el.classList.toggle(<span class="a">'is-open'</span>);
+el.classList.toggle(<span class="a">'is-open'</span>, skalVaereApen);   <span class="s">force it on or off</span>
+el.classList.contains(<span class="a">'is-open'</span>);              <span class="s">true / false</span>
+
+<span class="s">hard to undo, and no hover, no media query</span>
+el.style.display = <span class="a">'none'</span>;
+
+<span class="s">one name &mdash; every decision stays in the stylesheet</span>
+el.classList.add(<span class="a">'is-hidden'</span>);</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">naming</span>
+          <h2 data-i18n="s.name.t"></h2>
+        </header>
+        <div data-i18n="s.name.d"></div>
+        <pre><code><span class="s">describes the paint</span>
+.red   .big   .blue-box
+
+<span class="s">describes the thing</span>
+.price   .warning   .is-open   .card__title</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-11-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-10-v1.data.js"></script>
+  </body>
+</html>

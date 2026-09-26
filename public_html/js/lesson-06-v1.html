@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: fetch, json, CORS</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">const</span> res = <span class="t">await</span> fetch(<span class="a">'/api/kunder'</span>);
+<span class="t">if</span> (!res.ok) <span class="t">throw</span> <span class="t">new</span> Error(res.status);   <span class="s">← the line everyone forgets</span>
+<span class="t">const</span> kunder = <span class="t">await</span> res.json();</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">request</span>
+          <h2 data-i18n="s.req.t"></h2>
+        </header>
+        <div data-i18n="s.req.d"></div>
+        <pre><code><span class="s">what goes out</span>
+POST /api/kunder HTTP/1.1          <span class="s">method and path (lesson 8, HTML track)</span>
+Content-Type: application/json     <span class="s">headers</span>
+Accept: application/json
+
+{"navn":"Ada"}                     <span class="s">the body</span>
+
+<span class="s">what comes back</span>
+HTTP/1.1 201 Created               <span class="s">a status number and a name</span>
+Content-Type: application/json
+                                   <span class="s">headers, then a body</span>
+{"id":7,"navn":"Ada"}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">fetch()</span>
+          <h2 data-i18n="s.fetch.t"></h2>
+        </header>
+        <div data-i18n="s.fetch.d"></div>
+        <pre><code><span class="s">the shortest useful call</span>
+<span class="t">const</span> res = <span class="t">await</span> fetch(<span class="a">'/api/kunder'</span>);
+<span class="t">const</span> data = <span class="t">await</span> res.json();
+
+<span class="s">two awaits, because two separate things take time:</span>
+<span class="s">first the headers arrive, then the body is read to the end</span>
+
+<span class="s">with everything spelled out</span>
+<span class="t">const</span> res = <span class="t">await</span> fetch(<span class="a">'/api/kunder'</span>, {
+  method: <span class="a">'POST'</span>,
+  headers: { <span class="a">'Content-Type'</span>: <span class="a">'application/json'</span> },
+  body: JSON.stringify({ navn: <span class="a">'Ada'</span> }),
+});</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">response.ok</span>
+          <h2 data-i18n="s.ok.t"></h2>
+        </header>
+        <div data-i18n="s.ok.d"></div>
+        <pre><code><span class="s">a 404 is a perfectly successful fetch</span>
+<span class="t">const</span> res = <span class="t">await</span> fetch(<span class="a">'/finnes-ikke'</span>);
+res.ok        <span class="s">&rarr; false</span>
+res.status    <span class="s">&rarr; 404</span>
+<span class="s">no error was thrown. the server answered; you just did not like the answer.</span>
+
+<span class="s">fetch only fails when there was no answer at all</span>
+<span class="s">&mdash; no network, no DNS, blocked by CORS</span>
+
+<span class="s">so every call needs this</span>
+<span class="t">if</span> (!res.ok) <span class="t">throw</span> <span class="t">new</span> Error(<span class="a">'HTTP '</span> + res.status);</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">JSON</span>
+          <h2 data-i18n="s.json.t"></h2>
+        </header>
+        <div data-i18n="s.json.d"></div>
+        <pre><code>JSON.stringify({ a: <span class="a">1</span>, b: <span class="a">undefined</span> })     <span class="s">&rarr; '{"a":1}'      dropped</span>
+JSON.stringify([<span class="a">1</span>, <span class="a">undefined</span>])            <span class="s">&rarr; '[1,null]'     kept as null</span>
+JSON.stringify({ a: <span class="a">NaN</span> })              <span class="s">&rarr; '{"a":null}'</span>
+JSON.stringify({ a: <span class="t">new</span> Date(<span class="a">0</span>) })       <span class="s">&rarr; an ISO string</span>
+JSON.stringify(<span class="t">new</span> Map([[<span class="a">'a'</span>, <span class="a">1</span>]]))     <span class="s">&rarr; '{}'           silently empty</span>
+JSON.stringify({ a: <span class="a">1n</span> })               <span class="s">TypeError</span>
+JSON.stringify(sirkulær)                <span class="s">TypeError</span>
+
+<span class="s">and nothing is restored on the way back</span>
+JSON.parse(JSON.stringify({ når: <span class="t">new</span> Date() })).når   <span class="s">&rarr; a string</span>
+
+<span class="s">the format is stricter than Javascript</span>
+JSON.parse(<span class="a">'{a: 1}'</span>)        <span class="s">SyntaxError &mdash; keys must be quoted</span>
+JSON.parse(<span class="a">'{"a": 1,}'</span>)     <span class="s">SyntaxError &mdash; no trailing comma</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">methods</span>
+          <h2 data-i18n="s.methods.t"></h2>
+        </header>
+        <div data-i18n="s.methods.d"></div>
+        <pre><code><span class="a">GET</span>      <span class="s">read something. no body. safe to repeat, safe to cache.</span>
+<span class="a">POST</span>     <span class="s">create something, or anything that does not fit elsewhere.</span>
+<span class="a">PUT</span>      <span class="s">replace the whole thing at this address.</span>
+<span class="a">PATCH</span>    <span class="s">change part of it.</span>
+<span class="a">DELETE</span>   <span class="s">remove it.</span>
+<span class="a">OPTIONS</span>  <span class="s">ask what is allowed here. the browser sends these itself.</span>
+
+<span class="s">the distinction that matters in practice</span>
+<span class="s">repeating a PUT or a DELETE changes nothing more &mdash; idempotent</span>
+<span class="s">repeating a POST creates a second one &mdash; which is why double</span>
+<span class="s">clicks on a submit button are a real problem</span>
+
+<span class="t">await</span> fetch(url, { method: <span class="a">'GET'</span>, body: <span class="a">'x'</span> })   <span class="s">TypeError: GET cannot have a body</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Content-Type</span>
+          <h2 data-i18n="s.ct.t"></h2>
+        </header>
+        <div data-i18n="s.ct.d"></div>
+        <pre><code><span class="s">what you are sending</span>
+Content-Type: application/json
+Content-Type: application/x-www-form-urlencoded
+Content-Type: multipart/form-data        <span class="s">file uploads</span>
+
+<span class="s">what you would like back</span>
+Accept: application/json
+
+<span class="s">the classic bug: a JSON body without the header</span>
+fetch(url, { method: <span class="a">'POST'</span>, body: JSON.stringify(data) })
+<span class="s">→ the server reads it as text/plain and rejects it as malformed</span>
+
+<span class="s">and the opposite: with FormData, leave the header out</span>
+fetch(url, { method: <span class="a">'POST'</span>, body: <span class="t">new</span> FormData(skjema) })
+<span class="s">→ the browser sets it, including the boundary marker you cannot know</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">CORS</span>
+          <h2 data-i18n="s.cors.t"></h2>
+        </header>
+        <div data-i18n="s.cors.d"></div>
+        <pre><code><span class="s">same origin = same scheme, host and port (HTML lesson 9)</span>
+
+<span class="s">for anything else, the browser asks permission first</span>
+OPTIONS /api/kunder
+Origin: https://minside.no
+Access-Control-Request-Method: PUT
+
+<span class="s">and the server has to say yes</span>
+Access-Control-Allow-Origin: https://minside.no
+Access-Control-Allow-Methods: GET, PUT, DELETE
+Access-Control-Allow-Headers: Content-Type
+
+<span class="s">what triggers that extra round trip</span>
+method is PUT, PATCH or DELETE
+Content-Type: application/json           <span class="s">← yes, this one too</span>
+any header you set yourself
+
+<span class="s">with cookies, the wildcard is not allowed</span>
+fetch(url, { credentials: <span class="a">'include'</span> })
+Access-Control-Allow-Origin: *           <span class="s">rejected</span>
+Access-Control-Allow-Origin: https://minside.no   <span class="s">accepted</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-07-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-06-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS selectors</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the three that carry almost every stylesheet</span>
+
+p         <span class="s">a tag &mdash; every paragraph in the document</span>
+.price    <span class="s">a class &mdash; every element carrying that name</span>
+#priser   <span class="s">an id &mdash; the one element with that name</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">rule</span>
+          <h2 data-i18n="s.rule.t"></h2>
+        </header>
+        <div data-i18n="s.rule.d"></div>
+        <pre><code>.price { color: #58a6ff; font-weight: 700; }
+
+<span class="a">.price</span>              <span class="s">the selector &mdash; who the rule applies to</span>
+<span class="a">color: #58a6ff</span>      <span class="s">a declaration &mdash; lesson 10</span>
+<span class="a">font-weight: 700</span>    <span class="s">another one</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">p</span>
+          <h2 data-i18n="s.tag.t"></h2>
+        </header>
+        <div data-i18n="s.tag.d"></div>
+        <pre><code>p  { line-height: 1.6; }      <span class="s">every &lt;p&gt; in the document</span>
+h2 { font-weight: 750; }
+a  { color: #58a6ff; }
+
+P  { ... }                    <span class="s">matches &lt;p&gt; too &mdash; tag names ignore case in HTML</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">.class</span>
+          <h2 data-i18n="s.class.t"></h2>
+        </header>
+        <div data-i18n="s.class.d"></div>
+        <pre><code>.price { font-weight: 700; }
+
+<span class="t">&lt;p</span> <span class="a">class</span>="price"<span class="t">&gt;</span>499 kr<span class="t">&lt;/p&gt;</span>              <span class="s">matches</span>
+<span class="t">&lt;span</span> <span class="a">class</span>="price"<span class="t">&gt;</span>499 kr<span class="t">&lt;/span&gt;</span>        <span class="s">matches &mdash; any element at all</span>
+<span class="t">&lt;p</span> <span class="a">class</span>="total price"<span class="t">&gt;</span>499 kr<span class="t">&lt;/p&gt;</span>        <span class="s">matches &mdash; one name out of the list</span>
+<span class="t">&lt;p</span> <span class="a">class</span>="Price"<span class="t">&gt;</span>499 kr<span class="t">&lt;/p&gt;</span>              <span class="s">no match &mdash; class names respect case</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">#id</span>
+          <h2 data-i18n="s.id.t"></h2>
+        </header>
+        <div data-i18n="s.id.d"></div>
+        <pre><code>#priser { scroll-margin-top: 5rem; }
+
+<span class="t">&lt;h2</span> <span class="a">id</span>="priser"<span class="t">&gt;</span>Priser<span class="t">&lt;/h2&gt;</span>          <span class="s">matches, and nothing else can</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">p.price</span>
+          <h2 data-i18n="s.combine.t"></h2>
+        </header>
+        <div data-i18n="s.combine.d"></div>
+        <pre><code><span class="s">written together, with no space: all true of one element</span>
+p.price          <span class="s">a &lt;p&gt; that also carries .price</span>
+.card.is-open    <span class="s">an element carrying both classes</span>
+a#home           <span class="s">a link that also has that id</span>
+
+<span class="s">separated by commas: any one of them is enough</span>
+h1, h2, h3 { margin-top: 0; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">.card p</span>
+          <h2 data-i18n="s.desc.t"></h2>
+        </header>
+        <div data-i18n="s.desc.d"></div>
+        <pre><code>.card p       <span class="s">a &lt;p&gt; anywhere inside .card, however deep</span>
+.card &gt; p     <span class="s">a &lt;p&gt; that is a direct child of .card</span>
+h2 + p        <span class="s">the &lt;p&gt; immediately after an &lt;h2&gt;</span>
+h2 ~ p        <span class="s">any &lt;p&gt; after an &lt;h2&gt;, same parent</span>
+
+<span class="s">the space is a combinator, not decoration</span>
+.card.is-open <span class="s">one element with both classes</span>
+.card .is-open <span class="s">.is-open somewhere inside .card</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">0,1,1</span>
+          <h2 data-i18n="s.spec.t"></h2>
+        </header>
+        <div data-i18n="s.spec.d"></div>
+        <pre><code><span class="s">selector           ids  classes  tags</span>
+
+*                    0      0      0
+p                    0      0      1
+p span               0      0      2
+.price               0      1      0
+p.price              0      1      1
+.card .price         0      2      0
+#total               1      0      0
+#total .price        1      1      0</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-12-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-11-v1.data.js"></script>
+  </body>
+</html>

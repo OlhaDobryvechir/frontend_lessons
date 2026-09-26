@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS sizing</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code>width: <span class="a">400px</span>;       <span class="s">what you asked for</span>
+max-width: <span class="a">300px</span>;   <span class="s">but never wider than this</span>
+min-width: <span class="a">500px</span>;   <span class="s">and never narrower than this</span>
+
+<span class="s">the element ends up 500px wide. min beats max beats width.</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">box-sizing</span>
+          <h2 data-i18n="s.box.t"></h2>
+        </header>
+        <div data-i18n="s.box.d"></div>
+        <pre><code><span class="s">the default: the number is the content box only</span>
+.box { box-sizing: <span class="a">content-box</span>; width: 200px; padding: 20px; border: 2px solid; }
+<span class="s">&rarr; occupies 2 + 20 + 200 + 20 + 2 = 244px</span>
+
+<span class="s">border-box: the number is the whole visible box</span>
+.box { box-sizing: <span class="a">border-box</span>; width: 200px; padding: 20px; border: 2px solid; }
+<span class="s">&rarr; occupies 200px, and the content gets 156px</span>
+
+<span class="s">which is why almost every project begins with this line</span>
+*, *::before, *::after { box-sizing: border-box; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">auto</span>
+          <h2 data-i18n="s.auto.t"></h2>
+        </header>
+        <div data-i18n="s.auto.d"></div>
+        <pre><code>width: <span class="a">auto</span>     <span class="s">a block fills whatever room its parent gives it</span>
+height: <span class="a">auto</span>    <span class="s">a block is exactly as tall as its content</span>
+
+<span class="s">the same asymmetry that made height: 50% fail in lesson 12</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">max-width</span>
+          <h2 data-i18n="s.max.t"></h2>
+        </header>
+        <div data-i18n="s.max.d"></div>
+        <pre><code><span class="s">the responsive workhorse: follow the window, then stop</span>
+.container { width: <span class="a">100%</span>; max-width: <span class="a">60rem</span>; }
+
+<span class="s">and the one line that keeps images inside their box</span>
+img { max-width: <span class="a">100%</span>; height: <span class="a">auto</span>; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">min-width</span>
+          <h2 data-i18n="s.min.t"></h2>
+        </header>
+        <div data-i18n="s.min.d"></div>
+        <pre><code><span class="s">a floor, so the column never becomes unusable</span>
+.sidebar { width: <span class="a">25%</span>; min-width: <span class="a">240px</span>; }
+
+<span class="s">min-height keeps an empty box from collapsing</span>
+.panel { min-height: <span class="a">8rem</span>; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">min &gt; max &gt; width</span>
+          <h2 data-i18n="s.order.t"></h2>
+        </header>
+        <div data-i18n="s.order.d"></div>
+        <pre><code>width: 400px;  max-width: 300px;                     <span class="s">&rarr; 300px</span>
+width: 400px;  min-width: 500px;                     <span class="s">&rarr; 500px</span>
+width: 400px;  max-width: 300px;  min-width: 500px;  <span class="s">&rarr; 500px</span>
+
+<span class="s">the order is fixed: apply width, clamp with max, then clamp with min.</span>
+<span class="s">whoever runs last wins, so min-width always has the final say.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">min-content</span>
+          <h2 data-i18n="s.intrinsic.t"></h2>
+        </header>
+        <div data-i18n="s.intrinsic.d"></div>
+        <pre><code>width: <span class="a">min-content</span>   <span class="s">as narrow as possible without overflowing</span>
+width: <span class="a">max-content</span>   <span class="s">as wide as the content wants, never wrapping</span>
+width: <span class="a">fit-content</span>   <span class="s">max-content, capped by the space available</span>
+
+<span class="s">the function form takes a limit of your own, but browsers</span>
+<span class="s">accept it on grid tracks rather than on width</span>
+grid-template-columns: <span class="a">fit-content(40ch)</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">min-width: 0</span>
+          <h2 data-i18n="s.flex.t"></h2>
+        </header>
+        <div data-i18n="s.flex.d"></div>
+        <pre><code><span class="s">the classic: a flex item that refuses to shrink</span>
+.item { flex: 1; }                  <span class="s">long text pushes the row wider</span>
+
+<span class="s">the fix, and it looks like it should do nothing</span>
+.item { flex: 1; <span class="a">min-width: 0</span>; }   <span class="s">now it can shrink and wrap</span>
+
+<span class="s">because on a flex item min-width: auto means min-content, not zero</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-14-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-13-v1.data.js"></script>
+  </body>
+</html>

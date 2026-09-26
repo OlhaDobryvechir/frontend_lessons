@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: Promise, async, await</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the await from lesson 6, explained</span>
+
+<span class="t">const</span> res = <span class="t">await</span> fetch(url);
+
+<span class="s">fetch hands back a promise immediately &mdash; a receipt, not an answer.</span>
+<span class="s">await pauses this function, lets the page keep running, and resumes</span>
+<span class="s">here when the receipt is redeemed.</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">one thread</span>
+          <h2 data-i18n="s.thread.t"></h2>
+        </header>
+        <div data-i18n="s.thread.d"></div>
+        <pre><code><span class="s">there is exactly one thread running your code</span>
+
+<span class="t">while</span> (<span class="a">true</span>) {}          <span class="s">the whole tab stops. no clicks, no painting.</span>
+
+<span class="s">so nothing that takes time is allowed to block it</span>
+<span class="s">the network, timers, the disk &mdash; all hand back a promise</span>
+<span class="s">and let the thread get on with something else</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Promise</span>
+          <h2 data-i18n="s.promise.t"></h2>
+        </header>
+        <div data-i18n="s.promise.d"></div>
+        <pre><code><span class="s">three states, and it settles exactly once</span>
+
+pending  &rarr;  fulfilled   <span class="s">with a value</span>
+pending  &rarr;  rejected    <span class="s">with a reason</span>
+
+<span class="t">const</span> p = <span class="t">new</span> Promise((resolve, reject) =&gt; {
+  resolve(<span class="a">'first'</span>);
+  resolve(<span class="a">'second'</span>);    <span class="s">ignored</span>
+  reject(<span class="t">new</span> Error());   <span class="s">ignored too</span>
+});
+<span class="t">await</span> p                   <span class="s">&rarr; 'first'</span>
+
+<span class="s">you rarely write new Promise. fetch, timers and libraries</span>
+<span class="s">hand you one already made.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">.then()</span>
+          <h2 data-i18n="s.then.t"></h2>
+        </header>
+        <div data-i18n="s.then.d"></div>
+        <pre><code><span class="s">the original form: hand over a function to run later</span>
+fetch(url)
+  .then(res =&gt; res.json())
+  .then(data =&gt; vis(data))
+  .catch(err =&gt; visFeil(err))
+  .finally(() =&gt; skjulSpinner());
+
+<span class="s">each .then returns a new promise, which is what allows the chain</span>
+<span class="s">a value returned inside one becomes the input of the next</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">async await</span>
+          <h2 data-i18n="s.async.t"></h2>
+        </header>
+        <div data-i18n="s.async.d"></div>
+        <pre><code><span class="s">the same chain, written as if nothing took time</span>
+<span class="t">async function</span> last() {
+  <span class="t">const</span> res = <span class="t">await</span> fetch(url);
+  <span class="t">const</span> data = <span class="t">await</span> res.json();
+  vis(data);
+}
+
+<span class="s">async always returns a promise, whatever you write</span>
+<span class="t">async function</span> en() { <span class="t">return</span> <span class="a">1</span>; }
+en()                       <span class="s">&rarr; Promise, not 1</span>
+<span class="t">await</span> en()                 <span class="s">&rarr; 1</span>
+
+<span class="s">await works on things that were never promises</span>
+<span class="t">await</span> <span class="a">42</span>                  <span class="s">&rarr; 42</span>
+
+<span class="s">and it only exists inside async (or at the top of a module)</span>
+<span class="t">function</span> f() { <span class="t">await</span> x; }   <span class="s">SyntaxError</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">try catch</span>
+          <h2 data-i18n="s.error.t"></h2>
+        </header>
+        <div data-i18n="s.error.d"></div>
+        <pre><code><span class="s">a throw inside async becomes a rejection</span>
+<span class="t">async function</span> boom() { <span class="t">throw</span> <span class="t">new</span> Error(<span class="a">'x'</span>); }
+boom()                     <span class="s">&rarr; a rejected Promise, not an exception</span>
+
+<span class="s">so ordinary try/catch works again</span>
+<span class="t">try</span> {
+  <span class="t">const</span> res = <span class="t">await</span> fetch(url);
+  <span class="t">if</span> (!res.ok) <span class="t">throw</span> <span class="t">new</span> Error(res.status);   <span class="s">lesson 6</span>
+} <span class="t">catch</span> (err) {
+  visFeil(err);
+}
+
+<span class="s">but a promise nobody watches is a silent failure</span>
+lagre();                   <span class="s">async, no await, no .catch &rarr; unhandled rejection</span>
+<span class="t">await</span> lagre();             <span class="s">or lagre().catch(...)</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Promise.all</span>
+          <h2 data-i18n="s.all.t"></h2>
+        </header>
+        <div data-i18n="s.all.d"></div>
+        <pre><code><span class="s">three independent calls, one after the other</span>
+<span class="t">for</span> (<span class="t">const</span> id <span class="t">of</span> ids) <span class="t">await</span> hent(id);     <span class="s">measured: 121 ms</span>
+
+<span class="s">the same three, started together</span>
+<span class="t">await</span> Promise.all(ids.map(hent));       <span class="s">measured: 40 ms</span>
+
+<span class="s">all: one rejection rejects the whole thing</span>
+<span class="s">allSettled: never rejects; you get a status for each</span>
+<span class="s">race: the first to settle, good or bad</span>
+<span class="s">any: the first to succeed</span>
+
+<span class="t">const</span> svar = <span class="t">await</span> Promise.allSettled(kall);
+svar.map(r =&gt; r.status)    <span class="s">&rarr; ['fulfilled', 'rejected']</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">microtask</span>
+          <h2 data-i18n="s.loop.t"></h2>
+        </header>
+        <div data-i18n="s.loop.d"></div>
+        <pre><code>setTimeout(() =&gt; log(<span class="a">'timeout 0'</span>), <span class="a">0</span>);
+Promise.resolve().then(() =&gt; log(<span class="a">'promise'</span>));
+queueMicrotask(() =&gt; log(<span class="a">'microtask'</span>));
+log(<span class="a">'synchronous'</span>);
+
+<span class="s">the order, every time</span>
+synchronous  &rarr;  promise  &rarr;  microtask  &rarr;  timeout 0
+
+<span class="s">all synchronous code finishes first. then every waiting promise</span>
+<span class="s">runs, to the last one. only then does the next timer get a turn.</span>
+
+<span class="s">so setTimeout(fn, 0) does not mean "now" &mdash; it means</span>
+<span class="s">"after everything already queued, including promises"</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-08-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-07-v1.data.js"></script>
+  </body>
+</html>

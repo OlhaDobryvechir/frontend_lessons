@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: var, const, let</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">three keywords, and only two of them are worth typing</span>
+
+<span class="t">const</span> pris = <span class="a">199</span>;      <span class="s">the name will never point elsewhere</span>
+<span class="t">let</span>   antall = <span class="a">1</span>;      <span class="s">the name will</span>
+<span class="t">var</span>   gammel = <span class="a">true</span>;   <span class="s">the one from before 2015</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">const</span>
+          <h2 data-i18n="s.const.t"></h2>
+        </header>
+        <div data-i18n="s.const.d"></div>
+        <pre><code><span class="t">const</span> pris = <span class="a">199</span>;
+pris = <span class="a">249</span>;                 <span class="s">TypeError: assignment to constant variable</span>
+
+<span class="s">but from lesson 2: it binds the name, not the contents</span>
+<span class="t">const</span> kunde = {};
+kunde.navn = <span class="a">'Ada'</span>;          <span class="s">fine</span>
+kunde = {};                    <span class="s">TypeError</span>
+
+<span class="s">and it must be given a value on the spot</span>
+<span class="t">const</span> x;                      <span class="s">SyntaxError: missing initializer</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">let</span>
+          <h2 data-i18n="s.let.t"></h2>
+        </header>
+        <div data-i18n="s.let.d"></div>
+        <pre><code><span class="t">let</span> antall = <span class="a">1</span>;
+antall = <span class="a">2</span>;                  <span class="s">allowed &mdash; that is the whole difference</span>
+
+<span class="t">let</span> senere;                   <span class="s">allowed without a value &rarr; undefined</span>
+
+<span class="s">but not twice in the same scope</span>
+<span class="t">let</span> a = <span class="a">1</span>;
+<span class="t">let</span> a = <span class="a">2</span>;                    <span class="s">SyntaxError: already declared</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">var</span>
+          <h2 data-i18n="s.var.t"></h2>
+        </header>
+        <div data-i18n="s.var.d"></div>
+        <pre><code><span class="s">var does not see blocks. only functions.</span>
+
+<span class="t">function</span> f() {
+  { <span class="t">var</span> v = <span class="a">'leaked out'</span>; }
+  <span class="t">return</span> v;                  <span class="s">&rarr; 'leaked out'</span>
+}
+
+<span class="t">function</span> g() {
+  { <span class="t">let</span> l = <span class="a">'stayed in'</span>; }
+  <span class="t">return</span> l;                  <span class="s">ReferenceError: l is not defined</span>
+}
+
+<span class="s">and it can be declared twice without a word of complaint</span>
+<span class="t">var</span> a = <span class="a">1</span>;
+<span class="t">var</span> a = <span class="a">2</span>;                    <span class="s">allowed &mdash; which hides typos</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">hoisting</span>
+          <h2 data-i18n="s.hoist.t"></h2>
+        </header>
+        <div data-i18n="s.hoist.d"></div>
+        <pre><code><span class="s">a var exists from the top of its function, holding undefined</span>
+<span class="t">function</span> f() {
+  <span class="t">typeof</span> x;                  <span class="s">&rarr; 'undefined'   already known</span>
+  <span class="t">var</span> x = <span class="a">1</span>;
+}
+
+<span class="s">a function declaration is hoisted whole &mdash; you can call it early</span>
+hilse();                       <span class="s">&rarr; works</span>
+<span class="t">function</span> hilse() { ... }
+
+<span class="s">a function stored in a var is not</span>
+hilse();                       <span class="s">TypeError: hilse is not a function</span>
+<span class="t">var</span> hilse = <span class="t">function</span>() { ... };   <span class="s">the var is undefined until this line</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">TDZ</span>
+          <h2 data-i18n="s.tdz.t"></h2>
+        </header>
+        <div data-i18n="s.tdz.d"></div>
+        <pre><code><span class="s">let and const are hoisted too &mdash; but unusable until their line runs</span>
+
+<span class="t">function</span> f() {
+  <span class="t">typeof</span> y;                  <span class="s">ReferenceError: cannot access 'y' before initialization</span>
+  <span class="t">let</span> y = <span class="a">1</span>;
+}
+
+<span class="s">note what that means: typeof does not save you here.</span>
+<span class="s">on an undeclared name it returns 'undefined'; in the dead zone it throws.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">for (let i)</span>
+          <h2 data-i18n="s.loop.t"></h2>
+        </header>
+        <div data-i18n="s.loop.d"></div>
+        <pre><code><span class="s">one shared i &mdash; every function sees the value it ended on</span>
+<span class="t">const</span> fns = [];
+<span class="t">for</span> (<span class="t">var</span> i = <span class="a">0</span>; i &lt; <span class="a">3</span>; i++) fns.push(() =&gt; i);
+fns.map(f =&gt; f())              <span class="s">&rarr; [3, 3, 3]</span>
+
+<span class="s">a fresh j for every turn of the loop</span>
+<span class="t">const</span> fns2 = [];
+<span class="t">for</span> (<span class="t">let</span> j = <span class="a">0</span>; j &lt; <span class="a">3</span>; j++) fns2.push(() =&gt; j);
+fns2.map(f =&gt; f())             <span class="s">&rarr; [0, 1, 2]</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">globals</span>
+          <h2 data-i18n="s.global.t"></h2>
+        </header>
+        <div data-i18n="s.global.d"></div>
+        <pre><code><span class="s">assigning to a name you never declared</span>
+<span class="t">function</span> f() { antall = <span class="a">1</span>; }   <span class="s">sloppy mode: makes a global</span>
+                                 <span class="s">strict mode: ReferenceError</span>
+
+<span class="s">modules are always strict, so this is an error in any real project</span>
+
+<span class="s">and at the top level of a classic script</span>
+<span class="t">var</span> a = <span class="a">1</span>;   window.a        <span class="s">&rarr; 1</span>
+<span class="t">let</span> b = <span class="a">1</span>;   window.b        <span class="s">&rarr; undefined</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-04-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-03-v1.data.js"></script>
+  </body>
+</html>

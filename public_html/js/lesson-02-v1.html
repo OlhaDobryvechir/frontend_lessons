@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: function, array, object</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">lesson 1 was the values that get copied. these get shared.</span>
+
+<span class="t">let</span> a = { x: <span class="a">1</span> };
+<span class="t">let</span> b = a;                  <span class="s">not a copy &mdash; the same object, twice</span>
+b.x = <span class="a">2</span>;
+a.x                          <span class="s">&rarr; 2</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">object</span>
+          <h2 data-i18n="s.one.t"></h2>
+        </header>
+        <div data-i18n="s.one.d"></div>
+        <pre><code><span class="s">all three are objects. the differences are conveniences on top.</span>
+
+{ navn: <span class="a">'Ada'</span> }          <span class="s">a plain object &mdash; named slots</span>
+[<span class="a">10</span>, <span class="a">20</span>, <span class="a">30</span>]               <span class="s">an array &mdash; numbered slots, in order</span>
+<span class="t">function</span> f() {}            <span class="s">a function &mdash; an object you can call</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">typeof</span>
+          <h2 data-i18n="s.typeof.t"></h2>
+        </header>
+        <div data-i18n="s.typeof.d"></div>
+        <pre><code><span class="t">typeof</span> {}                 <span class="s">&rarr; 'object'</span>
+<span class="t">typeof</span> []                 <span class="s">&rarr; 'object'    no help at all</span>
+<span class="t">typeof</span> <span class="t">function</span>(){}     <span class="s">&rarr; 'function'  the one exception</span>
+<span class="t">typeof</span> <span class="a">null</span>               <span class="s">&rarr; 'object'    the bug from lesson 1</span>
+
+<span class="s">so to recognise an array there is a separate question</span>
+Array.isArray([])            <span class="s">&rarr; true</span>
+Array.isArray({})            <span class="s">&rarr; false</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">reference</span>
+          <h2 data-i18n="s.ref.t"></h2>
+        </header>
+        <div data-i18n="s.ref.d"></div>
+        <pre><code><span class="s">a primitive is copied</span>
+<span class="t">let</span> n = <span class="a">1</span>;
+<span class="t">function</span> endre(tall) { tall = <span class="a">99</span>; }
+endre(n);   n                <span class="s">&rarr; 1     untouched</span>
+
+<span class="s">an object is shared</span>
+<span class="t">const</span> liste = [<span class="a">1</span>];
+<span class="t">function</span> leggTil(a) { a.push(<span class="a">2</span>); }
+leggTil(liste);   liste      <span class="s">&rarr; [1, 2]   changed from inside</span>
+
+<span class="s">and const does not protect the contents</span>
+<span class="t">const</span> c = {};
+c.foo = <span class="a">1</span>;                  <span class="s">allowed &mdash; const binds the name, not the object</span>
+c = {};                      <span class="s">TypeError &mdash; this is what const stops</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">array</span>
+          <h2 data-i18n="s.array.t"></h2>
+        </header>
+        <div data-i18n="s.array.d"></div>
+        <pre><code><span class="t">const</span> priser = [<span class="a">199</span>, <span class="a">299</span>, <span class="a">399</span>];
+priser[<span class="a">0</span>]                   <span class="s">&rarr; 199    counting starts at zero</span>
+priser.length                <span class="s">&rarr; 3</span>
+
+<span class="s">underneath, the indexes are ordinary keys &mdash; as text</span>
+Object.keys([<span class="a">10</span>, <span class="a">20</span>])       <span class="s">&rarr; ['0', '1']</span>
+
+<span class="s">length is not a count, it is the highest index plus one</span>
+<span class="t">const</span> a = [];
+a[<span class="a">10</span>] = <span class="a">1</span>;   a.length      <span class="s">&rarr; 11</span>
+a.length = <span class="a">1</span>;                <span class="s">writing to it truncates the array</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">{ }</span>
+          <h2 data-i18n="s.object.t"></h2>
+        </header>
+        <div data-i18n="s.object.d"></div>
+        <pre><code><span class="t">const</span> kunde = {
+  navn: <span class="a">'Ada'</span>,
+  alder: <span class="a">36</span>,
+  adresse: { by: <span class="a">'Stavanger'</span> },   <span class="s">objects nest</span>
+};
+
+kunde.navn                   <span class="s">a name you know as you type it</span>
+kunde[<span class="a">'navn'</span>]                <span class="s">the same thing</span>
+kunde[felt]                  <span class="s">a name you only know while running</span>
+
+<span class="s">every key is text, whatever you write</span>
+<span class="t">const</span> o = {};
+o[<span class="a">1</span>] = <span class="a">'a'</span>;
+Object.keys(o)               <span class="s">&rarr; ['1']</span>
+o[<span class="a">1</span>] === o[<span class="a">'1'</span>]            <span class="s">&rarr; true</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">function</span>
+          <h2 data-i18n="s.function.t"></h2>
+        </header>
+        <div data-i18n="s.function.d"></div>
+        <pre><code><span class="s">a function is a value. it can go wherever a value can go.</span>
+
+<span class="t">const</span> hilsen = <span class="t">function</span>() { ... };   <span class="s">stored in a variable</span>
+knapp.addEventListener(<span class="a">'click'</span>, hilsen);  <span class="s">handed to something else</span>
+[<span class="a">3</span>, <span class="a">1</span>, <span class="a">2</span>].sort(sammenlign);           <span class="s">passed as an argument</span>
+
+<span class="s">and it carries properties, like any other object</span>
+<span class="t">function</span> sum(a, b) { <span class="t">return</span> a + b; }
+sum.name                     <span class="s">&rarr; 'sum'</span>
+sum.length                   <span class="s">&rarr; 2      how many arguments it declares</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">===</span>
+          <h2 data-i18n="s.equal.t"></h2>
+        </header>
+        <div data-i18n="s.equal.d"></div>
+        <pre><code><span class="s">primitives compare by content</span>
+<span class="a">'hei'</span> === <span class="a">'hei'</span>              <span class="s">&rarr; true</span>
+
+<span class="s">objects compare by identity &mdash; are these the same one?</span>
+[] === []                    <span class="s">&rarr; false</span>
+({}) === ({})                <span class="s">&rarr; false</span>
+[<span class="a">1</span>, <span class="a">2</span>] === [<span class="a">1</span>, <span class="a">2</span>]            <span class="s">&rarr; false   same contents, two objects</span>
+
+<span class="t">const</span> x = {};
+<span class="t">const</span> y = x;
+x === y                      <span class="s">&rarr; true    one object, two names</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-03-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-02-v1.data.js"></script>
+  </body>
+</html>

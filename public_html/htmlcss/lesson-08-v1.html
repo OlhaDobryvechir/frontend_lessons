@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>URL</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code>https://www.altibox.no:443/kundeservice?sort=pris&amp;side=2#priser
+
+<span class="a">scheme</span>     https
+<span class="a">host</span>       www.altibox.no
+<span class="a">port</span>       443                <span class="s">implied by the scheme, usually left out</span>
+<span class="a">path</span>       /kundeservice
+<span class="a">query</span>      sort=pris&amp;side=2   <span class="s">everything after the first ?</span>
+<span class="a">fragment</span>   priser             <span class="s">everything after the first #</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">URL</span>
+          <h2 data-i18n="s.parts.t"></h2>
+        </header>
+        <div data-i18n="s.parts.d"></div>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">path</span>
+          <h2 data-i18n="s.rel.t"></h2>
+        </header>
+        <div data-i18n="s.rel.d"></div>
+        <pre><code><span class="s">current document: /lessons/htmlcss/lesson-08-v1.html</span>
+
+<span class="a">href</span>="lesson-07-v1.html"     &rarr;  /lessons/htmlcss/lesson-07-v1.html
+<span class="a">href</span>="../styles.css"         &rarr;  /lessons/styles.css
+<span class="a">href</span>="/lessons/htmlcss/"     &rarr;  /lessons/htmlcss/
+<span class="a">href</span>="https://altibox.no/"   &rarr;  https://altibox.no/</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">?query</span>
+          <h2 data-i18n="s.query.t"></h2>
+        </header>
+        <div data-i18n="s.query.d"></div>
+        <pre><code>?sort=pris&amp;side=2
+
+<span class="s">name    value</span>
+sort    pris
+side    2
+
+<span class="s">a form from lesson 5 writes exactly this</span>
+<span class="t">&lt;form</span> <span class="a">method</span>="get" <span class="a">action</span>="/sok"<span class="t">&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">name</span>="sort" <span class="a">value</span>="pris"<span class="t">&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">name</span>="side" <span class="a">value</span>="2"<span class="t">&gt;</span>
+<span class="t">&lt;/form&gt;</span>
+
+&rarr;  /sok?sort=pris&amp;side=2</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">%20</span>
+          <h2 data-i18n="s.pct.t"></h2>
+        </header>
+        <div data-i18n="s.pct.d"></div>
+        <pre><code><span class="s">character   percent-encoded   why</span>
+
+space       <span class="a">%20</span>               <span class="s">not allowed raw in a URL</span>
+æ           <span class="a">%C3%A6</span>            <span class="s">its two UTF-8 bytes, from lesson 6</span>
+&amp;           <span class="a">%26</span>               <span class="s">otherwise it would separate two pairs</span>
+#           <span class="a">%23</span>               <span class="s">otherwise it would start the fragment</span>
+
+<span class="s">what you want to send</span>
+?q=Bræ hytte&amp;side=2
+
+<span class="s">1. percent-encode the value &mdash; for the URL parser</span>
+?q=Br%C3%A6%20hytte&amp;side=2
+
+<span class="s">2. escape the separator &mdash; for the HTML parser, lesson 7</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="?q=Br%C3%A6%20hytte&amp;amp;side=2"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">#fragment</span>
+          <h2 data-i18n="s.hash.t"></h2>
+        </header>
+        <div data-i18n="s.hash.d"></div>
+        <pre><code>https://altibox.no/kundeservice?sort=pris#priser
+
+<span class="s">the server receives</span>   GET /kundeservice?sort=pris
+<span class="s">the browser keeps</span>     #priser</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">id</span>
+          <h2 data-i18n="s.id.t"></h2>
+        </header>
+        <div data-i18n="s.id.d"></div>
+        <pre><code><span class="t">&lt;h2</span> <span class="a">id</span>="priser"<span class="t">&gt;</span>Priser<span class="t">&lt;/h2&gt;</span>
+
+<span class="s">the fragment of a URL finds it</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="#priser"<span class="t">&gt;</span>Til prisene<span class="t">&lt;/a&gt;</span>
+
+<span class="s">CSS selects it by the same name</span>
+#priser { scroll-margin-top: 5rem; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;a href="#"&gt;</span>
+          <h2 data-i18n="s.link.t"></h2>
+        </header>
+        <div data-i18n="s.link.d"></div>
+        <pre><code><span class="s">same page</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="#priser"<span class="t">&gt;</span>Til prisene<span class="t">&lt;/a&gt;</span>
+
+<span class="s">another page, then jump</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="/kundeservice#priser"<span class="t">&gt;</span>Priser<span class="t">&lt;/a&gt;</span>
+
+<span class="s">not a placeholder &mdash; this jumps to the top of the document</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="#"<span class="t">&gt;</span>Vis mer<span class="t">&lt;/a&gt;</span>
+
+<span class="s">use this instead, from lesson 5</span>
+<span class="t">&lt;button</span> <span class="a">type</span>="button"<span class="t">&gt;</span>Vis mer<span class="t">&lt;/button&gt;</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-09-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-08-v1.data.js"></script>
+  </body>
+</html>

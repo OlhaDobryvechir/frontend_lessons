@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML tags</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">&lt;a</span> <span class="a">href</span>="lesson-03-v1.html"<span class="t">&gt;</span>Back to lesson 3<span class="t">&lt;/a&gt;</span>
+
+<span class="t">&lt;img</span> <span class="a">src</span>="cabin.jpg" <span class="a">alt</span>="A red cabin by the fjord" <span class="a">width</span>="800" <span class="a">height</span>="600"<span class="t">&gt;</span>
+
+<span class="t">&lt;audio</span> <span class="a">src</span>="intro.mp3" <span class="a">controls</span><span class="t">&gt;&lt;/audio&gt;</span>
+
+<span class="t">&lt;video</span> <span class="a">src</span>="tour.mp4" <span class="a">controls</span> <span class="a">poster</span>="tour-still.jpg"<span class="t">&gt;&lt;/video&gt;</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;a&gt;</span>
+          <h2 data-i18n="s.a.t"></h2>
+        </header>
+        <div data-i18n="s.a.d"></div>
+
+        <h3><span class="attr-name">href</span></h3>
+        <div data-i18n="s.a.href"></div>
+        <pre><code><span class="t">&lt;a</span> <span class="a">href</span>="lesson-03-v1.html"<span class="t">&gt;</span>Lesson 3<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="https://altibox.no"<span class="t">&gt;</span>Altibox<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="#prices"<span class="t">&gt;</span>Jump to the prices<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="mailto:post@example.com"<span class="t">&gt;</span>Send an email<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="tel:+4712345678"<span class="t">&gt;</span>Call us<span class="t">&lt;/a&gt;</span></code></pre>
+
+        <h3><span class="attr-name">target</span></h3>
+        <div data-i18n="s.a.target"></div>
+        <pre><code><span class="t">&lt;a</span> <span class="a">href</span>="https://altibox.no" <span class="a">target</span>="_blank"<span class="t">&gt;</span>Opens in a new tab<span class="t">&lt;/a&gt;</span></code></pre>
+
+        <h3><span class="attr-name">rel</span></h3>
+        <div data-i18n="s.a.rel"></div>
+        <pre><code><span class="t">&lt;a</span> <span class="a">href</span>="https://altibox.no" <span class="a">target</span>="_blank" <span class="a">rel</span>="noopener noreferrer"<span class="t">&gt;</span>Altibox<span class="t">&lt;/a&gt;</span></code></pre>
+
+        <h3><span class="attr-name">download</span></h3>
+        <div data-i18n="s.a.download"></div>
+        <pre><code><span class="t">&lt;a</span> <span class="a">href</span>="price-list.pdf" <span class="a">download</span><span class="t">&gt;</span>Download the price list<span class="t">&lt;/a&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;img&gt;</span>
+          <h2 data-i18n="s.img.t"></h2>
+        </header>
+        <div data-i18n="s.img.d"></div>
+
+        <h3><span class="attr-name">src</span></h3>
+        <div data-i18n="s.img.src"></div>
+        <pre><code><span class="t">&lt;img</span> <span class="a">src</span>="cabin.jpg"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">alt</span></h3>
+        <div data-i18n="s.img.alt"></div>
+        <pre><code><span class="t">&lt;img</span> <span class="a">src</span>="cabin.jpg" <span class="a">alt</span>="A red cabin by the fjord"<span class="t">&gt;</span>
+
+<span class="s">&lt;!-- purely decorative: an empty alt tells a screen reader to skip it --&gt;</span>
+<span class="t">&lt;img</span> <span class="a">src</span>="divider.svg" <span class="a">alt</span>=""<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">width</span> <span class="attr-name">height</span></h3>
+        <div data-i18n="s.img.size"></div>
+        <pre><code><span class="t">&lt;img</span> <span class="a">src</span>="cabin.jpg" <span class="a">alt</span>="A red cabin by the fjord" <span class="a">width</span>="800" <span class="a">height</span>="600"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">loading</span></h3>
+        <div data-i18n="s.img.loading"></div>
+        <pre><code><span class="t">&lt;img</span> <span class="a">src</span>="cabin.jpg" <span class="a">alt</span>="A red cabin by the fjord" <span class="a">loading</span>="lazy"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;audio&gt;</span>
+          <h2 data-i18n="s.audio.t"></h2>
+        </header>
+        <div data-i18n="s.audio.d"></div>
+
+        <h3><span class="attr-name">src</span></h3>
+        <div data-i18n="s.audio.src"></div>
+        <pre><code><span class="t">&lt;audio</span> <span class="a">src</span>="intro.mp3"<span class="t">&gt;&lt;/audio&gt;</span></code></pre>
+
+        <h3><span class="attr-name">controls</span></h3>
+        <div data-i18n="s.audio.controls"></div>
+        <pre><code><span class="t">&lt;audio</span> <span class="a">src</span>="intro.mp3" <span class="a">controls</span><span class="t">&gt;&lt;/audio&gt;</span></code></pre>
+
+        <h3><span class="attr-name">autoplay</span> <span class="attr-name">muted</span> <span class="attr-name">loop</span></h3>
+        <div data-i18n="s.audio.auto"></div>
+        <pre><code><span class="t">&lt;audio</span> <span class="a">src</span>="ambient.mp3" <span class="a">autoplay</span> <span class="a">muted</span> <span class="a">loop</span><span class="t">&gt;&lt;/audio&gt;</span></code></pre>
+
+        <h3><span class="attr-name">preload</span></h3>
+        <div data-i18n="s.audio.preload"></div>
+        <pre><code><span class="t">&lt;audio</span> <span class="a">src</span>="intro.mp3" <span class="a">controls</span> <span class="a">preload</span>="metadata"<span class="t">&gt;&lt;/audio&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;video&gt;</span>
+          <h2 data-i18n="s.video.t"></h2>
+        </header>
+        <div data-i18n="s.video.d"></div>
+
+        <h3><span class="attr-name">src</span> <span class="attr-name">controls</span></h3>
+        <div data-i18n="s.video.src"></div>
+        <pre><code><span class="t">&lt;video</span> <span class="a">src</span>="tour.mp4" <span class="a">controls</span><span class="t">&gt;&lt;/video&gt;</span></code></pre>
+
+        <h3><span class="attr-name">poster</span></h3>
+        <div data-i18n="s.video.poster"></div>
+        <pre><code><span class="t">&lt;video</span> <span class="a">src</span>="tour.mp4" <span class="a">controls</span> <span class="a">poster</span>="tour-still.jpg"<span class="t">&gt;&lt;/video&gt;</span></code></pre>
+
+        <h3><span class="attr-name">width</span> <span class="attr-name">height</span></h3>
+        <div data-i18n="s.video.size"></div>
+        <pre><code><span class="t">&lt;video</span> <span class="a">src</span>="tour.mp4" <span class="a">controls</span> <span class="a">width</span>="960" <span class="a">height</span>="540"<span class="t">&gt;&lt;/video&gt;</span></code></pre>
+
+        <h3><span class="attr-name">autoplay</span> <span class="attr-name">muted</span> <span class="attr-name">loop</span> <span class="attr-name">playsinline</span></h3>
+        <div data-i18n="s.video.auto"></div>
+        <pre><code><span class="t">&lt;video</span> <span class="a">src</span>="background.mp4" <span class="a">autoplay</span> <span class="a">muted</span> <span class="a">loop</span> <span class="a">playsinline</span><span class="t">&gt;&lt;/video&gt;</span></code></pre>
+
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-05-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-04-v1.data.js"></script>
+  </body>
+</html>

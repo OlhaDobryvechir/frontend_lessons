@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS overflow</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the content is bigger than the box. two separate questions follow.</span>
+
+overflow:   <span class="a">auto</span>;       <span class="s">what happens to what does not fit</span>
+text-wrap:  <span class="a">balance</span>;    <span class="s">where the lines break before it gets that far</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">overflow</span>
+          <h2 data-i18n="s.overflow.t"></h2>
+        </header>
+        <div data-i18n="s.overflow.d"></div>
+        <pre><code>overflow: <span class="a">visible</span>;   <span class="s">the default &mdash; it spills out, and stays readable</span>
+overflow: <span class="a">hidden</span>;    <span class="s">clipped; no scrollbar, but a script can still scroll it</span>
+overflow: <span class="a">clip</span>;      <span class="s">clipped; nothing can scroll it, not even a script</span>
+overflow: <span class="a">scroll</span>;    <span class="s">scrollbars always, even with nothing to scroll</span>
+overflow: <span class="a">auto</span>;      <span class="s">scrollbars only when they are needed</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">overflow-x</span>
+          <h2 data-i18n="s.axes.t"></h2>
+        </header>
+        <div data-i18n="s.axes.d"></div>
+        <pre><code>overflow-x: <span class="a">hidden</span>;
+overflow-y: <span class="a">visible</span>;    <span class="s">&rarr; quietly becomes auto</span>
+
+<span class="s">to clip one axis and leave the other alone, use clip</span>
+overflow-x: <span class="a">clip</span>;
+overflow-y: <span class="a">visible</span>;    <span class="s">&rarr; stays visible</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">side effects</span>
+          <h2 data-i18n="s.side.t"></h2>
+        </header>
+        <div data-i18n="s.side.d"></div>
+        <pre><code><span class="s">a scroll container is also a block formatting context</span>
+.row { overflow: hidden; }   <span class="s">contains floats, stops margins collapsing through</span>
+
+<span class="s">and it removes the automatic minimum size from lesson 13</span>
+.item { flex: 1; overflow: hidden; }   <span class="s">shrinks without min-width: 0</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">ellipsis</span>
+          <h2 data-i18n="s.ellipsis.t"></h2>
+        </header>
+        <div data-i18n="s.ellipsis.d"></div>
+        <pre><code>.title {
+  <span class="a">overflow: hidden</span>;          <span class="s">1. something has to clip</span>
+  <span class="a">white-space: nowrap</span>;       <span class="s">2. it has to be a single line</span>
+  <span class="a">text-overflow: ellipsis</span>;   <span class="s">3. only then can the … appear</span>
+}
+
+<span class="s">all three, or nothing happens at all</span>
+
+<span class="s">for several lines instead</span>
+.excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  <span class="a">-webkit-line-clamp: 3</span>;
+  overflow: hidden;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">white-space</span>
+          <h2 data-i18n="s.ws.t"></h2>
+        </header>
+        <div data-i18n="s.ws.d"></div>
+        <pre><code><span class="s">value        runs of spaces   newlines   wraps</span>
+
+<span class="a">normal</span>       collapse         ignored    yes     <span class="s">the default</span>
+<span class="a">nowrap</span>       collapse         ignored    no
+<span class="a">pre</span>          kept             kept       no
+<span class="a">pre-wrap</span>     kept             kept       yes
+<span class="a">pre-line</span>     collapse         kept       yes</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">text-wrap</span>
+          <h2 data-i18n="s.wrap.t"></h2>
+        </header>
+        <div data-i18n="s.wrap.d"></div>
+        <pre><code>text-wrap: <span class="a">wrap</span>;      <span class="s">the default</span>
+text-wrap: <span class="a">nowrap</span>;    <span class="s">the same thing white-space: nowrap does</span>
+text-wrap: <span class="a">balance</span>;   <span class="s">even out the line lengths &mdash; headings, short blocks</span>
+text-wrap: <span class="a">pretty</span>;    <span class="s">keep a single word off the last line &mdash; body text</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">overflow-wrap</span>
+          <h2 data-i18n="s.break.t"></h2>
+        </header>
+        <div data-i18n="s.break.d"></div>
+        <pre><code><span class="s">a long address with nowhere to break blows the column open</span>
+https://example.com/kundeservice/fiber/bestilling/bekreftelse
+
+<span class="a">overflow-wrap: break-word</span>;   <span class="s">break only a word that cannot fit on its own line</span>
+<span class="a">overflow-wrap: anywhere</span>;     <span class="s">the same, and it also lets the column get narrower</span>
+<span class="a">word-break: break-all</span>;       <span class="s">break any word, even ones that would have fitted</span>
+<span class="a">hyphens: auto</span>;               <span class="s">break with a hyphen &mdash; needs lang on the document</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-17-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-16-v1.data.js"></script>
+  </body>
+</html>

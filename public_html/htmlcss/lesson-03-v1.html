@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML tags</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">&lt;div&gt;</span>
+  <span class="t">&lt;p&gt;</span>A paragraph of text.<span class="t">&lt;/p&gt;</span>
+  <span class="t">&lt;p&gt;</span>Another one, with <span class="t">&lt;span&gt;</span>a few words<span class="t">&lt;/span&gt;</span> singled out.<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;td&gt;</span>Oslo<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Norway<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;td&gt;</span>Kyiv<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Ukraine<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;div&gt;</span>
+          <h2 data-i18n="s.div.t"></h2>
+        </header>
+        <div data-i18n="s.div.d"></div>
+        <pre><code><span class="t">&lt;div&gt;</span>
+  <span class="t">&lt;h2&gt;</span>Our prices<span class="t">&lt;/h2&gt;</span>
+  <span class="t">&lt;p&gt;</span>Text about the prices.<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;span&gt;</span>
+          <h2 data-i18n="s.span.t"></h2>
+        </header>
+        <div data-i18n="s.span.d"></div>
+        <pre><code><span class="t">&lt;p&gt;</span>Total: <span class="t">&lt;span&gt;</span>499 kr<span class="t">&lt;/span&gt;</span> per month.<span class="t">&lt;/p&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;p&gt;</span>
+          <h2 data-i18n="s.p.t"></h2>
+        </header>
+        <div data-i18n="s.p.d"></div>
+        <pre><code><span class="t">&lt;p&gt;</span>The first paragraph.<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;p&gt;</span>The second one, on its own.<span class="t">&lt;/p&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;table&gt;</span>
+          <h2 data-i18n="s.table.t"></h2>
+        </header>
+        <div data-i18n="s.table.d"></div>
+        <pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;td&gt;</span>Oslo<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Norway<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;tr&gt;</span>
+          <h2 data-i18n="s.tr.t"></h2>
+        </header>
+        <div data-i18n="s.tr.d"></div>
+        <pre><code><span class="t">&lt;tr&gt;</span>
+  <span class="t">&lt;td&gt;</span>Oslo<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;td&gt;</span>Norway<span class="t">&lt;/td&gt;</span>
+<span class="t">&lt;/tr&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;td&gt;</span>
+          <h2 data-i18n="s.td.t"></h2>
+        </header>
+        <div data-i18n="s.td.d"></div>
+        <pre><code><span class="t">&lt;td&gt;</span>Oslo<span class="t">&lt;/td&gt;</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-04-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-03-v1.data.js"></script>
+  </body>
+</html>

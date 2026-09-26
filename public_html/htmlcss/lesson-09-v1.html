@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>iframe and window.open</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">a second document, framed inside this one</span>
+<span class="t">&lt;iframe</span> <span class="a">src</span>="lesson-01-v1.html" <span class="a">title</span>="Leksjon 1"<span class="t">&gt;&lt;/iframe&gt;</span>
+
+<span class="s">a second document, in a window of its own</span>
+button.addEventListener(<span class="a">'click'</span>, () =&gt; {
+  window.open(<span class="a">'lesson-01-v1.html'</span>, <span class="a">'_blank'</span>);
+});</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;iframe&gt;</span>
+          <h2 data-i18n="s.frame.t"></h2>
+        </header>
+        <div data-i18n="s.frame.d"></div>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">src title</span>
+          <h2 data-i18n="s.attrs.t"></h2>
+        </header>
+        <div data-i18n="s.attrs.d"></div>
+        <pre><code><span class="t">&lt;iframe</span>
+  <span class="a">src</span>="lesson-01-v1.html"
+  <span class="a">title</span>="Leksjon 1: HTML-tagger"
+  <span class="a">width</span>="800"
+  <span class="a">height</span>="600"
+  <span class="a">loading</span>="lazy"<span class="t">&gt;&lt;/iframe&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">sandbox</span>
+          <h2 data-i18n="s.sandbox.t"></h2>
+        </header>
+        <div data-i18n="s.sandbox.d"></div>
+        <pre><code><span class="s">nothing allowed: no scripts, no forms, no popups, opaque origin</span>
+<span class="t">&lt;iframe</span> <span class="a">src</span>="/preview.html" <span class="a">title</span>="Forhåndsvisning" <span class="a">sandbox</span><span class="t">&gt;&lt;/iframe&gt;</span>
+
+<span class="s">hand back only what the content actually needs</span>
+<span class="t">&lt;iframe</span> <span class="a">src</span>="/preview.html" <span class="a">title</span>="Forhåndsvisning"
+        <span class="a">sandbox</span>="allow-scripts allow-forms"<span class="t">&gt;&lt;/iframe&gt;</span>
+
+<span class="s">dangerous on untrusted content &mdash; the frame can drop its own sandbox</span>
+        <span class="a">sandbox</span>="allow-scripts allow-same-origin"</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">allow</span>
+          <h2 data-i18n="s.allow.t"></h2>
+        </header>
+        <div data-i18n="s.allow.d"></div>
+        <pre><code><span class="t">&lt;iframe</span> <span class="a">src</span>="https://www.youtube.com/embed/xyz" <span class="a">title</span>="Produktvideo"
+        <span class="a">allow</span>="autoplay; fullscreen; picture-in-picture"<span class="t">&gt;&lt;/iframe&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">same-origin</span>
+          <h2 data-i18n="s.origin.t"></h2>
+        </header>
+        <div data-i18n="s.origin.d"></div>
+        <pre><code><span class="s">scheme + host + port must all three match</span>
+
+https://altibox.no/a      https://altibox.no/b        <span class="t">same origin</span>
+https://altibox.no/       http://altibox.no/          <span class="a">different scheme</span>
+https://altibox.no/       https://www.altibox.no/     <span class="a">different host</span>
+https://altibox.no/       https://altibox.no:8443/    <span class="a">different port</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">window.open</span>
+          <h2 data-i18n="s.open.t"></h2>
+        </header>
+        <div data-i18n="s.open.d"></div>
+        <pre><code><span class="s">allowed: the browser is handling a click</span>
+button.addEventListener(<span class="a">'click'</span>, () =&gt; {
+  <span class="t">const</span> win = window.open(<span class="a">'/kvittering.html'</span>, <span class="a">'_blank'</span>);
+  <span class="t">if</span> (!win) {
+    <span class="s">// blocked &mdash; show the link instead of failing silently</span>
+  }
+});
+
+<span class="s">blocked: nothing the visitor did led here</span>
+window.open(<span class="a">'/kvittering.html'</span>, <span class="a">'_blank'</span>);   <span class="s">&rarr; null</span>
+
+<span class="s">isolated, and therefore no reference back</span>
+window.open(<span class="a">'https://altibox.no'</span>, <span class="a">'_blank'</span>, <span class="a">'noopener'</span>);   <span class="s">&rarr; null</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">postMessage</span>
+          <h2 data-i18n="s.msg.t"></h2>
+        </header>
+        <div data-i18n="s.msg.d"></div>
+        <pre><code><span class="s">page &rarr; frame</span>
+frame.contentWindow.postMessage({ type: <span class="a">'ping'</span> }, <span class="a">'https://altibox.no'</span>);
+
+<span class="s">frame &rarr; page</span>
+window.parent.postMessage({ type: <span class="a">'pong'</span> }, <span class="a">'https://minside.no'</span>);
+
+<span class="s">receiving &mdash; the origin check comes first, always</span>
+window.addEventListener(<span class="a">'message'</span>, (event) =&gt; {
+  <span class="t">if</span> (event.origin !== <span class="a">'https://altibox.no'</span>) <span class="t">return</span>;
+  console.log(event.data);
+});</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-10-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-09-v1.data.js"></script>
+  </body>
+</html>

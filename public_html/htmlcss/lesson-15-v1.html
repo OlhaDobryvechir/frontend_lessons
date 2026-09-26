@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS colour</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the accent colour of this very page, written four ways</span>
+
+color: <span class="a">#58a6ff</span>;
+color: <span class="a">rgb(88 166 255)</span>;
+color: <span class="a">hsl(212 100% 67.25%)</span>;
+color: <span class="a">#58a6ffcc</span>;            <span class="s">the same, at 80% alpha</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">color</span>
+          <h2 data-i18n="s.color.t"></h2>
+        </header>
+        <div data-i18n="s.color.d"></div>
+        <pre><code>body { color: <span class="a">#e6edf3</span>; }     <span class="s">every descendant gets it too</span>
+.muted { color: <span class="a">#94a3b4</span>; }  <span class="s">unless one of them says otherwise</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">background-color</span>
+          <h2 data-i18n="s.bg.t"></h2>
+        </header>
+        <div data-i18n="s.bg.d"></div>
+        <pre><code>.card {
+  background-color: <span class="a">#131a22</span>;
+  padding: 1.5rem;                  <span class="s">the fill reaches out here too</span>
+  border: 1px dashed <span class="a">#253040</span>;    <span class="s">and under the border, by default</span>
+}
+
+<span class="s">the starting value is transparent, not white</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">#rrggbb</span>
+          <h2 data-i18n="s.hex.t"></h2>
+        </header>
+        <div data-i18n="s.hex.d"></div>
+        <pre><code><span class="a">#58a6ff</span>
+ <span class="s">└┬┘└┬┘└┬┘</span>
+  <span class="s">58  a6  ff   red, green, blue &mdash; each 00 to ff, which is 0 to 255</span>
+
+<span class="a">#abc</span>        <span class="s">shorthand: each digit is doubled &rarr; #aabbcc</span>
+<span class="a">#58a6ffcc</span>   <span class="s">eight digits: the last pair is alpha &rarr; cc = 204 = 80%</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">rgb()</span>
+          <h2 data-i18n="s.rgb.t"></h2>
+        </header>
+        <div data-i18n="s.rgb.d"></div>
+        <pre><code>color: <span class="a">rgb(88 166 255)</span>;             <span class="s">modern: spaces, no commas</span>
+color: <span class="a">rgb(88 166 255 / 50%)</span>;       <span class="s">alpha after a slash</span>
+
+color: <span class="a">rgb(88, 166, 255)</span>;           <span class="s">the older form, still valid</span>
+color: <span class="a">rgba(88, 166, 255, 0.5)</span>;     <span class="s">rgba is now just an alias for rgb</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">hsl()</span>
+          <h2 data-i18n="s.hsl.t"></h2>
+        </header>
+        <div data-i18n="s.hsl.d"></div>
+        <pre><code>color: <span class="a">hsl(212 100% 67.25%)</span>;   <span class="s">exactly the same colour as #58a6ff</span>
+            <span class="s">│    │     └ lightness: 0% black, 100% white</span>
+            <span class="s">│    └ saturation: 0% grey, 100% full</span>
+            <span class="s">└ hue: a position on the colour wheel, 0&ndash;360</span>
+
+<span class="s">a hover state is one number away</span>
+hsl(212 100% <span class="a">67.25%</span>)   &rarr;   hsl(212 100% <span class="a">75%</span>)</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">alpha</span>
+          <h2 data-i18n="s.alpha.t"></h2>
+        </header>
+        <div data-i18n="s.alpha.d"></div>
+        <pre><code><span class="s">only the background fades; the text stays solid</span>
+.badge { background-color: <span class="a">rgb(88 166 255 / 10%)</span>; }
+
+<span class="s">the whole element fades, children and all</span>
+.badge { <span class="a">opacity: 0.1</span>; }
+
+transparent   <span class="s">is simply rgb(0 0 0 / 0)</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">currentColor</span>
+          <h2 data-i18n="s.current.t"></h2>
+        </header>
+        <div data-i18n="s.current.d"></div>
+        <pre><code>.button {
+  color: <span class="a">#58a6ff</span>;
+  border: 1px solid <span class="a">currentColor</span>;   <span class="s">follows the text colour</span>
+}
+.button:hover { color: <span class="a">#bc8cff</span>; }    <span class="s">the border follows along</span>
+
+<span class="s">around 150 names exist too, and they are exact colours</span>
+color: <span class="a">rebeccapurple</span>;   <span class="s">= #663399</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-16-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-15-v1.data.js"></script>
+  </body>
+</html>

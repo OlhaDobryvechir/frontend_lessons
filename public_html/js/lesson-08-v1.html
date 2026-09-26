@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: function and arrow functions</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the same function, two ways &mdash; and four real differences</span>
+
+<span class="t">function</span> doble(n) { <span class="t">return</span> n * <span class="a">2</span>; }
+<span class="t">const</span> doble = (n) =&gt; n * <span class="a">2</span>;</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">function</span>
+          <h2 data-i18n="s.decl.t"></h2>
+        </header>
+        <div data-i18n="s.decl.d"></div>
+        <pre><code><span class="s">a declaration: hoisted whole, callable from above (lesson 3)</span>
+hilse();                      <span class="s">&rarr; works</span>
+<span class="t">function</span> hilse() { ... }
+
+<span class="s">an expression: just a value, assigned when the line runs</span>
+hilse();                      <span class="s">TypeError: hilse is not a function</span>
+<span class="t">const</span> hilse = <span class="t">function</span>() { ... };
+
+<span class="s">a named expression &mdash; the name is visible only inside itself</span>
+<span class="t">const</span> f = <span class="t">function</span> ekte() { ... };
+f.name                        <span class="s">&rarr; 'ekte'</span>
+ekte                          <span class="s">ReferenceError out here</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">=&gt;</span>
+          <h2 data-i18n="s.arrow.t"></h2>
+        </header>
+        <div data-i18n="s.arrow.d"></div>
+        <pre><code>(a, b) =&gt; { <span class="t">return</span> a + b; }     <span class="s">full form</span>
+(a, b) =&gt; a + b               <span class="s">one expression: returned automatically</span>
+a =&gt; a * <span class="a">2</span>                    <span class="s">one parameter: parentheses optional</span>
+() =&gt; <span class="a">42</span>                      <span class="s">no parameters: parentheses required</span>
+
+<span class="s">the trap: braces mean a body, not an object</span>
+() =&gt; { navn: <span class="a">'Ada'</span> }         <span class="s">&rarr; undefined   (a label, then nothing returned)</span>
+() =&gt; ({ navn: <span class="a">'Ada'</span> })       <span class="s">&rarr; the object</span>
+
+<span class="s">they are anonymous, but the variable lends them a name</span>
+<span class="t">const</span> doble = () =&gt; {};
+doble.name                    <span class="s">&rarr; 'doble'</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">this</span>
+          <h2 data-i18n="s.this.t"></h2>
+        </header>
+        <div data-i18n="s.this.d"></div>
+        <pre><code><span class="s">a function gets its own this, decided by how it is called</span>
+<span class="s">an arrow has none, and uses the one from where it was written</span>
+
+<span class="t">const</span> teller = {
+  n: <span class="a">7</span>,
+  medFunction() {
+    <span class="t">return</span> [<span class="a">1</span>].map(<span class="t">function</span>() { <span class="t">return</span> <span class="t">this</span>.n; })[<span class="a">0</span>];   <span class="s">&rarr; undefined</span>
+  },
+  medPil() {
+    <span class="t">return</span> [<span class="a">1</span>].map(() =&gt; <span class="t">this</span>.n)[<span class="a">0</span>];                    <span class="s">&rarr; 7</span>
+  },
+};
+
+<span class="s">and an arrow cannot be talked out of it</span>
+pil.call({ n: <span class="a">99</span> })            <span class="s">&rarr; still the outer this, not 99</span>
+
+<span class="s">what this actually refers to is the next lesson</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">arguments</span>
+          <h2 data-i18n="s.args.t"></h2>
+        </header>
+        <div data-i18n="s.args.d"></div>
+        <pre><code><span class="t">function</span> klassisk() { <span class="t">return</span> arguments.length; }
+klassisk(<span class="a">1</span>, <span class="a">2</span>, <span class="a">3</span>)                <span class="s">&rarr; 3</span>
+
+<span class="s">an arrow borrows the enclosing function's, which is rarely what you want</span>
+<span class="t">function</span> ytre(a, b) {
+  <span class="t">const</span> indre = () =&gt; arguments.length;
+  <span class="t">return</span> indre(<span class="a">1</span>, <span class="a">2</span>, <span class="a">3</span>);         <span class="s">&rarr; 2   it saw ytre's two, not its own three</span>
+}
+
+<span class="s">with no function around it, there is nothing to borrow</span>
+<span class="t">const</span> alene = () =&gt; arguments.length;   <span class="s">ReferenceError</span>
+
+<span class="s">the replacement works in both forms, and is clearer</span>
+<span class="t">const</span> rest = (...a) =&gt; a.length;        <span class="s">&rarr; 3</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">new</span>
+          <h2 data-i18n="s.new.t"></h2>
+        </header>
+        <div data-i18n="s.new.d"></div>
+        <pre><code><span class="t">function</span> Kunde() {}
+<span class="t">const</span> Pil = () =&gt; {};
+
+<span class="t">typeof</span> Kunde.prototype            <span class="s">&rarr; 'object'</span>
+<span class="t">typeof</span> Pil.prototype              <span class="s">&rarr; 'undefined'</span>
+
+<span class="t">new</span> Kunde()                       <span class="s">&rarr; an object</span>
+<span class="t">new</span> Pil()                         <span class="s">TypeError: Pil is not a constructor</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">parameters</span>
+          <h2 data-i18n="s.params.t"></h2>
+        </header>
+        <div data-i18n="s.params.d"></div>
+        <pre><code><span class="s">these work the same in both forms</span>
+<span class="t">const</span> f = (a, b = <span class="a">10</span>) =&gt; a + b;          <span class="s">a default</span>
+<span class="t">const</span> g = (første, ...resten) =&gt; ...;     <span class="s">rest: gathers the remainder</span>
+<span class="t">const</span> h = ({ navn, alder }) =&gt; ...;       <span class="s">unpacked from an object</span>
+
+<span class="s">a default only applies to undefined, not to every falsy value</span>
+f(<span class="a">1</span>, <span class="a">undefined</span>)                <span class="s">&rarr; 11   the default was used</span>
+f(<span class="a">1</span>, <span class="a">null</span>)                     <span class="s">&rarr; 1    null is a real value</span>
+f(<span class="a">1</span>, <span class="a">0</span>)                        <span class="s">&rarr; 1</span>
+
+<span class="s">and length counts only the parameters before the first of those</span>
+((a, b) =&gt; {}).length          <span class="s">&rarr; 2</span>
+((a, b = <span class="a">2</span>) =&gt; {}).length      <span class="s">&rarr; 1</span>
+((a, ...r) =&gt; {}).length       <span class="s">&rarr; 1</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">choosing</span>
+          <h2 data-i18n="s.choose.t"></h2>
+        </header>
+        <div data-i18n="s.choose.d"></div>
+        <pre><code><span class="t">arrow</span>      <span class="s">callbacks, short transforms, anything inside a method</span>
+           liste.map(v =&gt; v.navn)
+           knapp.addEventListener(<span class="a">'click'</span>, () =&gt; <span class="t">this</span>.lagre())
+
+<span class="t">function</span>   <span class="s">methods on an object, and anything needing its own this</span>
+           { lagre() { ... } }
+
+<span class="a">not an arrow</span>   <span class="s">an object method that uses this</span>
+           { n: <span class="a">1</span>, les: () =&gt; <span class="t">this</span>.n }     <span class="s">&rarr; undefined</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-09-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-08-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Frontend</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <div class="lesson-list">
+        <a class="lesson-card" href="htmlcss/index.html">
+          <span class="num">01</span>
+          <span class="body">
+            <span class="title" data-i18n="l1.title"></span>
+            <span class="meta" data-i18n="l1.meta"></span>
+          </span>
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="lesson-card" href="js/index.html">
+          <span class="num">02</span>
+          <span class="body">
+            <span class="title" data-i18n="l2.title"></span>
+            <span class="meta" data-i18n="l2.meta"></span>
+          </span>
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="lesson-card" href="react/index-html">
+          <span class="num">03</span>
+          <span class="body">
+            <span class="title" data-i18n="l3.title"></span>
+            <span class="meta" data-i18n="l3.meta"></span>
+          </span>
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="lesson-card" href="react-native/index.html">
+          <span class="num">04</span>
+          <span class="body">
+            <span class="title" data-i18n="l4.title"></span>
+            <span class="meta" data-i18n="l4.meta"></span>
+          </span>
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+
+
+      </div>
+
+      <footer class="page-footer" data-i18n="footer"></footer>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+      Lessons.init({
+        translations: {
+          no: {
+            'doc.title': 'Frontend',
+            kicker: 'Frontend-skolen',
+            title: 'HTML & CSS & JAVASCRIPT & REACT & REACT NATIVE',
+            lead: 'Hver leksjon avsluttes med en selvtest som fester kunnskapen.',
+            'l1.title': 'HTML & CSS',
+            'l1.meta': '25 Leksjoner &middot; med selvtest',
+            'l2.title': 'JAVASCRIPT',
+            'l2.meta': '16 Leksjoner &middot; med selvtest',
+            'l3.title': 'REACT',
+            'l3.meta': '14 Leksjoner &middot; med selvtest',
+            'l4.title': 'REACT NATIVE',
+            'l4.meta': '14 Leksjoner &middot; med selvtest',
+            footer: 'Velg språk øverst til høyre.',
+          },
+          en: {
+            'doc.title': 'Frontend',
+            kicker: 'Frontend school',
+            title: 'HTML & CSS & JAVASCRIPT & REACT & REACT NATIVE',
+            lead: 'Every lesson ends with a self-check that fixes the knowledge.',
+            'l1.title': 'HTML & CSS',
+            'l1.meta': '25 lessons &middot; with self-check',
+            'l2.title': 'JAVASCRIPT',
+            'l2.meta': '16 lessons &middot; with self-check',
+            'l3.title': 'REACT',
+            'l3.meta': '14 lessons &middot; with self-check',
+            'l4.title': 'REACT NATIVE',
+            'l4.meta': '14 lessons &middot; with self-check',
+            footer: 'Choose your language in the top right corner.',
+          },
+          uk: {
+            'doc.title': 'Фронтенд',
+            kicker: 'Школа фронтенду',
+            title: 'HTML & CSS & JAVASCRIPT & REACT & REACT NATIVE',
+            lead: 'Кожен урок завершується самоперевіркою, яка закріплює знання.',
+            'l1.title': 'HTML & CSS',
+            'l1.meta': '25 уроків &middot; із самоперевіркою',
+            'l2.title': 'JAVASCRIPT',
+            'l2.meta': '16 уроків &middot; із самоперевіркою',
+            'l3.title': 'REACT',
+            'l3.meta': '14 уроків &middot; із самоперевіркою',
+            'l4.title': 'REACT NATIVE',
+            'l4.meta': '14 уроків &middot; із самоперевіркою',
+            footer: 'Оберіть мову у верхньому правому куті.',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

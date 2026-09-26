@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Special characters</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">what you write</span>        <span class="s">what the reader sees</span>
+
+&amp;amp;                    &amp;
+&amp;lt;                     &lt;
+&amp;gt;                     &gt;
+&amp;quot;                   "
+&amp;#8364;                  €</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;name;</span>
+          <h2 data-i18n="s.shape.t"></h2>
+        </header>
+        <div data-i18n="s.shape.d"></div>
+        <pre><code>&amp;amp;       <span class="s">a name, from a fixed published list</span>
+&amp;#38;       <span class="s">a number, in decimal</span>
+&amp;#x26;      <span class="s">the same number, in hexadecimal</span>
+
+<span class="s">all three produce</span>   &amp;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;amp;</span>
+          <h2 data-i18n="s.amp.t"></h2>
+        </header>
+        <div data-i18n="s.amp.d"></div>
+        <pre><code><span class="s">what you typed</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="/p?a=1&amp;reg;ion=eu"<span class="t">&gt;</span>
+
+<span class="s">what the browser makes of it &mdash; &amp;reg; is a real entity</span>
+/p?a=1®ion=eu
+
+<span class="s">what you meant</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="/p?a=1&amp;amp;region=eu"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;lt; &amp;gt;</span>
+          <h2 data-i18n="s.angle.t"></h2>
+        </header>
+        <div data-i18n="s.angle.d"></div>
+        <pre><code><span class="s">this opens a paragraph instead of showing anything</span>
+<span class="t">&lt;p&gt;</span>Use <span class="t">&lt;p&gt;</span> to start a paragraph<span class="t">&lt;/p&gt;</span>
+
+<span class="s">this shows the text</span>
+<span class="t">&lt;p&gt;</span>Use &amp;lt;p&amp;gt; to start a paragraph<span class="t">&lt;/p&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;quot;</span>
+          <h2 data-i18n="s.quot.t"></h2>
+        </header>
+        <div data-i18n="s.quot.d"></div>
+        <pre><code><span class="s">the value ends early at the second quote</span>
+<span class="t">&lt;input</span> <span class="a">value</span>="She said "hello""<span class="t">&gt;</span>
+
+<span class="s">correct</span>
+<span class="t">&lt;input</span> <span class="a">value</span>="She said &amp;quot;hello&amp;quot;"<span class="t">&gt;</span>
+
+<span class="s">in ordinary text a quotation mark is just a character</span>
+<span class="t">&lt;p&gt;</span>She said "hello".<span class="t">&lt;/p&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;#8364;</span>
+          <h2 data-i18n="s.num.t"></h2>
+        </header>
+        <div data-i18n="s.num.d"></div>
+        <pre><code><span class="s">character   named       decimal        hexadecimal</span>
+
+€           &amp;euro;      &amp;#8364;       &amp;#x20AC;
+å           &amp;aring;     &amp;#229;        &amp;#xE5;
+ї           <span class="s">none</span>        &amp;#1111;       &amp;#x457;
+🙂          <span class="s">none</span>        &amp;#128578;     &amp;#x1F642;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&amp;nbsp;</span>
+          <h2 data-i18n="s.nbsp.t"></h2>
+        </header>
+        <div data-i18n="s.nbsp.d"></div>
+        <pre><code>10&amp;nbsp;kr        <span class="s">the number never ends up alone on a line</span>
+Fig.&amp;nbsp;3
+Anne&amp;nbsp;Berit
+
+lang&amp;shy;strakt   <span class="s">a break point the reader only sees if it is used</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">escaping</span>
+          <h2 data-i18n="s.safe.t"></h2>
+        </header>
+        <div data-i18n="s.safe.d"></div>
+        <pre><code><span class="s">a visitor types this into a comment box</span>
+<span class="t">&lt;script&gt;</span>alert('hi')<span class="t">&lt;/script&gt;</span>
+
+<span class="s">printed raw &mdash; the browser runs it</span>
+<span class="t">&lt;p&gt;&lt;script&gt;</span>alert('hi')<span class="t">&lt;/script&gt;&lt;/p&gt;</span>
+
+<span class="s">escaped on the way out &mdash; the browser shows it</span>
+<span class="t">&lt;p&gt;</span>&amp;lt;script&amp;gt;alert('hi')&amp;lt;/script&amp;gt;<span class="t">&lt;/p&gt;</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-08-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-07-v1.data.js"></script>
+  </body>
+</html>

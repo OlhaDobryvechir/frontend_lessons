@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML tags</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">&lt;form</span> <span class="a">action</span>="/contact" <span class="a">method</span>="post"<span class="t">&gt;</span>
+  <span class="t">&lt;label</span> <span class="a">for</span>="email"<span class="t">&gt;</span>Email address<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>="email" <span class="a">id</span>="email" <span class="a">name</span>="email" <span class="a">required</span><span class="t">&gt;</span>
+
+  <span class="t">&lt;label</span> <span class="a">for</span>="message"<span class="t">&gt;</span>Message<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;textarea</span> <span class="a">id</span>="message" <span class="a">name</span>="message" <span class="a">rows</span>="6"<span class="t">&gt;&lt;/textarea&gt;</span>
+
+  <span class="t">&lt;button</span> <span class="a">type</span>="submit"<span class="t">&gt;</span>Send<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;/form&gt;</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;form&gt;</span>
+          <h2 data-i18n="s.form.t"></h2>
+        </header>
+        <div data-i18n="s.form.d"></div>
+
+        <h3><span class="attr-name">action</span></h3>
+        <div data-i18n="s.form.action"></div>
+        <pre><code><span class="t">&lt;form</span> <span class="a">action</span>="/contact"<span class="t">&gt;</span> ... <span class="t">&lt;/form&gt;</span></code></pre>
+
+        <h3><span class="attr-name">method</span></h3>
+        <div data-i18n="s.form.method"></div>
+        <pre><code><span class="s">&lt;!-- the values end up in the address: /search?q=fiber --&gt;</span>
+<span class="t">&lt;form</span> <span class="a">action</span>="/search" <span class="a">method</span>="get"<span class="t">&gt;</span> ... <span class="t">&lt;/form&gt;</span>
+
+<span class="s">&lt;!-- the values travel in the body of the request --&gt;</span>
+<span class="t">&lt;form</span> <span class="a">action</span>="/contact" <span class="a">method</span>="post"<span class="t">&gt;</span> ... <span class="t">&lt;/form&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;input&gt;</span>
+          <h2 data-i18n="s.input.t"></h2>
+        </header>
+        <div data-i18n="s.input.d"></div>
+
+        <h3><span class="attr-name">type</span></h3>
+        <div data-i18n="s.input.type"></div>
+        <pre><code><span class="t">&lt;input</span> <span class="a">type</span>="text"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="email"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="password"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="number"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="date"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="checkbox"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="radio"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="file"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">name</span></h3>
+        <div data-i18n="s.input.name"></div>
+        <pre><code><span class="t">&lt;input</span> <span class="a">type</span>="email" <span class="a">name</span>="email"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">value</span></h3>
+        <div data-i18n="s.input.value"></div>
+        <pre><code><span class="t">&lt;input</span> <span class="a">type</span>="text" <span class="a">name</span>="city" <span class="a">value</span>="Oslo"<span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="checkbox" <span class="a">name</span>="newsletter" <span class="a">value</span>="yes"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">placeholder</span></h3>
+        <div data-i18n="s.input.placeholder"></div>
+        <pre><code><span class="t">&lt;input</span> <span class="a">type</span>="email" <span class="a">name</span>="email" <span class="a">placeholder</span>="you@example.com"<span class="t">&gt;</span></code></pre>
+
+        <h3>
+          <span class="attr-name">required</span> <span class="attr-name">disabled</span>
+          <span class="attr-name">readonly</span>
+        </h3>
+        <div data-i18n="s.input.state"></div>
+        <pre><code><span class="t">&lt;input</span> <span class="a">type</span>="email" <span class="a">name</span>="email" <span class="a">required</span><span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="text" <span class="a">name</span>="code" <span class="a">value</span>="ABC-123" <span class="a">readonly</span><span class="t">&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="text" <span class="a">name</span>="old" <span class="a">disabled</span><span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">checked</span></h3>
+        <div data-i18n="s.input.checked"></div>
+        <pre><code><span class="t">&lt;input</span> <span class="a">type</span>="checkbox" <span class="a">name</span>="newsletter" <span class="a">value</span>="yes" <span class="a">checked</span><span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;button&gt;</span>
+          <h2 data-i18n="s.button.t"></h2>
+        </header>
+        <div data-i18n="s.button.d"></div>
+
+        <h3><span class="attr-name">type</span></h3>
+        <div data-i18n="s.button.type"></div>
+        <pre><code><span class="t">&lt;button</span> <span class="a">type</span>="submit"<span class="t">&gt;</span>Send<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">type</span>="button"<span class="t">&gt;</span>Show more<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">type</span>="reset"<span class="t">&gt;</span>Clear the form<span class="t">&lt;/button&gt;</span></code></pre>
+
+        <h3><span class="attr-name">disabled</span></h3>
+        <div data-i18n="s.button.disabled"></div>
+        <pre><code><span class="t">&lt;button</span> <span class="a">type</span>="submit" <span class="a">disabled</span><span class="t">&gt;</span>Send<span class="t">&lt;/button&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;label&gt;</span>
+          <h2 data-i18n="s.label.t"></h2>
+        </header>
+        <div data-i18n="s.label.d"></div>
+
+        <h3><span class="attr-name">for</span></h3>
+        <div data-i18n="s.label.for"></div>
+        <pre><code><span class="t">&lt;label</span> <span class="a">for</span>="email"<span class="t">&gt;</span>Email address<span class="t">&lt;/label&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>="email" <span class="a">id</span>="email" <span class="a">name</span>="email"<span class="t">&gt;</span></code></pre>
+
+        <h3 data-i18n="s.label.wrapH"></h3>
+        <div data-i18n="s.label.wrap"></div>
+        <pre><code><span class="t">&lt;label&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>="checkbox" <span class="a">name</span>="newsletter" <span class="a">value</span>="yes"<span class="t">&gt;</span>
+  Send me the newsletter
+<span class="t">&lt;/label&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;textarea&gt;</span>
+          <h2 data-i18n="s.textarea.t"></h2>
+        </header>
+        <div data-i18n="s.textarea.d"></div>
+        <pre><code><span class="t">&lt;textarea</span> <span class="a">name</span>="message"<span class="t">&gt;</span>The starting text goes here.<span class="t">&lt;/textarea&gt;</span></code></pre>
+
+        <h3><span class="attr-name">rows</span> <span class="attr-name">cols</span></h3>
+        <div data-i18n="s.textarea.size"></div>
+        <pre><code><span class="t">&lt;textarea</span> <span class="a">name</span>="message" <span class="a">rows</span>="6" <span class="a">cols</span>="40"<span class="t">&gt;&lt;/textarea&gt;</span></code></pre>
+
+        <h3>
+          <span class="attr-name">placeholder</span> <span class="attr-name">required</span>
+          <span class="attr-name">maxlength</span>
+        </h3>
+        <div data-i18n="s.textarea.rest"></div>
+        <pre><code><span class="t">&lt;textarea</span> <span class="a">name</span>="message" <span class="a">placeholder</span>="Write your message" <span class="a">required</span> <span class="a">maxlength</span>="500"<span class="t">&gt;&lt;/textarea&gt;</span></code></pre>
+
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-06-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-05-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: for, while</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">two loops that look almost the same and are not</span>
+
+<span class="t">for</span> (<span class="t">const</span> v <span class="t">of</span> [<span class="a">'a'</span>, <span class="a">'b'</span>]) ...    <span class="s">v is 'a', then 'b'      the values</span>
+<span class="t">for</span> (<span class="t">const</span> k <span class="t">in</span> [<span class="a">'a'</span>, <span class="a">'b'</span>]) ...    <span class="s">k is '0', then '1'      the keys, as text</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">for</span>
+          <h2 data-i18n="s.for.t"></h2>
+        </header>
+        <div data-i18n="s.for.d"></div>
+        <pre><code><span class="t">for</span> (<span class="t">let</span> i = <span class="a">0</span>; i &lt; liste.length; i++) {
+  ...
+}
+<span class="s">      │            │                │</span>
+<span class="s">      │            │                └ after every turn</span>
+<span class="s">      │            └ checked before every turn</span>
+<span class="s">      └ once, before the first turn</span>
+
+<span class="s">use let, not var &mdash; lesson 3 showed why</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">while</span>
+          <h2 data-i18n="s.while.t"></h2>
+        </header>
+        <div data-i18n="s.while.d"></div>
+        <pre><code><span class="s">when you cannot say up front how many turns there will be</span>
+<span class="t">while</span> (kø.length &gt; <span class="a">0</span>) {
+  behandle(kø.pop());
+}
+
+<span class="s">do...while tests afterwards, so the body always runs once</span>
+<span class="t">let</span> forsøk = <span class="a">0</span>;
+<span class="t">do</span> { forsøk++; } <span class="t">while</span> (forsøk &lt; <span class="a">3</span>);
+
+<span class="t">while</span> (<span class="a">false</span>) { ... }      <span class="s">runs 0 times</span>
+<span class="t">do</span> { ... } <span class="t">while</span> (<span class="a">false</span>);   <span class="s">runs 1 time</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">for...of</span>
+          <h2 data-i18n="s.of.t"></h2>
+        </header>
+        <div data-i18n="s.of.d"></div>
+        <pre><code><span class="t">for</span> (<span class="t">const</span> pris <span class="t">of</span> priser) { ... }     <span class="s">no counter, no length, no index</span>
+
+<span class="s">need the index as well?</span>
+<span class="t">for</span> (<span class="t">const</span> [i, pris] <span class="t">of</span> priser.entries()) { ... }
+
+<span class="s">it works on anything iterable &mdash; strings, Map, Set, NodeList</span>
+<span class="t">for</span> (<span class="t">const</span> tegn <span class="t">of</span> <span class="a">'hei'</span>) { ... }
+
+<span class="s">but not on a plain object</span>
+<span class="t">for</span> (<span class="t">const</span> v <span class="t">of</span> { a: <span class="a">1</span> })          <span class="s">TypeError: is not iterable</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">for...in</span>
+          <h2 data-i18n="s.in.t"></h2>
+        </header>
+        <div data-i18n="s.in.d"></div>
+        <pre><code><span class="s">it walks keys, and keys are text (lesson 2)</span>
+<span class="t">for</span> (<span class="t">const</span> k <span class="t">in</span> [<span class="a">'a'</span>, <span class="a">'b'</span>, <span class="a">'c'</span>])   <span class="s">k is '0', '1', '2'</span>
+
+<span class="s">and it finds everything, not just the indexes</span>
+<span class="t">const</span> a = [<span class="a">'a'</span>, <span class="a">'b'</span>];
+a.notat = <span class="a">'ikke en indeks'</span>;
+<span class="t">for</span> (<span class="t">const</span> k <span class="t">in</span> a)               <span class="s">'0', '1', 'notat'</span>
+<span class="t">for</span> (<span class="t">const</span> v <span class="t">of</span> a)               <span class="s">'a', 'b'        unaffected</span>
+
+<span class="s">the order is not the order you wrote them in</span>
+<span class="t">const</span> o = {}; o.b = <span class="a">1</span>; o[<span class="a">'2'</span>] = <span class="a">1</span>; o.a = <span class="a">1</span>; o[<span class="a">'1'</span>] = <span class="a">1</span>;
+Object.keys(o)                   <span class="s">&rarr; ['1', '2', 'b', 'a']</span>
+
+<span class="s">for objects, prefer the explicit form</span>
+<span class="t">for</span> (<span class="t">const</span> [k, v] <span class="t">of</span> Object.entries(o)) { ... }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">break continue</span>
+          <h2 data-i18n="s.break.t"></h2>
+        </header>
+        <div data-i18n="s.break.d"></div>
+        <pre><code><span class="t">break</span>      <span class="s">leave the loop entirely</span>
+<span class="t">continue</span>   <span class="s">skip to the next turn</span>
+
+<span class="s">both only leave the innermost loop &mdash; unless you name one</span>
+ytre: <span class="t">for</span> (<span class="t">const</span> a <span class="t">of</span> rader) {
+  <span class="t">for</span> (<span class="t">const</span> b <span class="t">of</span> a.celler) {
+    <span class="t">if</span> (b.tom) <span class="t">continue</span> ytre;   <span class="s">next row, not next cell</span>
+  }
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">forEach</span>
+          <h2 data-i18n="s.methods.t"></h2>
+        </header>
+        <div data-i18n="s.methods.d"></div>
+        <pre><code>liste.forEach(v =&gt; { ... });        <span class="s">do something with each</span>
+liste.map(v =&gt; v * <span class="a">2</span>);              <span class="s">build a new array</span>
+liste.filter(v =&gt; v &gt; <span class="a">0</span>);            <span class="s">build a shorter one</span>
+liste.find(v =&gt; v.id === <span class="a">7</span>);         <span class="s">the first match, or undefined</span>
+
+<span class="s">but you cannot leave a forEach early</span>
+liste.forEach(v =&gt; { <span class="t">if</span> (v) <span class="t">break</span>; });   <span class="s">SyntaxError</span>
+liste.forEach(v =&gt; { <span class="t">if</span> (v) <span class="t">return</span>; });  <span class="s">skips one, keeps going</span>
+
+<span class="s">when you do need to stop early</span>
+liste.some(v =&gt; v.id === <span class="a">7</span>);         <span class="s">stops at the first true</span>
+<span class="t">for</span> (<span class="t">const</span> v <span class="t">of</span> liste) { <span class="t">if</span> (...) <span class="t">break</span>; }</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">pitfalls</span>
+          <h2 data-i18n="s.traps.t"></h2>
+        </header>
+        <div data-i18n="s.traps.d"></div>
+        <pre><code><span class="s">the condition is re-read every single turn</span>
+<span class="t">const</span> liste = [<span class="a">1</span>, <span class="a">2</span>, <span class="a">3</span>];
+<span class="t">for</span> (<span class="t">let</span> i = <span class="a">0</span>; i &lt; liste.length; i++) {
+  liste.push(i);               <span class="s">the end moves away faster than i reaches it</span>
+}                              <span class="s">this never finishes</span>
+
+<span class="s">removing while walking forwards skips elements</span>
+<span class="t">for</span> (<span class="t">let</span> i = <span class="a">0</span>; i &lt; liste.length; i++) {
+  <span class="t">if</span> (skalFjernes(liste[i])) liste.splice(i, <span class="a">1</span>);   <span class="s">the next one slides into i</span>
+}
+
+<span class="s">walk backwards, or build a new list instead</span>
+<span class="t">const</span> beholdt = liste.filter(v =&gt; !skalFjernes(v));</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-06-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-05-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML tags</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">&lt;!DOCTYPE html&gt;</span>
+<span class="t">&lt;html&gt;</span>
+  <span class="t">&lt;head&gt;</span>
+    <span class="t">&lt;title&gt;</span>My page<span class="t">&lt;/title&gt;</span>
+    <span class="t">&lt;style&gt;</span>
+      body { background: #0b0f14; color: #e6edf3; }
+    <span class="t">&lt;/style&gt;</span>
+  <span class="t">&lt;/head&gt;</span>
+  <span class="t">&lt;body&gt;</span>
+    <span class="t">&lt;h1&gt;</span>Hello!<span class="t">&lt;/h1&gt;</span>
+    <span class="t">&lt;script&gt;</span>
+      console.log('the page is ready');
+    <span class="t">&lt;/script&gt;</span>
+  <span class="t">&lt;/body&gt;</span>
+<span class="t">&lt;/html&gt;</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;html&gt;</span>
+          <h2 data-i18n="s.html.t"></h2>
+        </header>
+        <div data-i18n="s.html.d"></div>
+        <pre><code><span class="t">&lt;html&gt;</span>
+  <span class="t">&lt;head&gt;</span> ... <span class="t">&lt;/head&gt;</span>
+  <span class="t">&lt;body&gt;</span> ... <span class="t">&lt;/body&gt;</span>
+<span class="t">&lt;/html&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;head&gt;</span>
+          <h2 data-i18n="s.head.t"></h2>
+        </header>
+        <div data-i18n="s.head.d"></div>
+        <pre><code><span class="t">&lt;head&gt;</span>
+  <span class="t">&lt;title&gt;</span>My page<span class="t">&lt;/title&gt;</span>
+  <span class="t">&lt;style&gt;</span> ... <span class="t">&lt;/style&gt;</span>
+<span class="t">&lt;/head&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;body&gt;</span>
+          <h2 data-i18n="s.body.t"></h2>
+        </header>
+        <div data-i18n="s.body.d"></div>
+        <pre><code><span class="t">&lt;body&gt;</span>
+  <span class="t">&lt;h1&gt;</span>Hello!<span class="t">&lt;/h1&gt;</span>
+  <span class="t">&lt;p&gt;</span>Some text on the page.<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;/body&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;style&gt;</span>
+          <h2 data-i18n="s.style.t"></h2>
+        </header>
+        <div data-i18n="s.style.d"></div>
+        <pre><code><span class="t">&lt;style&gt;</span>
+  body { background: #0b0f14; }
+  h1   { color: #58a6ff; }
+<span class="t">&lt;/style&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;script&gt;</span>
+          <h2 data-i18n="s.script.t"></h2>
+        </header>
+        <div data-i18n="s.script.d"></div>
+        <pre><code><span class="t">&lt;script&gt;</span>
+  console.log('hello from JavaScript');
+<span class="t">&lt;/script&gt;</span></code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-02-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-01-v1.data.js"></script>
+  </body>
+</html>

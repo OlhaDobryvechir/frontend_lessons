@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: storage</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code>localStorage.setItem(<span class="a">'antall'</span>, 5);
+localStorage.getItem(<span class="a">'antall'</span>) + 1;   <span class="s">'51'</span>
+
+<span class="s">there are no numbers in here. there are no objects either.</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">setItem</span>
+          <h2 data-i18n="s.set.t"></h2>
+        </header>
+        <div data-i18n="s.set.d"></div>
+        <pre><code>localStorage.setItem(<span class="a">'n'</span>, 5);          <span class="s">stored as '5'</span>
+localStorage.setItem(<span class="a">'b'</span>, <span class="t">false</span>);      <span class="s">stored as 'false'</span>
+localStorage.setItem(<span class="a">'o'</span>, { a: 1 });   <span class="s">stored as '[object Object]'</span>
+localStorage.setItem(<span class="a">'u'</span>, <span class="t">undefined</span>);  <span class="s">stored as 'undefined'</span>
+
+<span class="s">the nicer-looking way is the same thing, with one trap</span>
+localStorage.c = <span class="a">'3'</span>;               <span class="s">works &mdash; getItem('c') is '3'</span>
+localStorage.length = 99;            <span class="s">ignored. length is a real property.</span>
+localStorage.getItem(<span class="a">'length'</span>)       <span class="s">null &mdash; nothing was stored</span>
+
+<span class="s">the rest of the object</span>
+localStorage.length      localStorage.key(0)     <span class="s">key(9) &rarr; null</span>
+localStorage.removeItem(<span class="a">'finnesikke'</span>)  <span class="s">undefined, no complaint</span>
+localStorage.clear()</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">getItem</span>
+          <h2 data-i18n="s.get.t"></h2>
+        </header>
+        <div data-i18n="s.get.d"></div>
+        <pre><code>localStorage.getItem(<span class="a">'finnesikke'</span>)   <span class="s">null, not undefined</span>
+
+<span class="s">three traps, all from lesson 1</span>
+getItem(<span class="a">'n'</span>) + 1                     <span class="s">'51'   text and text</span>
+Number(getItem(<span class="a">'n'</span>)) + 1             <span class="s">6</span>
+
+<span class="t">if</span> (getItem(<span class="a">'b'</span>)) ...                <span class="s">'false' is a non-empty string &rarr; true</span>
+getItem(<span class="a">'b'</span>) === <span class="a">'true'</span>              <span class="s">this is the check you want</span>
+
+getItem(<span class="a">'n'</span>) === 5                   <span class="s">false. always false.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">JSON</span>
+          <h2 data-i18n="s.json.t"></h2>
+        </header>
+        <div data-i18n="s.json.d"></div>
+        <pre><code><span class="s">the only way to store something that is not a string</span>
+localStorage.setItem(<span class="a">'bruker'</span>, JSON.stringify(bruker));
+<span class="t">const</span> bruker = JSON.parse(localStorage.getItem(<span class="a">'bruker'</span>));
+
+<span class="s">lesson 7 still applies: a Date comes back as text</span>
+{ navn: <span class="a">'Åse'</span>, dato: <span class="t">new</span> Date(0), f: () =&gt; {}, u: <span class="t">undefined</span> }
+   <span class="s">&rarr; {"navn":"Åse","dato":"1970-01-01T00:00:00.000Z"}</span>
+   <span class="s">the function and the undefined are simply gone</span>
+
+<span class="s">two ways this throws at you later</span>
+JSON.parse(getItem(<span class="a">'finnesikke'</span>))   <span class="s">null &mdash; survives, parses 'null'</span>
+JSON.parse(<span class="a">'undefined'</span>)             <span class="s">SyntaxError</span>
+JSON.parse(<span class="a">'[object Object]'</span>)        <span class="s">SyntaxError</span>
+
+<span class="s">so wrap the read once, and never again</span>
+<span class="t">const</span> les = (k, reserve) =&gt; {
+  <span class="t">try</span> { <span class="t">const</span> r = localStorage.getItem(k); <span class="t">return</span> r === <span class="t">null</span> ? reserve : JSON.parse(r); }
+  <span class="t">catch</span> { <span class="t">return</span> reserve; }
+};</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">localStorage</span>
+          <h2 data-i18n="s.local.t"></h2>
+        </header>
+        <div data-i18n="s.local.d"></div>
+        <pre><code><span class="s">written in one tab, read in another &mdash; measured</span>
+fane 1: localStorage.setItem(<span class="a">'delt'</span>, <span class="a">'fra fane 1'</span>);
+fane 2: localStorage.getItem(<span class="a">'delt'</span>)   <span class="s">'fra fane 1'</span>
+
+<span class="s">but only within one origin (lesson 13)</span>
+http://127.0.0.1:8099   <span class="s">wrote it</span>
+http://localhost:8099   <span class="s">same server, other hostname &rarr; null</span>
+
+<span class="s">and only within one browser profile</span>
+<span class="s">a second profile read: null</span>
+
+<span class="s">a same-origin iframe is inside, and shares everything</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">sessionStorage</span>
+          <h2 data-i18n="s.session.t"></h2>
+        </header>
+        <div data-i18n="s.session.d"></div>
+        <pre><code><span class="s">same methods, exactly. different reach.</span>
+
+fane 1: sessionStorage.setItem(<span class="a">'privat'</span>, <span class="a">'fra fane 1'</span>);
+fane 2: sessionStorage.getItem(<span class="a">'privat'</span>)   <span class="s">null</span>
+
+F5 i fane 1:  <span class="s">'fra fane 1'   it survives a reload</span>
+
+<span class="s">one exception: window.open copies what is there</span>
+barnet: sessionStorage.getItem(<span class="a">'privat'</span>)   <span class="s">'fra fane 1'   a copy</span>
+<span class="s">the child then changes it &rarr; the parent still has the old value</span>
+
+<span class="s">use it for: this tab, this task. a half-filled form, a step counter.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">storage event</span>
+          <h2 data-i18n="s.event.t"></h2>
+        </header>
+        <div data-i18n="s.event.d"></div>
+        <pre><code>addEventListener(<span class="a">'storage'</span>, (e) =&gt; {
+  e.key   e.oldValue   e.newValue   e.url   e.storageArea
+});
+
+<span class="s">measured, with two tabs open on the same origin:</span>
+setItem('k','v2')   <span class="s">the tab that wrote it:  nothing</span>
+                    <span class="s">the other tab: {key:'k', oldValue:'v1', newValue:'v2'}</span>
+
+removeItem('k')     <span class="s">newValue: null</span>
+clear()             <span class="s">key, oldValue and newValue are all null</span>
+
+setItem('k','v2') <span class="s">again, same value &rarr; no event at all. nothing changed.</span>
+clear() <span class="s">on an already empty storage &rarr; no event either</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">limits</span>
+          <h2 data-i18n="s.limit.t"></h2>
+        </header>
+        <div data-i18n="s.limit.d"></div>
+        <pre><code><span class="s">filling it in this browser:</span>
+<span class="t">try</span> { <span class="t">for</span> (;;) localStorage.setItem(<span class="a">'big'</span> + n++, hundreTusenTegn); }
+<span class="t">catch</span> (e) { e.name }   <span class="s">QuotaExceededError, after ~5,2 million characters</span>
+
+<span class="s">everything written before the failure is still there</span>
+
+<span class="s">and it is synchronous &mdash; it blocks the page while it writes</span>
+20 &times; 200 000 tegn   <span class="s">6&ndash;17 ms on the main thread, run to run</span>
+
+<span class="s">so: small things. not a token, not a personal id number, not a cache.</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-15-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-14-v1.data.js"></script>
+  </body>
+</html>

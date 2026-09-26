@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: events</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code>knapp.addEventListener(<span class="a">'click'</span>, (e) =&gt; {
+  e.preventDefault();      <span class="s">do not do what you would normally do</span>
+  e.stopPropagation();     <span class="s">do not tell anyone else</span>
+});
+
+<span class="s">two different sentences. they are not the same sentence.</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">addEventListener</span>
+          <h2 data-i18n="s.add.t"></h2>
+        </header>
+        <div data-i18n="s.add.d"></div>
+        <pre><code>el.addEventListener(<span class="a">'click'</span>, handler);
+el.addEventListener(<span class="a">'click'</span>, handler, { capture: <span class="t">true</span>, once: <span class="t">true</span>, passive: <span class="t">true</span> });
+
+<span class="s">many listeners live side by side</span>
+b.addEventListener(<span class="a">'click'</span>, a);   <span class="s">a</span>
+b.addEventListener(<span class="a">'click'</span>, b);   <span class="s">a, b   &mdash; both run</span>
+
+<span class="s">the old property has room for one</span>
+b.onclick = en;
+b.onclick = to;                <span class="s">only 'to' survives</span>
+
+<span class="s">the exact same function, added three times</span>
+b.addEventListener(<span class="a">'click'</span>, f); <span class="t">x3</span>   <span class="s">&rarr; fires once. duplicates are ignored</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">removeEventListener</span>
+          <h2 data-i18n="s.remove.t"></h2>
+        </header>
+        <div data-i18n="s.remove.d"></div>
+        <pre><code><span class="s">this does nothing at all &mdash; a new function every time</span>
+el.addEventListener(<span class="a">'click'</span>, () =&gt; lukk());
+el.removeEventListener(<span class="a">'click'</span>, () =&gt; lukk());   <span class="s">still fires</span>
+el.removeEventListener(<span class="a">'click'</span>, obj.h.bind(obj)); <span class="s">still fires</span>
+
+<span class="s">keep the reference, and match the capture flag too</span>
+<span class="t">const</span> h = () =&gt; lukk();
+el.addEventListener(<span class="a">'click'</span>, h, <span class="t">true</span>);
+el.removeEventListener(<span class="a">'click'</span>, h);          <span class="s">no &mdash; flags differ</span>
+el.removeEventListener(<span class="a">'click'</span>, h, <span class="t">true</span>);    <span class="s">yes</span>
+
+<span class="s">two ways to never write it</span>
+el.addEventListener(<span class="a">'click'</span>, h, { once: <span class="t">true</span> });   <span class="s">3 clicks, 1 run</span>
+
+<span class="t">const</span> ac = <span class="t">new</span> AbortController();
+el.addEventListener(<span class="a">'click'</span>, h, { signal: ac.signal });
+ac.abort();                                   <span class="s">removes all of them at once</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">propagation</span>
+          <h2 data-i18n="s.prop.t"></h2>
+        </header>
+        <div data-i18n="s.prop.d"></div>
+        <pre><code><span class="t">&lt;div</span> <span class="a">id</span>="ytre"<span class="t">&gt;&lt;div</span> <span class="a">id</span>="midt"<span class="t">&gt;&lt;button</span> <span class="a">id</span>="indre"<span class="t">&gt;</span></code></pre>
+        <pre><code><span class="s">one click on the button, six handlers, this order:</span>
+
+ytre    capture   <span class="s">eventPhase 1   down</span>
+midt    capture   <span class="s">eventPhase 1</span>
+indre   capture   <span class="s">eventPhase 2   at the target</span>
+indre   bubble    <span class="s">eventPhase 2</span>
+midt    bubble    <span class="s">eventPhase 3   up</span>
+ytre    bubble    <span class="s">eventPhase 3</span>
+
+<span class="s">without { capture: true } you only ever see the way up</span>
+
+<span class="s">focus does not bubble; focusin does the same job and bubbles</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">currentTarget</span>
+          <h2 data-i18n="s.target.t"></h2>
+        </header>
+        <div data-i18n="s.target.d"></div>
+        <pre><code><span class="s">listener on #ytre, the user clicks a &lt;span&gt; deep inside</span>
+
+e.target          <span class="s">&rarr; the span      what was clicked</span>
+e.currentTarget   <span class="s">&rarr; #ytre         who is listening</span>
+<span class="t">this</span>              <span class="s">&rarr; #ytre         in a function(), same as currentTarget</span>
+
+<span class="s">but not in an arrow &mdash; it keeps the this from where it was written</span>
+el.addEventListener(<span class="a">'click'</span>, () =&gt; <span class="t">this</span>);   <span class="s">window, or undefined in a module</span>
+
+<span class="s">so: e.currentTarget always works. this only sometimes.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">delegation</span>
+          <h2 data-i18n="s.deleg.t"></h2>
+        </header>
+        <div data-i18n="s.deleg.d"></div>
+        <pre><code><span class="s">one listener for a list that keeps changing</span>
+liste.addEventListener(<span class="a">'click'</span>, (e) =&gt; {
+  <span class="t">const</span> knapp = e.target.closest(<span class="a">'button'</span>);
+  <span class="t">if</span> (!knapp) <span class="t">return</span>;               <span class="s">the click missed</span>
+  slett(knapp.dataset.id);
+});
+
+liste.innerHTML = <span class="a">'&lt;li&gt;&lt;button data-id="99"&gt;...'</span>;  <span class="s">all new buttons</span>
+<span class="s">&rarr; still works. the listener was never on them.</span>
+
+<span class="s">closest is not optional: click a span inside the button</span>
+e.target                <span class="s">&rarr; SPAN</span>
+e.target.closest(<span class="a">'button'</span>) <span class="s">&rarr; the button</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">preventDefault</span>
+          <h2 data-i18n="s.prevent.t"></h2>
+        </header>
+        <div data-i18n="s.prevent.d"></div>
+        <pre><code>skjema.addEventListener(<span class="a">'submit'</span>, (e) =&gt; {
+  e.preventDefault();      <span class="s">the page does not reload</span>
+  send(<span class="t">new</span> FormData(skjema));
+});
+
+<span class="s">measured, on a link with preventDefault:</span>
+<span class="s">  the address did not change          the default was cancelled</span>
+<span class="s">  the parent&#39;s handler still ran      the journey was not</span>
+
+e.defaultPrevented       <span class="s">&rarr; true   later handlers can see it</span>
+
+<span class="t">return</span> <span class="t">false</span>;                <span class="s">does nothing here. the link followed.</span>
+                         <span class="s">(it only means something in onclick="...")</span>
+
+<span class="s">and inside { passive: true } it is ignored, with a console error</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">stopPropagation</span>
+          <h2 data-i18n="s.stop.t"></h2>
+        </header>
+        <div data-i18n="s.stop.d"></div>
+        <pre><code><span class="s">two handlers on the button, one on the parent</span>
+
+e.stopPropagation()           <span class="s">&rarr; first, second        parent: no</span>
+e.stopImmediatePropagation()  <span class="s">&rarr; first               parent: no</span>
+
+<span class="s">and neither of them cancels anything:</span>
+lenke.addEventListener(<span class="a">'click'</span>, (e) =&gt; e.stopPropagation());
+<span class="s">&rarr; the browser followed the link anyway</span>
+
+<span class="s">the other direction, from above:</span>
+ytre.addEventListener(<span class="a">'click'</span>, (e) =&gt; e.stopPropagation(), <span class="t">true</span>);
+<span class="s">&rarr; the button&#39;s own handler never ran. it was stopped on the way down.</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-13-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-12-v1.data.js"></script>
+  </body>
+</html>

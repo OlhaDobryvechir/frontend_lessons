@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: finding and making elements</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">find something that is there</span>
+<span class="t">const</span> el = document.getElementById(<span class="a">'priser'</span>);
+<span class="t">const</span> el = document.querySelector(<span class="a">'#priser'</span>);
+
+<span class="s">make something that is not</span>
+<span class="t">const</span> ny = document.createElement(<span class="a">'p'</span>);</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">getElementById</span>
+          <h2 data-i18n="s.byid.t"></h2>
+        </header>
+        <div data-i18n="s.byid.d"></div>
+        <pre><code>document.getElementById(<span class="a">'priser'</span>)     <span class="s">the element</span>
+document.getElementById(<span class="a">'finnesikke'</span>)  <span class="s">&rarr; null</span>
+
+<span class="s">no # here &mdash; it takes the id itself, not a selector</span>
+document.getElementById(<span class="a">'#priser'</span>)    <span class="s">&rarr; null   looks for id="#priser"</span>
+
+<span class="s">and it only exists on document, never on an element</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">querySelector</span>
+          <h2 data-i18n="s.query.t"></h2>
+        </header>
+        <div data-i18n="s.query.d"></div>
+        <pre><code><span class="s">any selector from lesson 11 of the HTML track</span>
+document.querySelector(<span class="a">'#priser'</span>)
+document.querySelector(<span class="a">'.kort.er-apen'</span>)
+document.querySelector(<span class="a">'.kort &gt; p'</span>)
+document.querySelector(<span class="a">'input[name="epost"]'</span>)
+
+<span class="s">the first match in document order, or null</span>
+
+<span class="s">and it works on any element, searching only inside it</span>
+kort.querySelector(<span class="a">'p'</span>)             <span class="s">a p inside this card only</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">NodeList</span>
+          <h2 data-i18n="s.all.t"></h2>
+        </header>
+        <div data-i18n="s.all.d"></div>
+        <pre><code><span class="t">const</span> fast = host.querySelectorAll(<span class="a">'.x'</span>);      <span class="s">NodeList &mdash; a snapshot</span>
+<span class="t">const</span> levende = host.getElementsByClassName(<span class="a">'x'</span>); <span class="s">HTMLCollection &mdash; live</span>
+
+fast.length / levende.length          <span class="s">&rarr; 2 / 2</span>
+host.appendChild(nyMedKlassenX);
+fast.length / levende.length          <span class="s">&rarr; 2 / 3</span>
+
+<span class="s">neither is an array</span>
+fast.forEach(...)                     <span class="s">works</span>
+fast.map(...)                         <span class="s">undefined &mdash; there is no map</span>
+levende.forEach(...)                  <span class="s">undefined &mdash; not even forEach</span>
+
+[...fast].map(...)                    <span class="s">spread it first</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">createElement</span>
+          <h2 data-i18n="s.create.t"></h2>
+        </header>
+        <div data-i18n="s.create.d"></div>
+        <pre><code><span class="t">const</span> p = document.createElement(<span class="a">'p'</span>);
+p.parentNode                   <span class="s">&rarr; null</span>
+document.body.contains(p)      <span class="s">&rarr; false</span>
+
+<span class="s">it exists, but nowhere. set it up before you insert it:</span>
+p.className = <span class="a">'pris'</span>;
+p.textContent = <span class="a">'499 kr'</span>;
+p.id = <span class="a">'pris-7'</span>;
+beholder.append(p);            <span class="s">now the page changes, once</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">textContent</span>
+          <h2 data-i18n="s.text.t"></h2>
+        </header>
+        <div data-i18n="s.text.d"></div>
+        <pre><code>el.textContent = <span class="a">'&lt;b&gt;hei&lt;/b&gt;'</span>;
+el.innerHTML                   <span class="s">&rarr; '&amp;lt;b&amp;gt;hei&amp;lt;/b&amp;gt;'</span>
+el.children.length             <span class="s">&rarr; 0   it is text, not markup</span>
+
+el.innerHTML = <span class="a">'&lt;b&gt;hei&lt;/b&gt;'</span>;
+el.children.length             <span class="s">&rarr; 1   it is now an element</span>
+
+<span class="s">innerHTML will not run a &lt;script&gt; tag &mdash; but that is not safety.</span>
+<span class="s">an onerror on an image runs perfectly well.</span>
+el.innerHTML = <span class="a">'&lt;img src=x onerror=...&gt;'</span>;   <span class="s">this executes</span>
+
+<span class="s">so: textContent for anything that came from a person.</span>
+<span class="s">this is lesson 7 of the HTML track, from the other side.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">append</span>
+          <h2 data-i18n="s.append.t"></h2>
+        </header>
+        <div data-i18n="s.append.d"></div>
+        <pre><code>foreldre.append(a, b, <span class="a">'og tekst'</span>);   <span class="s">many at once, strings allowed</span>
+foreldre.appendChild(a);              <span class="s">one node, returns it</span>
+foreldre.appendChild(<span class="a">'tekst'</span>);         <span class="s">TypeError</span>
+
+foreldre.prepend(a);                  <span class="s">first instead of last</span>
+el.before(a);   el.after(a);          <span class="s">as a sibling</span>
+el.replaceWith(a);
+
+<span class="s">building many: put them in a fragment, insert once</span>
+<span class="t">const</span> frag = document.createDocumentFragment();
+<span class="t">for</span> (<span class="t">const</span> rad <span class="t">of</span> rader) frag.append(lagRad(rad));
+tabell.append(frag);                  <span class="s">one change to the page, not a hundred</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">timing</span>
+          <h2 data-i18n="s.timing.t"></h2>
+        </header>
+        <div data-i18n="s.timing.d"></div>
+        <pre><code><span class="s">a script in the head runs before the body exists</span>
+<span class="t">&lt;head&gt;</span><span class="t">&lt;script&gt;</span>document.getElementById(<span class="a">'x'</span>)<span class="t">&lt;/script&gt;</span><span class="t">&lt;/head&gt;</span>   <span class="s">&rarr; null</span>
+
+<span class="s">three ways out, in order of preference</span>
+<span class="t">&lt;script</span> <span class="a">defer</span> <span class="a">src</span>="..."<span class="t">&gt;</span>            <span class="s">in the head, runs after parsing</span>
+<span class="t">&lt;script&gt;</span> at the end of the body        <span class="s">lesson 1 of the HTML track</span>
+document.addEventListener(<span class="a">'DOMContentLoaded'</span>, ...)
+
+<span class="s">null is the normal symptom of all timing mistakes here</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-12-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-11-v1.data.js"></script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML tags</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">&lt;head&gt;</span>
+  <span class="t">&lt;meta</span> <span class="a">charset</span>="utf-8"<span class="t">&gt;</span>
+  <span class="t">&lt;meta</span> <span class="a">name</span>="viewport" <span class="a">content</span>="width=device-width, initial-scale=1"<span class="t">&gt;</span>
+  <span class="t">&lt;base</span> <span class="a">href</span>="/lessons/htmlcss/"<span class="t">&gt;</span>
+  <span class="t">&lt;title&gt;</span>My page<span class="t">&lt;/title&gt;</span>
+  <span class="t">&lt;link</span> <span class="a">rel</span>="icon" <span class="a">href</span>="favicon.svg"<span class="t">&gt;</span>
+  <span class="t">&lt;link</span> <span class="a">rel</span>="stylesheet" <span class="a">href</span>="styles.css"<span class="t">&gt;</span>
+<span class="t">&lt;/head&gt;</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;meta&gt;</span>
+          <h2 data-i18n="s.meta.t"></h2>
+        </header>
+        <div data-i18n="s.meta.d"></div>
+
+        <h3><span class="attr-name">charset</span></h3>
+        <div data-i18n="s.meta.charset"></div>
+        <pre><code><span class="t">&lt;meta</span> <span class="a">charset</span>="utf-8"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">name="viewport"</span></h3>
+        <div data-i18n="s.meta.viewport"></div>
+        <pre><code><span class="t">&lt;meta</span> <span class="a">name</span>="viewport" <span class="a">content</span>="width=device-width, initial-scale=1"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;link&gt;</span>
+          <h2 data-i18n="s.link.t"></h2>
+        </header>
+        <div data-i18n="s.link.d"></div>
+
+        <h3><span class="attr-name">rel="stylesheet"</span></h3>
+        <div data-i18n="s.link.stylesheet"></div>
+        <pre><code><span class="t">&lt;link</span> <span class="a">rel</span>="stylesheet" <span class="a">href</span>="styles.css"<span class="t">&gt;</span></code></pre>
+
+        <h3><span class="attr-name">rel="icon"</span></h3>
+        <div data-i18n="s.link.icon"></div>
+        <pre><code><span class="t">&lt;link</span> <span class="a">rel</span>="icon" <span class="a">href</span>="favicon.svg"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">&lt;base&gt;</span>
+          <h2 data-i18n="s.base.t"></h2>
+        </header>
+        <div data-i18n="s.base.d"></div>
+
+        <h3><span class="attr-name">href</span></h3>
+        <div data-i18n="s.base.href"></div>
+        <pre><code><span class="t">&lt;base</span> <span class="a">href</span>="/lessons/htmlcss/"<span class="t">&gt;</span>
+
+<span class="s">&lt;!-- resolves to /lessons/htmlcss/lesson-01-v1.html --&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>="lesson-01-v1.html"<span class="t">&gt;</span>Lesson 1<span class="t">&lt;/a&gt;</span></code></pre>
+
+        <h3><span class="attr-name">target</span></h3>
+        <div data-i18n="s.base.target"></div>
+        <pre><code><span class="t">&lt;base</span> <span class="a">target</span>="_blank"<span class="t">&gt;</span></code></pre>
+
+        <div class="note" data-i18n="s.base.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-03-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-02-v1.data.js"></script>
+  </body>
+</html>

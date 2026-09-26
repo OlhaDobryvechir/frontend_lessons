@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Encoding, UTF-8</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">the same three letters, saved two different ways</span>
+
+Br<span class="a">æ</span>   as UTF-8     <span class="a">42 72 C3 A6</span>   <span class="s">4 bytes</span>
+Br<span class="a">æ</span>   as ISO-8859-1 <span class="a">42 72 E6</span>      <span class="s">3 bytes</span>
+
+<span class="s">read the first with the second table and you get</span>  BrÃ¦</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">bytes</span>
+          <h2 data-i18n="s.bytes.t"></h2>
+        </header>
+        <div data-i18n="s.bytes.d"></div>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">ASCII</span>
+          <h2 data-i18n="s.ascii.t"></h2>
+        </header>
+        <div data-i18n="s.ascii.d"></div>
+        <pre><code><span class="s">ASCII: 128 characters, numbered 0 to 127</span>
+
+A = <span class="a">65</span>      a = <span class="a">97</span>      0 = <span class="a">48</span>      space = <span class="a">32</span></code></pre>
+
+        <h3 data-i18n="s.ascii.pagesH"></h3>
+        <div data-i18n="s.ascii.pages"></div>
+        <pre><code><span class="s">one byte, three different answers</span>
+
+byte <span class="a">E6</span>  in ISO-8859-1   &rarr;  æ
+byte <span class="a">E6</span>  in ISO-8859-5   &rarr;  ц
+byte <span class="a">E6</span>  in Windows-1251 &rarr;  ж</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Unicode</span>
+          <h2 data-i18n="s.unicode.t"></h2>
+        </header>
+        <div data-i18n="s.unicode.d"></div>
+        <pre><code>A    <span class="a">U+0041</span>
+æ    <span class="a">U+00E6</span>
+å    <span class="a">U+00E5</span>
+і    <span class="a">U+0456</span>
+ї    <span class="a">U+0457</span>
+中   <span class="a">U+4E2D</span>
+🙂   <span class="a">U+1F642</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">UTF-8</span>
+          <h2 data-i18n="s.utf8.t"></h2>
+        </header>
+        <div data-i18n="s.utf8.d"></div>
+        <pre><code><span class="s">character   code point   bytes in UTF-8</span>
+
+A           U+0041       <span class="a">41</span>                <span class="s">1 byte</span>
+æ           U+00E6       <span class="a">C3 A6</span>             <span class="s">2 bytes</span>
+і           U+0456       <span class="a">D1 96</span>             <span class="s">2 bytes</span>
+中          U+4E2D       <span class="a">E4 B8 AD</span>          <span class="s">3 bytes</span>
+🙂          U+1F642      <span class="a">F0 9F 99 82</span>       <span class="s">4 bytes</span></code></pre>
+
+        <h3 data-i18n="s.utf8.whyH"></h3>
+        <div data-i18n="s.utf8.why"></div>
+
+        <h3 data-i18n="s.utf8.lenH"></h3>
+        <div data-i18n="s.utf8.len"></div>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">mojibake</span>
+          <h2 data-i18n="s.moji.t"></h2>
+        </header>
+        <div data-i18n="s.moji.d"></div>
+        <pre><code><span class="s">UTF-8 bytes read as a one-byte encoding</span>
+
+æ   <span class="a">C3 A6</span>        &rarr;  Ã¦
+’   <span class="a">E2 80 99</span>     &rarr;  â€™
+
+<span class="s">one-byte bytes read as UTF-8: not a valid sequence</span>
+
+æ   <span class="a">E6</span>           &rarr;  &#xFFFD;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">charset</span>
+          <h2 data-i18n="s.declare.t"></h2>
+        </header>
+        <div data-i18n="s.declare.d"></div>
+        <pre><code><span class="s">1. the editor writes the bytes</span>
+   <span class="s">save the file as UTF-8, without a BOM</span>
+
+<span class="s">2. the server announces them &mdash; this one wins</span>
+   Content-Type: text/html; <span class="a">charset=utf-8</span>
+
+<span class="s">3. the document announces them, first in the head</span>
+   <span class="t">&lt;meta</span> <span class="a">charset</span>="utf-8"<span class="t">&gt;</span></code></pre>
+        <div class="note" data-i18n="s.declare.note"></div>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">entities</span>
+          <h2 data-i18n="s.entities.t"></h2>
+        </header>
+        <div data-i18n="s.entities.d"></div>
+        <pre><code><span class="s">still required &mdash; these three mean something to HTML</span>
+
+&amp;lt;     &rarr;  &lt;
+&amp;gt;     &rarr;  &gt;
+&amp;amp;    &rarr;  &amp;
+
+<span class="s">no longer needed &mdash; just type the letter</span>
+
+&amp;aring;   &rarr;  å        <span class="s">write å</span>
+&amp;#1111;  &rarr;  ї        <span class="s">write ї</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-07-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-06-v1.data.js"></script>
+  </body>
+</html>

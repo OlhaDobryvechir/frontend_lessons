@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS flexbox</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">one declaration, and four things happen at once</span>
+
+.row { <span class="a">display: flex</span>; }
+
+<span class="s">the children line up in a row</span>
+<span class="s">they end up the same height</span>
+<span class="s">they shrink rather than wrap</span>
+<span class="s">float, clear and vertical-align stop applying to them</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">display: flex</span>
+          <h2 data-i18n="s.on.t"></h2>
+        </header>
+        <div data-i18n="s.on.d"></div>
+        <pre><code>.row   { display: <span class="a">flex</span>; }          <span class="s">a block-level flex container</span>
+.badge { display: <span class="a">inline-flex</span>; }   <span class="s">an inline-level one</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">container / item</span>
+          <h2 data-i18n="s.two.t"></h2>
+        </header>
+        <div data-i18n="s.two.d"></div>
+        <pre><code>.row {                   <span class="s">&larr; the container decides how the row behaves</span>
+  display: flex;
+}
+
+.row &gt; * {               <span class="s">&larr; the items decide how each one behaves</span>
+}
+
+<span class="s">every flex property belongs to one side or the other, never both</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">direct children</span>
+          <h2 data-i18n="s.items.t"></h2>
+        </header>
+        <div data-i18n="s.items.d"></div>
+        <pre><code><span class="t">&lt;div</span> <span class="a">class</span>="row"<span class="t">&gt;</span>
+  <span class="t">&lt;div&gt;</span>a<span class="t">&lt;/div&gt;</span>                 <span class="s">an item</span>
+
+  <span class="t">&lt;div&gt;</span>                          <span class="s">an item</span>
+    <span class="t">&lt;span&gt;</span>b<span class="t">&lt;/span&gt;</span>              <span class="s">NOT an item &mdash; it is inside one</span>
+  <span class="t">&lt;/div&gt;</span>
+
+  loose text                    <span class="s">an item too, an anonymous one</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">defaults</span>
+          <h2 data-i18n="s.free.t"></h2>
+        </header>
+        <div data-i18n="s.free.d"></div>
+        <pre><code><span class="s">what display: flex already gives you, without another line</span>
+
+flex-direction:  <span class="a">row</span>          <span class="s">side by side          &rarr; lesson 19</span>
+flex-wrap:       <span class="a">nowrap</span>       <span class="s">shrink, never wrap    &rarr; lesson 18</span>
+justify-content: <span class="a">normal</span>       <span class="s">packs at the start    &rarr; lesson 20</span>
+align-items:     <span class="a">normal</span>       <span class="s">stretches to match    &rarr; lesson 20</span>
+
+<span class="s">the last two compute to normal, which in a flex container</span>
+<span class="s">behaves exactly as flex-start and stretch</span>
+
+<span class="s">and on every item</span>
+flex:            <span class="a">0 1 auto</span>     <span class="s">natural size, may shrink, will not grow</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">turned off</span>
+          <h2 data-i18n="s.off.t"></h2>
+        </header>
+        <div data-i18n="s.off.d"></div>
+        <pre><code>.row &gt; .item {
+  float: left;              <span class="s">ignored</span>
+  clear: both;              <span class="s">ignored</span>
+  vertical-align: middle;   <span class="s">ignored</span>
+}
+
+<span class="s">margins between items never collapse, either</span>
+<span class="s">10px below one and 10px above the next is 20px, not 10px</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">inline-flex</span>
+          <h2 data-i18n="s.inline.t"></h2>
+        </header>
+        <div data-i18n="s.inline.d"></div>
+        <pre><code><span class="a">flex</span>          <span class="s">the box is block-level: it starts a new line and fills the width</span>
+<span class="a">inline-flex</span>   <span class="s">the box sits in the running text, as wide as its content</span>
+
+<span class="s">inside, the two behave identically. the difference is the box itself.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">the map</span>
+          <h2 data-i18n="s.map.t"></h2>
+        </header>
+        <div data-i18n="s.map.d"></div>
+        <pre><code><span class="t">on the container</span>
+  display: flex | inline-flex        <span class="s">this lesson</span>
+  flex-wrap                          <span class="a">lesson 18</span>
+  gap, row-gap, column-gap           <span class="a">lesson 18</span>
+  align-content                      <span class="a">lesson 18</span>
+  flex-direction                     <span class="a">lesson 19</span>
+  justify-content                    <span class="a">lesson 20</span>
+  align-items                        <span class="a">lesson 20</span>
+
+<span class="t">on the item</span>
+  flex (grow, shrink, basis)         <span class="a">lesson 18</span>
+  order                              <span class="a">lesson 19</span>
+  align-self                         <span class="a">lesson 20</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-18-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-17-v1.data.js"></script>
+  </body>
+</html>

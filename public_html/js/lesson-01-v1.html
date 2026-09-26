@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: simple types</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">typeof</span> <span class="a">'hei'</span>        <span class="s">&rarr; 'string'</span>
+<span class="t">typeof</span> <span class="a">42</span>           <span class="s">&rarr; 'number'</span>
+<span class="t">typeof</span> <span class="a">true</span>         <span class="s">&rarr; 'boolean'</span>
+<span class="t">typeof</span> <span class="a">undefined</span>    <span class="s">&rarr; 'undefined'</span>
+<span class="t">typeof</span> <span class="a">null</span>         <span class="s">&rarr; 'object'   ← wrong, and it will never be fixed</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">typeof</span>
+          <h2 data-i18n="s.typeof.t"></h2>
+        </header>
+        <div data-i18n="s.typeof.d"></div>
+        <pre><code><span class="s">the seven primitive types in the language</span>
+
+<span class="a">string</span>      <span class="a">number</span>      <span class="a">boolean</span>
+<span class="a">null</span>        <span class="a">undefined</span>
+<span class="a">symbol</span>      <span class="a">bigint</span>      <span class="s">← later lessons</span>
+
+<span class="s">everything else &mdash; objects, arrays, functions &mdash; is not a primitive</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">string</span>
+          <h2 data-i18n="s.string.t"></h2>
+        </header>
+        <div data-i18n="s.string.d"></div>
+        <pre><code><span class="t">const</span> a = <span class="a">'enkle'</span>;
+<span class="t">const</span> b = <span class="a">"doble"</span>;        <span class="s">identical &mdash; pick one and keep to it</span>
+<span class="t">const</span> c = <span class="a">`Hei, ${navn}`</span>;  <span class="s">backticks: values can go inside</span>
+
+<span class="s">a string cannot be changed, only replaced</span>
+<span class="t">let</span> s = <span class="a">'hei'</span>;
+s[<span class="a">0</span>] = <span class="a">'H'</span>;                <span class="s">silently does nothing</span>
+s                            <span class="s">&rarr; 'hei'</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">number</span>
+          <h2 data-i18n="s.number.t"></h2>
+        </header>
+        <div data-i18n="s.number.d"></div>
+        <pre><code><span class="s">one type for everything, whole or not</span>
+<span class="a">42</span>    <span class="a">-7</span>    <span class="a">3.14</span>    <span class="a">1e6</span>
+
+<span class="s">and therefore</span>
+<span class="a">0.1</span> + <span class="a">0.2</span>                   <span class="s">&rarr; 0.30000000000000004</span>
+<span class="a">0.1</span> + <span class="a">0.2</span> === <span class="a">0.3</span>           <span class="s">&rarr; false</span>
+
+<span class="s">three values that are numbers but not amounts</span>
+<span class="a">1</span> / <span class="a">0</span>                       <span class="s">&rarr; Infinity</span>
+<span class="a">0</span> / <span class="a">0</span>                       <span class="s">&rarr; NaN</span>
+<span class="t">typeof</span> <span class="a">NaN</span>                  <span class="s">&rarr; 'number'</span>
+<span class="a">NaN</span> === <span class="a">NaN</span>                 <span class="s">&rarr; false   use Number.isNaN()</span>
+
+<span class="s">whole numbers are exact only this far</span>
+Number.MAX_SAFE_INTEGER      <span class="s">&rarr; 9007199254740991</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">boolean</span>
+          <h2 data-i18n="s.boolean.t"></h2>
+        </header>
+        <div data-i18n="s.boolean.d"></div>
+        <pre><code><span class="s">two values &mdash; and eight things that behave like false</span>
+
+<span class="a">false</span>   <span class="a">0</span>   <span class="a">-0</span>   <span class="a">0n</span>   <span class="a">''</span>   <span class="a">null</span>   <span class="a">undefined</span>   <span class="a">NaN</span>
+
+<span class="s">everything else is truthy, including these</span>
+Boolean(<span class="a">'0'</span>)       <span class="s">&rarr; true    a non-empty string</span>
+Boolean(<span class="a">[]</span>)        <span class="s">&rarr; true    an empty array is still an object</span>
+Boolean(<span class="a">'false'</span>)   <span class="s">&rarr; true</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">null</span>
+          <h2 data-i18n="s.null.t"></h2>
+        </header>
+        <div data-i18n="s.null.d"></div>
+        <pre><code><span class="s">someone decided there is nothing here</span>
+<span class="t">let</span> valgtKunde = <span class="a">null</span>;      <span class="s">nobody is selected yet</span>
+
+<span class="s">you have to write it yourself &mdash; it never appears on its own</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">undefined</span>
+          <h2 data-i18n="s.undefined.t"></h2>
+        </header>
+        <div data-i18n="s.undefined.d"></div>
+        <pre><code><span class="s">the language produces this one for you</span>
+
+<span class="t">let</span> x;                       <span class="s">declared, never assigned   &rarr; undefined</span>
+obj.finnesIkke               <span class="s">a property that is not there &rarr; undefined</span>
+<span class="t">function</span> f() {}  f()        <span class="s">a function that returns nothing &rarr; undefined</span>
+
+<span class="s">the difference in one line</span>
+<span class="a">null</span>        <span class="s">&mdash; I put nothing here</span>
+<span class="a">undefined</span>   <span class="s">&mdash; nobody put anything here</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">typeof null</span>
+          <h2 data-i18n="s.compare.t"></h2>
+        </header>
+        <div data-i18n="s.compare.d"></div>
+        <pre><code><span class="a">null</span> == <span class="a">undefined</span>          <span class="s">&rarr; true    loose: the two count as equal</span>
+<span class="a">null</span> === <span class="a">undefined</span>         <span class="s">&rarr; false   strict: two different types</span>
+
+<span class="s">and then this pair, which follows no rule you would guess</span>
+<span class="a">null</span> == <span class="a">0</span>                  <span class="s">&rarr; false</span>
+<span class="a">null</span> &gt;= <span class="a">0</span>                  <span class="s">&rarr; true</span>
+
+<span class="s">the safe way to ask "is there anything here?"</span>
+<span class="t">if</span> (verdi != <span class="a">null</span>) { ... }   <span class="s">catches null and undefined, nothing else</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-02-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-01-v1.data.js"></script>
+  </body>
+</html>
