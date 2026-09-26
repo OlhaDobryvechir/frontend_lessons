@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">.container</span> {
+  <span class="t">display</span>: <span class="s">flex</span>;
+  <span class="t">justify-content</span>: <span class="s">center</span>;
+  <span class="t">align-items</span>: <span class="s">center</span>;
+}</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">display: flex</span>
+          <h2 data-i18n="s.flex.t"></h2>
+        </header>
+        <div data-i18n="s.flex.d"></div>
+        <pre><code><span class="s">.container</span> {
+  <span class="t">display</span>: <span class="s">flex</span>;
+}
+
+<span class="s">.container</span> <span class="t">&gt;</span> <span class="s">.item</span> {
+  <span class="t">/* flex items */</span>
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">justify-content</span>
+          <h2 data-i18n="s.justify.t"></h2>
+        </header>
+        <div data-i18n="s.justify.d"></div>
+        <pre><code><span class="s">.container</span> {
+  <span class="t">display</span>: <span class="s">flex</span>;
+  <span class="t">justify-content</span>: <span class="s">space-between</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">align-items</span>
+          <h2 data-i18n="s.align.t"></h2>
+        </header>
+        <div data-i18n="s.align.d"></div>
+        <pre><code><span class="s">.container</span> {
+  <span class="t">display</span>: <span class="s">flex</span>;
+  <span class="t">align-items</span>: <span class="s">center</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">main axis / cross axis</span>
+          <h2 data-i18n="s.axes.t"></h2>
+        </header>
+        <div data-i18n="s.axes.d"></div>
+        <pre><code><span class="s">.container</span> {
+  <span class="t">display</span>: <span class="s">flex</span>;
+  <span class="t">flex-direction</span>: <span class="s">row</span>;
+  <span class="t">justify-content</span>: <span class="s">center</span>;
+  <span class="t">align-items</span>: <span class="s">center</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">common values</span>
+          <h2 data-i18n="s.values.t"></h2>
+        </header>
+        <div data-i18n="s.values.d"></div>
+        <pre><code><span class="s">.container</span> {
+  <span class="t">justify-content</span>: <span class="s">flex-start</span>;
+  <span class="t">justify-content</span>: <span class="s">center</span>;
+  <span class="t">justify-content</span>: <span class="s">space-between</span>;
+
+  <span class="t">align-items</span>: <span class="s">stretch</span>;
+  <span class="t">align-items</span>: <span class="s">center</span>;
+  <span class="t">align-items</span>: <span class="s">flex-end</span>;
+}</code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-20-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-19-v1.data.js"></script>
+  </body>
+</html>

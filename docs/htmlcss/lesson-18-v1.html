@@ -1,1 +1,112 @@
-Coming soon
+          <!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flexbox: axes and flex-direction</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">.container</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">row</span>;
+}
+
+<span class="t">.container</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">column</span>;
+}</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">display: flex</span>
+          <h2 data-i18n="s.flex.t"></h2>
+        </header>
+        <div data-i18n="s.flex.d"></div>
+        <pre><code><span class="t">.container</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+}
+
+<span class="t">.item</span> {
+  <span class="p">padding</span>: <span class="v">10px</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">main axis</span>
+          <h2 data-i18n="s.main.t"></h2>
+        </header>
+        <div data-i18n="s.main.d"></div>
+        <pre><code><span class="t">.container</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">row</span>;
+}
+
+<span class="comment">/* main axis: left → right */</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">cross axis</span>
+          <h2 data-i18n="s.cross.t"></h2>
+        </header>
+        <div data-i18n="s.cross.d"></div>
+        <pre><code><span class="t">.container</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">row</span>;
+}
+
+<span class="comment">/* cross axis: top ↕ bottom */</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">flex-direction</span>
+          <h2 data-i18n="s.direction.t"></h2>
+        </header>
+        <div data-i18n="s.direction.d"></div>
+        <pre><code><span class="t">.container</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">column</span>;
+}
+
+<span class="comment">/* main axis: top → bottom */</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">row ↔ column</span>
+          <h2 data-i18n="s.change.t"></h2>
+        </header>
+        <div data-i18n="s.change.d"></div>
+        <pre><code><span class="t">.row</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">row</span>;
+}
+
+<span class="t">.column</span> {
+  <span class="p">display</span>: <span class="v">flex</span>;
+  <span class="p">flex-direction</span>: <span class="v">column</span>;
+}</code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-19-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-18-v1.data.js"></script>
+  </body>
+</html>
+
