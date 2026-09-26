@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Adaptive design</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="s">&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</span>
+
+<span class="t">@media</span> (max-width: 700px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+<img class="fluid-image" src="photo.jpg" alt="Example" /></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">viewport</span>
+          <h2 data-i18n="s.viewport.t"></h2>
+        </header>
+        <div data-i18n="s.viewport.d"></div>
+        <pre><code><span class="t">&lt;meta</span> name="viewport"
+      content="width=device-width, initial-scale=1"<span class="t">&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">fluid sizes</span>
+          <h2 data-i18n="s.fluid.t"></h2>
+        </header>
+        <div data-i18n="s.fluid.d"></div>
+        <pre><code>.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">@media</span>
+          <h2 data-i18n="s.media.t"></h2>
+        </header>
+        <div data-i18n="s.media.d"></div>
+        <pre><code>.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+<span class="t">@media</span> (max-width: 700px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">flex / grid</span>
+          <h2 data-i18n="s.layout.t"></h2>
+        </header>
+        <div data-i18n="s.layout.d"></div>
+        <pre><code>.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit, minmax(220px, 1fr)
+  );
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">mobile-first</span>
+          <h2 data-i18n="s.first.t"></h2>
+        </header>
+        <div data-i18n="s.first.d"></div>
+        <pre><code>.menu {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+<span class="t">@media</span> (min-width: 800px) {
+  .menu {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}</code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-26-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-25-v1.data.js"></script>
+  </body>
+</html>

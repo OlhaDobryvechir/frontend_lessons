@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS Flexbox: flex-wrap, gap, row-gap, column-gap</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">.container</span> {
+  display: flex;
+  <span class="t">flex-wrap</span>: wrap;
+  <span class="t">gap</span>: 16px 24px;
+}
+
+<span class="t">.container</span> {
+  <span class="t">row-gap</span>: 16px;
+  <span class="t">column-gap</span>: 24px;
+}</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">flex-wrap</span>
+          <h2 data-i18n="s.wrap.t"></h2>
+        </header>
+        <div data-i18n="s.wrap.d"></div>
+        <pre><code><span class="t">.container</span> {
+  display: flex;
+  <span class="t">flex-wrap</span>: wrap;
+}
+
+<span class="t">.container</span> {
+  <span class="t">flex-wrap</span>: nowrap;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">gap</span>
+          <h2 data-i18n="s.gap.t"></h2>
+        </header>
+        <div data-i18n="s.gap.d"></div>
+        <pre><code><span class="t">.container</span> {
+  display: flex;
+  <span class="t">gap</span>: 20px;
+}
+
+<span class="t">.container</span> {
+  <span class="t">gap</span>: 12px 24px;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">row-gap</span>
+          <h2 data-i18n="s.row.t"></h2>
+        </header>
+        <div data-i18n="s.row.d"></div>
+        <pre><code><span class="t">.container</span> {
+  <span class="t">row-gap</span>: 16px;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">column-gap</span>
+          <h2 data-i18n="s.column.t"></h2>
+        </header>
+        <div data-i18n="s.column.d"></div>
+        <pre><code><span class="t">.container</span> {
+  <span class="t">column-gap</span>: 24px;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">flex-wrap + gap</span>
+          <h2 data-i18n="s.combo.t"></h2>
+        </header>
+        <div data-i18n="s.combo.d"></div>
+        <pre><code><span class="t">.cards</span> {
+  display: flex;
+  <span class="t">flex-wrap</span>: wrap;
+  <span class="t">row-gap</span>: 12px;
+  <span class="t">column-gap</span>: 24px;
+}</code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-21-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-20-v1.data.js"></script>
+  </body>
+</html>

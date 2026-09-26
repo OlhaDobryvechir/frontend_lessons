@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS flex: 1 0 200px</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">.item</span> {
+  <span class="s">flex:</span> 1 0 200px;
+}</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">flex</span>
+          <h2 data-i18n="s.flex.t"></h2>
+        </header>
+        <div data-i18n="s.flex.d"></div>
+        <pre><code><span class="t">.item</span> {
+  <span class="s">flex:</span> 1 0 200px;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">1</span>
+          <h2 data-i18n="s.grow.t"></h2>
+        </header>
+        <div data-i18n="s.grow.d"></div>
+        <pre><code><span class="t">flex:</span> 1 0 200px;
+       <span class="s">↑</span>
+       grow</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">0</span>
+          <h2 data-i18n="s.shrink.t"></h2>
+        </header>
+        <div data-i18n="s.shrink.d"></div>
+        <pre><code><span class="t">flex:</span> 1 0 200px;
+         <span class="s">↑</span>
+         shrink</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">200px</span>
+          <h2 data-i18n="s.basis.t"></h2>
+        </header>
+        <div data-i18n="s.basis.d"></div>
+        <pre><code><span class="t">flex:</span> 1 0 200px;
+           <span class="s">↑</span>
+           basis</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">grow + shrink</span>
+          <h2 data-i18n="s.space.t"></h2>
+        </header>
+        <div data-i18n="s.space.d"></div>
+        <pre><code><span class="t">.container</span> { display: flex; }
+
+<span class="t">.item</span> {
+  <span class="s">flex:</span> 1 0 200px;
+}</code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-22-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-21-v1.data.js"></script>
+  </body>
+</html>

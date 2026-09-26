@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS Grid vs Flex vs Table</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">.layout</span> {
+  <span class="s">display</span>: grid;
+  <span class="s">grid-template-columns</span>: <span class="n">240px 1fr</span>;
+  <span class="s">gap</span>: <span class="n">16px</span>;
+}
+
+<span class="t">.toolbar</span> {
+  <span class="s">display</span>: flex;
+  <span class="s">gap</span>: <span class="n">8px</span>;
+}
+
+<span class="t">table</span> {
+  <span class="s">width</span>: <span class="n">100%</span>;
+}</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Grid vs Flex</span>
+          <h2 data-i18n="s.gridFlex.t"></h2>
+        </header>
+        <div data-i18n="s.gridFlex.d"></div>
+        <pre><code><span class="t">.cards</span> {
+  <span class="s">display</span>: grid;
+  <span class="s">grid-template-columns</span>: <span class="n">repeat(3, 1fr)</span>;
+}
+
+<span class="t">.actions</span> {
+  <span class="s">display</span>: flex;
+  <span class="s">gap</span>: <span class="n">8px</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">1D vs 2D</span>
+          <h2 data-i18n="s.dimension.t"></h2>
+        </header>
+        <div data-i18n="s.dimension.d"></div>
+        <pre><code><span class="t">.grid</span> {
+  <span class="s">display</span>: grid;
+  <span class="s">grid-template-columns</span>: <span class="n">1fr 1fr</span>;
+  <span class="s">grid-template-rows</span>: <span class="n">auto auto</span>;
+}
+
+<span class="t">.flex</span> {
+  <span class="s">display</span>: flex;
+  <span class="s">flex-direction</span>: row;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">When to use Grid</span>
+          <h2 data-i18n="s.useGrid.t"></h2>
+        </header>
+        <div data-i18n="s.useGrid.d"></div>
+        <pre><code><span class="t">.dashboard</span> {
+  <span class="s">display</span>: grid;
+  <span class="s">grid-template-columns</span>: <span class="n">200px 1fr 1fr</span>;
+  <span class="s">grid-template-rows</span>: <span class="n">auto 1fr</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Grid vs Table</span>
+          <h2 data-i18n="s.gridTable.t"></h2>
+        </header>
+        <div data-i18n="s.gridTable.d"></div>
+        <pre><code><span class="t">.dashboard</span> {
+  <span class="s">display</span>: grid;
+  <span class="s">grid-template-columns</span>: <span class="n">repeat(3, 1fr)</span>;
+}
+
+<span class="t">table</span> {
+  <span class="s">border-collapse</span>: collapse;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Semantic table data</span>
+          <h2 data-i18n="s.semantic.t"></h2>
+        </header>
+        <div data-i18n="s.semantic.d"></div>
+        <pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;thead&gt;</span>...<span class="t">&lt;/thead&gt;</span>
+  <span class="t">&lt;tbody&gt;</span>...<span class="t">&lt;/tbody&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Choosing a layout</span>
+          <h2 data-i18n="s.choice.t"></h2>
+        </header>
+        <div data-i18n="s.choice.d"></div>
+        <pre><code><span class="t">.page</span> {
+  <span class="s">display</span>: grid;
+}
+
+<span class="t">.nav</span> {
+  <span class="s">display</span>: flex;
+}
+
+<span class="t">.prices</span> {
+  <span class="s">display</span>: grid;
+}</code></pre>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-25-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-24-v1.data.js"></script>
+  </body>
+</html>
