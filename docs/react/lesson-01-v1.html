@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>React: components</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">function</span> Greeting(<span class="a">props</span>) {
+  <span class="t">return</span> <span class="s">&lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;</span>;
+}
+
+<span class="t">export default</span> Greeting;</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">component</span>
+          <h2 data-i18n="s.component.t"></h2>
+        </header>
+        <div data-i18n="s.component.d"></div>
+        <pre><code><span class="t">function</span> Welcome() {
+  <span class="t">return</span> <span class="s">&lt;h2&gt;Welcome!&lt;/h2&gt;</span>;
+}
+
+<span class="t">function</span> App() {
+  <span class="t">return</span> <span class="s">&lt;Welcome /&gt;</span>;
+}</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">export</span>
+          <h2 data-i18n="s.export.t"></h2>
+        </header>
+        <div data-i18n="s.export.d"></div>
+        <pre><code><span class="t">export function</span> Button() {
+  <span class="t">return</span> <span class="s">&lt;button&gt;Save&lt;/button&gt;</span>;
+}
+
+<span class="t">export default</span> App;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">props</span>
+          <h2 data-i18n="s.props.t"></h2>
+        </header>
+        <div data-i18n="s.props.d"></div>
+        <pre><code><span class="t">function</span> Greeting(<span class="a">props</span>) {
+  <span class="t">return</span> <span class="s">&lt;p&gt;Hello, {props.name}!&lt;/p&gt;</span>;
+}
+
+<span class="s">pass data to the component</span>
+<span class="s">&lt;Greeting name="Ada" /&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">destructure</span>
+          <h2 data-i18n="s.destructure.t"></h2>
+        </header>
+        <div data-i18n="s.destructure.d"></div>
+        <pre><code><span class="t">function</span> Greeting({ name, city }) {
+  <span class="t">return</span> <span class="s">&lt;p&gt;{name} lives in {city}.&lt;/p&gt;</span>;
+}
+
+<span class="s">&lt;Greeting name="Ada" city="Bergen" /&gt;</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">props</span>
+          <h2 data-i18n="s.rules.t"></h2>
+        </header>
+        <div data-i18n="s.rules.d"></div>
+        <pre><code><span class="t">function</span> Card({ title }) {
+  <span class="t">return</span> <span class="s">&lt;article&gt;{title}&lt;/article&gt;</span>;
+}
+
+<span class="s">&lt;Card title="React" /&gt;</span>
+<span class="s">&lt;Card title={2 + 3} /&gt;</span>
+<span class="s">&lt;Card title="A" other="B" /&gt;</span></code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-2-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-01-v1.data.js"></script>
+  </body>
+</html>

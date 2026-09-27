@@ -1,0 +1,63 @@
+I need to create lesson 2 of React tutorial with 10-question quiz to fix the knowledge. The topic is: 
+
+className, onClick, style on div and span elements in React
+
+Create it in Norwegian, English and Ukrainian languages.
+Use files lesson-14-v1.html and lesson-14-v1.data.js as a pattern for styles, formatting and placement of text.
+Create files lesson-02-v1.html and lesson-02-v1.data.js for this new topic, supporting the same style and format.
+Put both files into a zip archive. Note that the correct number of answer in quiz is zero based.
+
+            'l1.title': 'Components in React. Export function. Properties of components',
+            'l2.title': 'className, onClick, style on div and span elements in React',
+            'l3.title': 'hooks: useState. onChange on input with storing in state',
+            'l4.title': 'How to show arrays and selection options in React',
+            'l5.title': 'Use of radio input and checkbox in React, saving its state',
+            'l6.title': 'i18n and translations in React',
+            'l7.title': 'Export interface, Record, type definition, use of | and &',
+            'l8.title': 'Operators in React',
+            'l9.title': 'Providers in React',
+            'l10.title': 'Routing in React',
+            'l11.title': 'Hook: useEffect',
+            'l12.title': 'Hook: useRef, useId. Special cases when id should be used and when ref is advised',
+            'l13.title': 'Library lte-oss-ui-components',
+            'l14.title': 'ProvTable from lte-oss-ui-components',
+
+
+File I uploaded is javascript, which is used for 
+
+
+I want to have many configurations to test the knowledge of HTML, CSS and Javascript. 
+Each configuration must have
+1. headerText in html format, to give a task to a user
+2. function evaluateResponse, which must evaluate the text, which is entered in HTML editor, and
+ has 2 parameters: rawText, rootElement - the raw text, which is entered by the user in HTML editor
+  and a root to an element where this HTML is placed inside, and shown at the right to the HTML editor.
+3. answerHTML - correct html in text format, which can be an answer to the task
+
+Give me a HTML/Javascript code for the tests, in dark style, which appear in a modal dialog, 
+which can show a task at the top (headerText from configuration as explained above). 
+The dialog has a small HTML editor inside the modal dialog.
+When a user enters HTML context, first we must validate it that it is valid HTML code, which can contain <style>
+section, which we must also check, and <script> section. We do not need to check carefully every statement of Javascript,
+just general check. When a user enters anything, it must be shown as a mini page at the right side of the HTML editor.
+Preferably, if it is possible, do it inside iframe.
+
+The tutorial must have "Submit" button. When this button is clicked, the first what is checked
+is the general validity of HTML. If it is wrong, the error must be shown to the user.
+
+After this the code is checked by evaluateResponse from the configuration, if it is defined.
+If this function is not defined, the default function must reduce spaces and check that 
+the text entered by the user must coincide with the text in answerHTML from the configuration.
+If it does not coincide, it must show a message to the user, at what line must be another tag or a tag
+with another attributes or text, and specify the next tag with its attributes which must be added.
+User must have buttons: 'Try again' to continue editing, 'Full help' to insert the text from answerHTML
+into the HTML editor, and in this case this question is considered not answered, and button 'It is right anyway',
+which means that the user entered a correct HTML, but it can be different from our HTML, so it is considered
+as the right answer. 'Next question' to go to the next question of the quiz.
+At the final page it must show the results of the quiz.
+All the parts of the program put in zip file.
+As an example, you can think up sample questions for topic "HTML & CSS Adaptive design".
+
+
+
+ 

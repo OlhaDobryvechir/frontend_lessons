@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>React: className, onClick, style</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code>function Card() {
+  return (
+    &lt;div className=<span class="a">"card"</span> onClick={<span class="t">{() =&gt; alert('Hei!')}</span>}
+      style={{ padding: <span class="a">"16px"</span>, borderRadius: <span class="a">"8px"</span> }}&gt;
+      &lt;span className=<span class="a">"title"</span>&gt;React&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">className</span>
+          <h2 data-i18n="s.class.t"></h2>
+        </header>
+        <div data-i18n="s.class.d"></div>
+        <pre><code>&lt;div className=<span class="a">"card"</span>&gt;
+  &lt;span className=<span class="a">"title"</span>&gt;Hello&lt;/span&gt;
+&lt;/div&gt;
+
+<span class="s">React writes className to the HTML class attribute.</span>
+<span class="s">Use CSS to decide what those classes look like.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">onClick</span>
+          <h2 data-i18n="s.click.t"></h2>
+        </header>
+        <div data-i18n="s.click.d"></div>
+        <pre><code>&lt;div onClick={<span class="t">{() =&gt; console.log('clicked')}</span>}&gt;
+  &lt;span onClick={<span class="t">{handleClick}</span>}&gt;Click me&lt;/span&gt;
+&lt;/div&gt;
+
+<span class="s">Pass a function. Do not call it while rendering:</span>
+onClick={<span class="t">{handleClick}</span>}       <span class="s">good</span>
+onClick={<span class="t">{handleClick()}</span>}      <span class="s">runs immediately</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">style</span>
+          <h2 data-i18n="s.style.t"></h2>
+        </header>
+        <div data-i18n="s.style.d"></div>
+        <pre><code>&lt;div style={{ padding: <span class="a">"12px"</span>, backgroundColor: <span class="a">"lightblue"</span> }}&gt;
+  &lt;span style={{ fontWeight: <span class="a">"bold"</span>, fontSize: <span class="a">"20px"</span> }}&gt;
+    Hello
+  &lt;/span&gt;
+&lt;/div&gt;
+
+<span class="s">style uses a JavaScript object, so CSS property names use camelCase.</span>
+<span class="s">background-color  &rarr;  backgroundColor</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">div</span>
+          <h2 data-i18n="s.div.t"></h2>
+        </header>
+        <div data-i18n="s.div.d"></div>
+        <pre><code>&lt;div
+  className=<span class="a">"card"</span>
+  onClick={<span class="t">{handleCardClick}</span>}
+  style={{ margin: <span class="a">"8px"</span> }}
+&gt;
+  Card content
+&lt;/div&gt;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">span</span>
+          <h2 data-i18n="s.span.t"></h2>
+        </header>
+        <div data-i18n="s.span.d"></div>
+        <pre><code>&lt;span
+  className=<span class="a">"label"</span>
+  onClick={<span class="t">{handleLabelClick}</span>}
+  style={{ color: <span class="a">"green"</span> }}
+&gt;
+  Ready
+&lt;/span&gt;</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">together</span>
+          <h2 data-i18n="s.together.t"></h2>
+        </header>
+        <div data-i18n="s.together.d"></div>
+        <pre><code>function Status() {
+  const handleClick = () =&gt; console.log(<span class="a">"status clicked"</span>);
+
+  return (
+    &lt;div
+      className=<span class="a">"status"</span>
+      onClick={<span class="t">{handleClick}</span>}
+      style={{ padding: <span class="a">"10px"</span>, border: <span class="a">"1px solid gray"</span> }}
+    &gt;
+      &lt;span
+        className=<span class="a">"status-text"</span>
+        style={{ fontWeight: <span class="a">"bold"</span> }}
+      &gt;
+        Ready
+      &lt;/span&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-03-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-02-v1.data.js"></script>
+  </body>
+</html>
