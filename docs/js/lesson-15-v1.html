@@ -1,1 +1,178 @@
-Coming soon
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript: Map og Set</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body data-i18n-title="doc.title">
+    <main class="page">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
+
+      <pre><code><span class="t">const</span> map = <span class="t">new</span> Map();
+map.set(<span class="a">'name'</span>, <span class="a">'Åse'</span>);
+map.get(<span class="a">'name'</span>);             <span class="s">'Åse'</span>
+
+<span class="t">const</span> set = <span class="t">new</span> Set([<span class="a">'JS'</span>, <span class="a">'CSS'</span>, <span class="a">'JS'</span>]);
+set.size;                          <span class="s">2</span>
+
+<span class="s">Map: key → value. Set: unique values.</span></code></pre>
+
+      <hr class="rule" />
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Map</span>
+          <h2 data-i18n="s.map.t"></h2>
+        </header>
+        <div data-i18n="s.map.d"></div>
+        <pre><code><span class="t">const</span> people = <span class="t">new</span> Map();
+
+people.set(<span class="a">'id'</span>, 17);
+people.set(<span class="a">'name'</span>, <span class="a">'Åse'</span>);
+people.get(<span class="a">'name'</span>);             <span class="s">'Åse'</span>
+people.has(<span class="a">'id'</span>);                 <span class="s">true</span>
+people.delete(<span class="a">'id'</span>);              <span class="s">true</span>
+people.size;                         <span class="s">1</span>
+
+<span class="s">keys can be any value</span>
+<span class="t">const</span> user = {};
+people.set(user, <span class="a">'owner'</span>);
+people.get(user);                    <span class="s">'owner'</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Set</span>
+          <h2 data-i18n="s.set.t"></h2>
+        </header>
+        <div data-i18n="s.set.d"></div>
+        <pre><code><span class="t">const</span> tags = <span class="t">new</span> Set([<span class="a">'js'</span>, <span class="a">'css'</span>, <span class="a">'js'</span>]);
+
+tags.size;                         <span class="s">2</span>
+tags.has(<span class="a">'js'</span>);                    <span class="s">true</span>
+tags.add(<span class="a">'html'</span>);
+tags.delete(<span class="a">'css'</span>);                <span class="s">true</span>
+
+tags.add(<span class="a">'js'</span>);                    <span class="s">no duplicate is added</span>
+tags.size;                         <span class="s">2</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Object</span>
+          <h2 data-i18n="s.object.t"></h2>
+        </header>
+        <div data-i18n="s.object.d"></div>
+        <pre><code><span class="t">const</span> person = {};
+person.name = <span class="a">'Åse'</span>;
+person.age = 42;
+
+person.name;                       <span class="s">'Åse'</span>
+Object.keys(person).length;        <span class="s">2</span>
+
+<span class="s">ordinary property keys are strings or symbols</span>
+person[1] = <span class="a">'one'</span>;
+person[<span class="a">'1'</span>];                       <span class="s">'one'</span>
+
+<span class="s">Map keeps the key's type</span>
+<span class="t">const</span> map = <span class="t">new</span> Map();
+map.set(1, <span class="a">'one'</span>);
+map.get(1);                        <span class="s">'one'</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">Array</span>
+          <h2 data-i18n="s.array.t"></h2>
+        </header>
+        <div data-i18n="s.array.d"></div>
+        <pre><code><span class="t">const</span> colors = [<span class="a">'red'</span>, <span class="a">'green'</span>, <span class="a">'blue'</span>];
+
+colors[0];                         <span class="s">'red'</span>
+colors.length;                     <span class="s">3</span>
+colors.push(<span class="a">'yellow'</span>);
+
+<span class="s">Array: position and order matter</span>
+<span class="t">for</span> (<span class="t">const</span> color <span class="t">of</span> colors) console.log(color);
+
+<span class="s">Set: uniqueness matters</span>
+<span class="t">const</span> uniqueColors = <span class="t">new</span> Set(colors);</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">iteration</span>
+          <h2 data-i18n="s.iter.t"></h2>
+        </header>
+        <div data-i18n="s.iter.d"></div>
+        <pre><code><span class="t">const</span> prices = <span class="t">new</span> Map([
+  [<span class="a">'book'</span>, 20],
+  [<span class="a">'pen'</span>, 5]
+]);
+
+<span class="t">for</span> (<span class="t">const</span> [name, price] <span class="t">of</span> prices) {
+  console.log(name, price);
+}
+
+<span class="t">for</span> (<span class="t">const</span> value <span class="t">of</span> tags) {
+  console.log(value);
+}
+
+<span class="s">Map yields [key, value]. Set yields values.</span></code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">conversion</span>
+          <h2 data-i18n="s.convert.t"></h2>
+        </header>
+        <div data-i18n="s.convert.d"></div>
+        <pre><code><span class="t">const</span> numbers = [1, 2, 2, 3, 3, 3];
+
+<span class="t">const</span> unique = <span class="t">new</span> Set(numbers);
+<span class="t">const</span> arrayAgain = [...unique];
+
+[...<span class="t">new</span> Set(numbers)];      <span class="s">[1, 2, 3]</span>
+
+<span class="s">Map from key/value pairs</span>
+<span class="t">const</span> mapFromPairs = <span class="t">new</span> Map([
+  [<span class="a">'a'</span>, 1],
+  [<span class="a">'b'</span>, 2]
+]);</code></pre>
+      </section>
+
+      <section class="tag-section">
+        <header>
+          <span class="tag-name">comparison</span>
+          <h2 data-i18n="s.compare.t"></h2>
+        </header>
+        <div data-i18n="s.compare.d"></div>
+        <pre><code><span class="s">ordered elements</span>
+<span class="t">const</span> a = [<span class="a">'a'</span>, <span class="a">'b'</span>];
+
+<span class="s">unique values</span>
+<span class="t">const</span> b = <span class="t">new</span> Set([<span class="a">'a'</span>, <span class="a">'b'</span>, <span class="a">'a'</span>]);
+
+<span class="s">key → value lookups</span>
+<span class="t">const</span> c = <span class="t">new</span> Map([[<span class="a">'a'</span>, 1]]);
+
+<span class="s">named fields</span>
+<span class="t">const</span> d = { name: <span class="a">'Åse'</span>, age: 42 };</code></pre>
+        <div class="note" data-i18n="s.note"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn" href="index.html" data-i18n="btn.index"></a>
+        <button type="button" class="btn btn-primary" data-quiz-start data-i18n="btn.test"></button>
+        <a class="btn" href="lesson-16-v1.html" data-i18n="btn.next"></a>
+      </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script src="lesson-15-v1.data.js"></script>
+  </body>
+</html>

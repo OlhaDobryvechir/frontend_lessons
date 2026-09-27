@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML/CSS/JS Configurable Quiz</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0b1020; --panel:#121a2b; --panel2:#0e1627; --border:#293754;
+  --text:#e8eefc; --muted:#9eabc4; --accent:#6ea8fe; --good:#4fd18b;
+  --bad:#ff6b7a; --warn:#f4c95d; --shadow:0 24px 70px #0009;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#080c16,#10182a);color:var(--text);
+font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button{font:inherit}
+.launcher{min-height:100vh;display:grid;place-items:center;padding:30px}
+.launcher-card{max-width:850px;background:var(--panel);border:1px solid var(--border);
+border-radius:18px;padding:34px;box-shadow:var(--shadow)}
+.launcher-card h1{margin-top:0}.launcher-card p{color:var(--muted)}
+.primary{background:var(--accent);color:#07101f;border:0;border-radius:9px;padding:10px 16px;font-weight:700;cursor:pointer}
+.primary:hover{filter:brightness(1.08)}
+.modal{position:fixed;inset:0;background:#030611cc;backdrop-filter:blur(5px);display:none;
+align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal.open{display:flex}
+.dialog{width:min(1250px,96vw);height:min(850px,94vh);background:var(--panel);
+border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
+display:flex;flex-direction:column;overflow:hidden}
+.top{padding:18px 22px 14px;border-bottom:1px solid var(--border)}
+.topline{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.progress{color:var(--muted);font-size:13px;white-space:nowrap}
+.task{font-size:16px;margin-top:9px}.task code{background:#202b43;padding:1px 5px;border-radius:4px}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;min-height:0;flex:1}
+.pane{min-width:0;min-height:0;background:var(--panel2);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column}
+.pane-title{padding:8px 11px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+textarea{flex:1;width:100%;resize:none;border:0;outline:0;background:#080e1b;color:#dce7ff;
+padding:14px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}
+iframe{flex:1;width:100%;border:0;background:white}
+.status{padding:9px 12px;min-height:42px;border-top:1px solid var(--border);font-size:13px}
+.status.error{color:#ffd2d7;background:#35151b}.status.ok{color:#caffdf;background:#102a20}
+.status.warn{color:#ffeab0;background:#302711}
+.bottom{display:flex;gap:8px;justify-content:flex-end;padding:12px 14px;border-top:1px solid var(--border)}
+.secondary,.danger{border:1px solid var(--border);background:#182238;color:var(--text);border-radius:8px;padding:9px 14px;cursor:pointer}
+.secondary:hover,.danger:hover{background:#202d48}.danger{border-color:#70404a}
+.feedback{padding:12px 14px;border-top:1px solid var(--border);display:none}
+.feedback.show{display:block}.feedback-title{font-weight:700;margin-bottom:5px}
+.feedback pre{white-space:pre-wrap;background:#080e1b;border:1px solid var(--border);padding:9px;border-radius:7px;
+max-height:140px;overflow:auto;font:12px/1.45 ui-monospace,monospace}
+.results{padding:28px;overflow:auto}.results h2{margin-top:0}.score{font-size:28px;font-weight:800}
+.result-row{border:1px solid var(--border);border-radius:8px;padding:10px;margin:8px 0}
+.good{color:var(--good)}.bad{color:var(--bad)}.muted{color:var(--muted)}
+@media(max-width:800px){.workspace{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.dialog{height:96vh}}
+</style>
+</head>
+<body>
+<div class="launcher">
+  <div class="launcher-card">
+    <h1>Adaptive Design — HTML/CSS/JavaScript Quiz</h1>
+    <p>This demo uses a configuration array. Each question can provide <code>headerText</code>,
+    <code>evaluateResponse(rawText, rootElement)</code>, and <code>answerHTML</code>.</p>
+    <button class="primary" id="startBtn">Start quiz</button>
+  </div>
+</div>
+
+<div class="modal" id="quizModal" aria-hidden="true">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="taskText">
+    <div class="top">
+      <div class="topline"><strong id="questionNo"></strong><span class="progress" id="progress"></span></div>
+      <div class="task" id="taskText"></div>
+    </div>
+    <div class="workspace" id="workArea">
+      <section class="pane">
+        <div class="pane-title">HTML editor</div>
+        <textarea id="editor" spellcheck="false" aria-label="HTML editor"></textarea>
+      </section>
+      <section class="pane">
+        <div class="pane-title">Live preview (sandboxed iframe)</div>
+        <iframe id="preview" sandbox="allow-scripts" title="Live preview"></iframe>
+      </section>
+    </div>
+    <div class="status" id="validationStatus">Enter HTML, CSS, and optional JavaScript.</div>
+    <div class="feedback" id="feedback">
+      <div class="feedback-title" id="feedbackTitle"></div>
+      <div id="feedbackText"></div>
+      <pre id="feedbackDetails"></pre>
+    </div>
+    <div class="bottom" id="buttons">
+      <button class="secondary" id="submitBtn">Submit</button>
+      <button class="secondary" id="tryBtn" hidden>Try again</button>
+      <button class="secondary" id="helpBtn" hidden>Full help</button>
+      <button class="secondary" id="rightBtn" hidden>It is right anyway</button>
+      <button class="primary" id="nextBtn" hidden>Next question</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/*
+  ==============================================================
+  QUESTION CONFIGURATION
+  ==============================================================
+  Each question can contain:
+    headerText: HTML displayed above the editor.
+    answerHTML: reference answer as a string.
+    evaluateResponse(rawText, rootElement):
+       return true / false
+       OR { correct: true/false, message: "...", details: "..." }
+
+  rootElement is the DOM root of the rendered answer in the preview iframe
+  (the iframe's document.body). For safety, the evaluator should inspect
+  DOM structure rather than execute the user's JavaScript itself.
+*/
+const questions = [
+  {
+    headerText: `<strong>Task 1 — Responsive card</strong><br>
+      Create a <code>&lt;div&gt;</code> with class <code>card</code>.
+      On screens 600px wide or wider it must have a width of 400px.
+      Below 600px it must use <code>width: 100%</code>.`,
+    answerHTML: `<style>
+.card { width: 400px; max-width: 100%; }
+@media (max-width: 599px) {
+  .card { width: 100%; }
+}
+</style>
+<div class="card">Responsive card</div>`,
+    evaluateResponse(rawText, rootElement) {
+      const card = rootElement.querySelector(".card");
+      if (!card) return {correct:false, message:"The preview does not contain an element with class .card."};
+      const css = rawText;
+      if (!/@media\\s*\\(\\s*max-width\\s*:\\s*599px\\s*\\)/i.test(css))
+        return {correct:false, message:"Add a media query for max-width: 599px."};
+      if (!/\\.card[^{]*\\{[^}]*width\\s*:\\s*400px/i.test(css))
+        return {correct:false, message:"The .card rule should contain width: 400px."};
+      if (!/@media[\\s\\S]*?\\.card[^{]*\\{[^}]*width\\s*:\\s*100%/i.test(css))
+        return {correct:false, message:"Inside the media query, set .card to width: 100%."};
+      return true;
+    }
+  },
+  {
+    headerText: `<strong>Task 2 — Flexible navigation</strong><br>
+      Create a <code>&lt;nav&gt;</code> containing three links.
+      The links must be laid out in one row with Flexbox and wrap onto another line when needed.`,
+    answerHTML: `<style>
+nav { display: flex; flex-wrap: wrap; gap: 8px; }
+</style>
+<nav>
+  <a href="#">Home</a>
+  <a href="#">Products</a>
+  <a href="#">Contact</a>
+</nav>`,
+    evaluateResponse(rawText, rootElement) {
+      const nav = rootElement.querySelector("nav");
+      const links = nav ? nav.querySelectorAll("a") : [];
+      if (!nav) return {correct:false, message:"Add a nav element."};
+      if (links.length !== 3) return {correct:false, message:"The nav must contain exactly three links."};
+      if (!/display\\s*:\\s*flex/i.test(rawText))
+        return {correct:false, message:"Set display: flex on the nav."};
+      if (!/flex-wrap\\s*:\\s*wrap/i.test(rawText))
+        return {correct:false, message:"Set flex-wrap: wrap on the nav."};
+      return true;
+    }
+  },
+  {
+    headerText: `<strong>Task 3 — Mobile-first typography</strong><br>
+      Create a heading with class <code>title</code>. Its base font size should be
+      24px, and at a minimum viewport width of 900px it should become 40px.`,
+    answerHTML: `<style>
+.title { font-size: 24px; }
+@media (min-width: 900px) {
+  .title { font-size: 40px; }
+}
+</style>
+<h1 class="title">Adaptive title</h1>`,
+    evaluateResponse(rawText, rootElement) {
+      if (!rootElement.querySelector(".title"))
+        return {correct:false, message:"Add an element with class .title."};
+      if (!/\\.title[^{]*\\{[^}]*font-size\\s*:\\s*24px/i.test(rawText))
+        return {correct:false, message:"Set the base .title font-size to 24px."};
+      if (!/@media\\s*\\(\\s*min-width\\s*:\\s*900px\\s*\\)/i.test(rawText))
+        return {correct:false, message:"Add @media (min-width: 900px)."};
+      if (!/@media[\\s\\S]*?\\.title[^{]*\\{[^}]*font-size\\s*:\\s*40px/i.test(rawText))
+        return {correct:false, message:"Set .title to 40px inside the 900px media query."};
+      return true;
+    }
+  },
+  {
+    headerText: `<strong>Task 4 — Responsive image</strong><br>
+      Add an image with class <code>responsive-image</code>. It must never become wider
+      than its container.`,
+    answerHTML: `<style>
+.responsive-image {
+  max-width: 100%;
+  height: auto;
+}
+</style>
+<img class="responsive-image" src="https://via.placeholder.com/800x300" alt="Example">`,
+    evaluateResponse(rawText, rootElement) {
+      const img = rootElement.querySelector("img.responsive-image");
+      if (!img) return {correct:false, message:"Add an img.responsive-image element."};
+      if (!/max-width\\s*:\\s*100%/i.test(rawText))
+        return {correct:false, message:"Set max-width: 100% on the image."};
+      return true;
+    }
+  },
+  {
+    headerText: `<strong>Task 5 — JavaScript responsive message</strong><br>
+      Create an element with id <code>message</code> and a script that changes its text
+      to <em>Mobile</em> when the viewport is below 600px and to <em>Desktop</em> otherwise.`,
+    answerHTML: `<div id="message"></div>
+<script>
+function updateMessage() {
+  document.getElementById("message").textContent =
+    window.innerWidth < 600 ? "Mobile" : "Desktop";
+}
+updateMessage();
+window.addEventListener("resize", updateMessage);
+</script>`,
+    evaluateResponse(rawText, rootElement) {
+      const el = rootElement.querySelector("#message");
+      if (!el) return {correct:false, message:"Add an element with id=\"message\"."};
+      if (!/<script[\\s>]/i.test(rawText))
+        return {correct:false, message:"Add a script section containing the responsive logic."};
+      if (!/innerWidth\\s*<\\s*600|matchMedia\\s*\\(\\s*["']?\\(max-width\\s*:\\s*599px/i.test(rawText))
+        return {correct:false, message:"The JavaScript must detect a viewport below 600px."};
+      if (!/Mobile/.test(rawText) || !/Desktop/.test(rawText))
+        return {correct:false, message:"The script must use both the texts Mobile and Desktop."};
+      return true;
+    }
+  }
+];
+
+/* ---------------- Framework implementation ---------------- */
+
+const state = {
+  index: 0,
+  answers: [],
+  attempts: [],
+  forcedWrong: false
+};
+
+const $ = id => document.getElementById(id);
+const modal = $("quizModal"), editor = $("editor"), preview = $("preview");
+
+function escapeText(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+/*
+  General validation:
+  - Parses HTML with DOMParser.
+  - Rejects parsererror.
+  - Rejects malformed closing structure detected by a lightweight tokenizer.
+  - Checks style blocks can be parsed by CSSStyleSheet rules (best effort).
+  - Checks script blocks have generally plausible JavaScript using Function().
+  This is deliberately not a complete HTML/CSS/JS compiler.
+*/
+function validateGeneralHTML(raw) {
+  if (!raw.trim()) return {ok:false, message:"The editor is empty."};
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(raw, "text/html");
+  if (doc.querySelector("parsererror"))
+    return {ok:false, message:"The HTML parser reported an error."};
+
+  // Reject obvious unclosed/malformed tags using a stack, while ignoring void elements.
+  const voids = new Set(["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"]);
+  const tokenRe = /<!--(?:[\\s\\S]*?)-->|<![^>]*>|<\\/?([a-zA-Z][\\w:-]*)(?:\\s[^>]*)?>/g;
+  const stack = [];
+  let m;
+  while ((m = tokenRe.exec(raw))) {
+    const token = m[0], name = (m[1] || "").toLowerCase();
+    if (!name || token.startsWith("<!")) continue;
+    if (/^<\\//.test(token)) {
+      if (!stack.length || stack[stack.length - 1] !== name)
+        return {ok:false, message:`Unexpected closing tag </${name}>. Check the nesting/order of tags.`};
+      stack.pop();
+    } else if (!/\\/>\s*$/.test(token) && !voids.has(name)) {
+      stack.push(name);
+    }
+  }
+  if (stack.length)
+    return {ok:false, message:`Unclosed tag <${stack[stack.length-1]}>. Close it before submitting.`};
+
+  // CSS: best-effort check of style contents.
+  for (const style of doc.querySelectorAll("style")) {
+    const css = style.textContent.trim();
+    if (!css) continue;
+    try {
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync(css);
+    } catch (e) {
+      return {ok:false, message:`CSS error in <style>: ${e.message || "invalid CSS"}`};
+    }
+  }
+
+  // JavaScript: general syntax check only. Do not execute it here.
+  for (const script of doc.querySelectorAll("script")) {
+    const type = (script.getAttribute("type") || "").toLowerCase();
+    if (type && !["text/javascript","application/javascript","module"].includes(type)) continue;
+    const js = script.textContent.trim();
+    if (!js) continue;
+    try { new Function(js); }
+    catch (e) { return {ok:false, message:`JavaScript syntax error: ${e.message}`}; }
+  }
+
+  return {ok:true, doc};
+}
+
+function renderPreview(raw) {
+  // The srcdoc is isolated by sandbox="allow-scripts" and no same-origin access.
+  // Add a CSP that blocks network requests where supported; inline CSS/JS remains allowed.
+  const csp = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data: https:;">`;
+  preview.srcdoc = `<!doctype html><html><head>${csp}<meta charset="utf-8"></head><body>${raw}</body></html>`;
+}
+
+function updatePreview() {
+  renderPreview(editor.value);
+  $("validationStatus").textContent = "Preview updated.";
+  $("validationStatus").className = "status";
+}
+
+function normalizeHTML(s) {
+  return s
+    .replace(/<!--([\\s\\S]*?)-->/g,"")
+    .replace(/\\r/g,"")
+    .replace(/\\s+/g," ")
+    .replace(/>\\s+</g,"><")
+    .trim();
+}
+
+function compareDefault(raw, answer) {
+  const a = normalizeHTML(raw), b = normalizeHTML(answer);
+  if (a === b) return {correct:true};
+
+  const rawLines = raw.replace(/\\r/g,"").split("\\n");
+  const answerLines = answer.replace(/\\r/g,"").split("\\n");
+  let first = 0;
+  while (first < Math.min(rawLines.length, answerLines.length) &&
+         normalizeHTML(rawLines[first]) === normalizeHTML(answerLines[first])) first++;
+
+  const expected = answerLines[first] || "(end of answer)";
+  return {
+    correct:false,
+    message:`The answer differs around line ${first + 1}.`,
+    details:`Expected next line:\\n${expected}\\n\\nYour line:\\n${rawLines[first] || "(missing)"}`
+  };
+}
+
+function getRootElement() {
+  try {
+    return preview.contentDocument ? preview.contentDocument.body : null;
+  } catch { return null; }
+}
+
+function showFeedback(kind, title, message, details="") {
+  const box = $("feedback");
+  box.className = "feedback show";
+  $("feedbackTitle").textContent = title;
+  $("feedbackText").textContent = message;
+  $("feedbackDetails").textContent = details;
+  $("feedbackDetails").style.display = details ? "block" : "none";
+}
+
+function hideFeedback() {
+  $("feedback").className = "feedback";
+  $("feedbackDetails").textContent = "";
+}
+
+function setButtons(mode) {
+  $("submitBtn").hidden = mode !== "editing";
+  $("tryBtn").hidden = mode !== "failed";
+  $("helpBtn").hidden = mode !== "failed";
+  $("rightBtn").hidden = mode !== "failed";
+  $("nextBtn").hidden = mode !== "passed" && mode !== "final";
+}
+
+function loadQuestion(i) {
+  state.index = i;
+  state.forcedWrong = false;
+  const q = questions[i];
+  $("questionNo").textContent = `Question ${i + 1}`;
+  $("progress").textContent = `${i + 1} / ${questions.length}`;
+  $("taskText").innerHTML = q.headerText;
+  editor.value = "";
+  hideFeedback();
+  $("validationStatus").textContent = "Enter HTML, CSS, and optional JavaScript.";
+  $("validationStatus").className = "status";
+  setButtons("editing");
+  updatePreview();
+}
+
+function submitQuestion() {
+  const raw = editor.value;
+  const general = validateGeneralHTML(raw);
+
+  if (!general.ok) {
+    $("validationStatus").textContent = general.message;
+    $("validationStatus").className = "status error";
+    showFeedback("error","Invalid HTML/CSS/JavaScript",general.message,
+      "Fix the general syntax first. The custom question evaluator has not been run yet.");
+    setButtons("editing");
+    return;
+  }
+
+  // Preview may be refreshed with the validated text.
+  renderPreview(raw);
+
+  const q = questions[state.index];
+  let result;
+  if (typeof q.evaluateResponse === "function") {
+    try {
+      result = q.evaluateResponse(raw, getRootElement());
+      if (typeof result === "boolean") result = {correct:result};
+      result = result || {correct:false, message:"The evaluator returned no result."};
+    } catch (e) {
+      result = {correct:false, message:"The evaluator itself produced an error.", details:String(e)};
+    }
+  } else {
+    result = compareDefault(raw, q.answerHTML);
+  }
+
+  if (result.correct) {
+    state.answers[state.index] = true;
+    state.attempts[state.index] = (state.attempts[state.index] || 0) + 1;
+    $("validationStatus").textContent = "Correct answer.";
+    $("validationStatus").className = "status ok";
+    showFeedback("ok","Correct!",result.message || "Your answer satisfies the task.");
+    setButtons(state.index === questions.length - 1 ? "final" : "passed");
+  } else {
+    state.answers[state.index] = false;
+    state.attempts[state.index] = (state.attempts[state.index] || 0) + 1;
+    $("validationStatus").textContent = result.message || "The answer does not satisfy the task yet.";
+    $("validationStatus").className = "status warn";
+    showFeedback("warn","Not quite yet",result.message || "Check your answer.",
+      result.details || "Use Try again to edit, Full help to insert the reference answer, or It is right anyway to accept your answer as correct.");
+    setButtons("failed");
+  }
+}
+
+function acceptAnyway() {
+  state.answers[state.index] = true;
+  state.forcedWrong = true;
+  $("validationStatus").textContent = "Accepted as correct by the user.";
+  $("validationStatus").className = "status ok";
+  showFeedback("ok","Accepted","This answer was marked correct even though it differs from the configured evaluator/reference.");
+  setButtons(state.index === questions.length - 1 ? "final" : "passed");
+}
+
+function fullHelp() {
+  editor.value = questions[state.index].answerHTML;
+  state.answers[state.index] = false;
+  renderPreview(editor.value);
+  $("validationStatus").textContent = "Reference answer inserted. This question is not counted as answered correctly.";
+  $("validationStatus").className = "status warn";
+  showFeedback("warn","Full help inserted","The reference answer is now in the editor. This question remains unanswered.");
+  setButtons("editing");
+}
+
+function showResults() {
+  const correct = state.answers.filter(Boolean).length;
+  $("workArea").innerHTML = `<div class="results" style="grid-column:1/-1">
+    <h2>Quiz results</h2>
+    <div class="score">${correct} / ${questions.length}</div>
+    <p class="muted">A question answered with “Full help” remains incorrect. “It is right anyway” is counted as correct.</p>
+    ${questions.map((q,i)=>`<div class="result-row">
+      <strong>Question ${i+1}</strong>:
+      <span class="${state.answers[i] ? "good":"bad"}">${state.answers[i] ? "Correct":"Not answered correctly"}</span>
+      <span class="muted"> — attempts: ${state.attempts[i] || 0}</span>
+    </div>`).join("")}
+  </div>`;
+  $("questionNo").textContent = "Quiz complete";
+  $("progress").textContent = "";
+  $("taskText").innerHTML = "Review the result below.";
+  $("validationStatus").textContent = "Finished.";
+  $("validationStatus").className = "status";
+  $("feedback").className = "feedback";
+  $("submitBtn").hidden = true; $("tryBtn").hidden = true; $("helpBtn").hidden = true;
+  $("rightBtn").hidden = true; $("nextBtn").hidden = true;
+}
+
+function nextQuestion() {
+  if (state.index >= questions.length - 1) showResults();
+  else loadQuestion(state.index + 1);
+}
+
+$("startBtn").addEventListener("click", () => {
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  loadQuestion(0);
+  editor.focus();
+});
+$("submitBtn").addEventListener("click", submitQuestion);
+$("tryBtn").addEventListener("click", () => { hideFeedback(); setButtons("editing"); editor.focus(); });
+$("helpBtn").addEventListener("click", fullHelp);
+$("rightBtn").addEventListener("click", acceptAnyway);
+$("nextBtn").addEventListener("click", nextQuestion);
+editor.addEventListener("input", updatePreview);
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && modal.classList.contains("open")) {
+    // Deliberately no close button: closing can be added if desired.
+  }
+});
+</script>
+</body>
+</html>
